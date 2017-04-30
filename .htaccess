@@ -4,4 +4,4 @@ RewriteCond %{Request_Filename} !-F
 
 RewriteCond %{Request_Filename} !-d
 
-RewriteRule ^ public/index.php [QSA,L]
+RewriteRule ^ index.php [QSA,L]

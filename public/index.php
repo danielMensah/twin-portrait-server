@@ -46,14 +46,6 @@ $app->post('/user', function (Request $request, Response $response) {
 });
 /* END LOGIN SECTION */
 
-
-$app->get('/userProfile/{token}', function (Request $request, Response $response) {
-    $token = $request->getAttribute('token');
-    $response->getBody()->write("$token");
-    return $response;
-});
-
-
 $app->get('/userProfile/{token}', function (Request $request, Response $response) {
     $token = $request->getAttribute('token');
     $dbh = getConnection(1);
@@ -64,10 +56,27 @@ $app->get('/userProfile/{token}', function (Request $request, Response $response
     $sql->bindParam(':token', $token, PDO::PARAM_STR);
     if ($sql->execute()){
         $result = json_encode($sql->fetchAll(PDO::FETCH_ASSOC));
+
+        //$response->getBody()->write("$token\n $dbh->lastInsertId()");
     }
     return $result;
 });
 
+/*
+$app->post('/userProfile/{token}', function (Request $request, Response $response) {
+    $dbh = getConnection(1);
+    $email_address = $request->getParsedBody()['email_address'];
+    $sql = $dbh->prepare(""); // CALL PROCEDURE
+    // bindParams
+    if ($sql->execute()){
+        $response->getBody()->write("Success");
+    } else {
+        $response->getBody()->write("Failure");
+    }
+    return $response;
+});
+
+*/
 $app->get('/randomKey', function (Request $request, Response $response) {
     require $_SERVER['DOCUMENT_ROOT'].'/../util/tokenGeneratorUtil.php';
     $str = generateToken();

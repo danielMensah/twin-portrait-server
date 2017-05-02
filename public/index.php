@@ -1,6 +1,7 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+header('Access-Control-Allow-Origin: *');
 require('../vendor/autoload.php');
 require('../config/connection.php');
 //require $_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php';

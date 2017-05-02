@@ -9,7 +9,7 @@ function getConnection($option) {
             break;
         case 2:
             $dbhost="ec2-34-250-225-109.eu-west-1.compute.amazonaws.com";
-            $dbuser="olep_api_main";
+            $dbuser="olep_api_pwd";
             $dbpass="XpEMqus03TnEBV";
             $dbname="olep_secure";
             break;

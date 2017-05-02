@@ -1,7 +1,7 @@
 <?php
 function getDocs(){
     $response = '
-       <h4>To access the User Login part of the API please follow the instructions below:</h4\n<h4>This is for the /user part of the API.</h4>
+       <h4>To access the User Login part of the API please follow the instructions below:</h4><br><b>This is for the /user part of the API.</b>
        <hr>
        <p>This works on a POST method from the AJAX or Form action. The variables that are used here are:</p><br>
        <ul>

@@ -5,9 +5,9 @@ function encodeUserToken($u_auth, $p_auth, $u_token){
         $u_token = 0;
     }
     $jarr = array(
-        array("label" => "u_auth", "data" => $u_auth;
-        array("label" => "p_auth", "data" => $p_auth;
-        array("label" => "u_token", "data" => $u_token
+        array("label" => "u_auth", "data" => $u_auth);
+        array("label" => "p_auth", "data" => $p_auth);
+        array("label" => "u_token", "data" => $u_token);
     );
     //$jarr = array();
     /*$jarr[u_auth] = $u_auth;

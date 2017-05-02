@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< Updated upstream
   <component name="PublishConfigData" autoUpload="Always" serverName="OLEP">
+    <option name="myAutoUpload" value="ALWAYS" />
+=======
+  <component name="PublishConfigData" serverName="OLEP">
     <serverData>
       <paths name="OLEP">
         <serverdata>
@@ -10,6 +14,6 @@
         </serverdata>
       </paths>
     </serverData>
-    <option name="myAutoUpload" value="ALWAYS" />
+>>>>>>> Stashed changes
   </component>
 </project>

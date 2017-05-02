@@ -1,12 +1,23 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-require $_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php';
-require $_SERVER['DOCUMENT_ROOT'].'/../config/connection.php';
-$app = new \Slim\App;
+require('../vendor/autoload.php');
+require('../config/connection.php');
+//require $_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php';
+$app = new \Slim\App([
+    'settings' => [
+        'displayErrorDetails' => true
+    ]
+]);
 
 $app->get('/', function (Request $request, Response $response) {
-    $response->getBody()->write("Hello Test");
+    $response->getBody()->write("Welcome to OLEP's API!\n Currently under development!");
+    return $response;
+});
+
+$app->get('/test}', function (Request $request, Response $response) {
+    $response->getBody()->write("Hello, You!");
+
     return $response;
 });
 
@@ -33,14 +44,34 @@ $app->post('/user', function (Request $request, Response $response) {
     echo $data;
     return $response;
 });
-
-
 /* END LOGIN SECTION */
 
-$app->get('/random', function (Request $request, Response $response) {
+
+$app->get('/userProfile/{token}', function (Request $request, Response $response) {
+    $token = $request->getAttribute('token');
+    $response->getBody()->write("$token");
+    return $response;
+});
+
+
+$app->get('/userProfile/{token}', function (Request $request, Response $response) {
+    $token = $request->getAttribute('token');
+    $dbh = getConnection(1);
+    $sql = $dbh->prepare("  SELECT up.first_name, up.last_name FROM user_profile up, active_connection ac, user u
+                            WHERE ac.user_id = u.user_id
+                            AND up.user_id = u.user_id
+                            AND ac.user_token = :token;");
+    $sql->bindParam(':token', $token, PDO::PARAM_STR);
+    if ($sql->execute()){
+        $result = json_encode($sql->fetchAll(PDO::FETCH_ASSOC));
+    }
+    return $result;
+});
+
+$app->get('/randomKey', function (Request $request, Response $response) {
     require $_SERVER['DOCUMENT_ROOT'].'/../util/tokenGeneratorUtil.php';
     $str = generateToken();
-    $response->getBody()->write("Hello, $str");
+    $response->getBody()->write("$str");
     return $response;
 });
 
@@ -48,8 +79,7 @@ $app->get('/users', function (Request $request, Response $response) {
     $dbh = getConnection(1);
     $sql = $dbh->prepare("SELECT * FROM user");
     $sql->execute();
-    $result = $sql->fetchAll();
-//    echo json_encode($result);
+    $result = $sql->fetchAll(PDO::FETCH_ASSOC);
     return json_encode($result);
 });
 
@@ -70,9 +100,7 @@ $app->post('/users', function (Request $request, Response $response) {
         $sql->bindParam(':u_password', $u_pwd, PDO::PARAM_STR);
         $sql->execute();
     }
-
 });
-
 
 $app->get('/hello/{name}', function (Request $request, Response $response) {
     $name = $request->getAttribute('name');

@@ -2,19 +2,19 @@
 function getConnection($option) {
     switch($option){
         case 1:
-            $dbhost="127.0.0.1";
-            $dbuser="root";
-            $dbpass="";
+            $dbhost="ec2-34-250-225-109.eu-west-1.compute.amazonaws.com";
+            $dbuser="olep_api";
+            $dbpass="ZvRLZiensqef";
             $dbname="olep_user";
             break;
         case 2:
-            $dbhost="127.0.0.1";
-            $dbuser="root";
-            $dbpass="";
-            $dbname="olep_password";
+            $dbhost="ec2-34-250-225-109.eu-west-1.compute.amazonaws.com";
+            $dbuser="olep_api_main";
+            $dbpass="XpEMqus03TnEBV";
+            $dbname="olep_secure";
             break;
     }
-    $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+    $dbh = new PDO("mysql:host=$dbhost;port=55030;dbname=$dbname", $dbuser, $dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $dbh;
 }

@@ -120,7 +120,7 @@ $app->get('/hello/{name}', function (Request $request, Response $response) {
 
 /* DOCS SECTION */
 
-$app->post('/user', function (Request $request, Response $response) {
+$app->get('/user/docs', function (Request $request, Response $response) {
     require '../docs/userDocs.php';
     $docs = getDocs();
     $response->getBody()->write("$docs");

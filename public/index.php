@@ -41,8 +41,7 @@ $app->post('/user', function (Request $request, Response $response) {
         }
     }
     $data =  encodeUserToken($u_auth['u_auth'],$p_auth, $u_token);
-    echo $data;
-    return $response;
+    return $data;
 });
 /* END LOGIN SECTION */
 
@@ -117,4 +116,19 @@ $app->get('/hello/{name}', function (Request $request, Response $response) {
 
     return $response;
 });
+
+
+/* DOCS SECTION */
+
+$app->post('/user', function (Request $request, Response $response) {
+    require '../docs/userDocs.php';
+    $docs = getDocs();
+    $response->getBody()->write("$docs");
+    return $response;
+});
+
+
+
+/* END DOCS SECTION */
+
 $app->run();

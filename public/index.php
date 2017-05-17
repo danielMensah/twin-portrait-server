@@ -156,7 +156,7 @@ $app->get('/user/docs', function (Request $request, Response $response) {
     return $response;
 });
 
-$app->get('/activities/{name}', function (Request $request, Reponse $reponse){
+$app->get('/activities/{name}', function (Request $request, Reponse $response){
     $name = $request->getAttribute('name');
     $response->getBody()->write("Hello, $name");
     return $response;

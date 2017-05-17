@@ -156,6 +156,12 @@ $app->get('/user/docs', function (Request $request, Response $response) {
     return $response;
 });
 
+$app->get('/activities/{name}', function (Request $request, Reponse $reponse){
+    $name = $request->getAttribute('name');
+    $response->getBody()->write("Hello, $name");
+    return $response;
+});
+
 
 
 /* END DOCS SECTION */

@@ -16,7 +16,10 @@ function encodeUserAnnouncement(){
     $announcement = array(
       'type' => 'announcement',
     'author' => 'Jessica Jones',
-        'content' => "content"
+        'content' => "content",
+        'module' => 'Programming 2',
+        'date' => 'yesterday',
+        'comments' => 'Test Comment'
     );
     return json_encode($announcement, JSON_NUMERIC_CHECK);
 }

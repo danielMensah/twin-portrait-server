@@ -157,8 +157,9 @@ $app->get('/user/docs', function (Request $request, Response $response) {
 });
 
 $app->get('/activities/{name}', function (Request $request, Response $response){
-    $name = $request->getAttribute('name');
-    $response->getBody()->write("Hello, $name");
+    require $_SERVER['DOCUMENT_ROOT'].'/../util/encodeUtil.php';
+    $result = encodeUserAnnouncement();
+    $response->getBody()->write($result );
     return $response;
 });
 

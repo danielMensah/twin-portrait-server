@@ -11,3 +11,12 @@ function encodeUserToken($u_auth, $p_auth, $u_token){
         );
     return json_encode($jarr, JSON_NUMERIC_CHECK);
 }
+
+function encodeUserAnnouncement(){
+    $announcement = array(
+      'type' => "announcement",
+    'author' => "Jessica Jones",
+        'content' => "content"
+    );
+    return json_encode($announcement, JSON_NUMERIC_CHECK);
+}

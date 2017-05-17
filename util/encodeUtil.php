@@ -14,8 +14,8 @@ function encodeUserToken($u_auth, $p_auth, $u_token){
 
 function encodeUserAnnouncement(){
     $announcement = array(
-      'type' => "announcement",
-    'author' => "Jessica Jones",
+      'type' => 'announcement',
+    'author' => 'Jessica Jones',
         'content' => "content"
     );
     return json_encode($announcement, JSON_NUMERIC_CHECK);

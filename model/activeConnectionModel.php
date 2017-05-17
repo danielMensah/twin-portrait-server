@@ -7,3 +7,11 @@ function insertToken($user_id, $token){
     $acsql->execute();
 
 }
+
+function checkToken($token){
+    $dbh = getConnection(1);
+    $sql = $dbh->prepare("SELECT COUNT(*) as state FROM active_connection WHERE user_token = :u_token");
+    $sql->bindParam(':u_token', $token, PDO::PARAM_STR);
+    $sql->execute();
+    return $sql->fetch(PDO::FETCH_ASSOC);
+}

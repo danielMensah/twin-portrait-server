@@ -4,7 +4,6 @@ use \Psr\Http\Message\ResponseInterface as Response;
 header('Access-Control-Allow-Origin: *');
 require('../vendor/autoload.php');
 require('../config/connection.php');
-//require $_SERVER['DOCUMENT_ROOT'].'/../vendor/autoload.php';
 $app = new \Slim\App([
     'settings' => [
         'displayErrorDetails' => true
@@ -23,7 +22,7 @@ $app->get('/test}', function (Request $request, Response $response) {
 });
 
 /* USER LOGIN SECTION */
-$app->post('/user', function (Request $request, Response $response) {
+$app->post('/auth/login', function (Request $request, Response $response) {
     require $_SERVER['DOCUMENT_ROOT'].'/../model/userModel.php';
     require $_SERVER['DOCUMENT_ROOT'].'/../model/upasswordModel.php';
     require $_SERVER['DOCUMENT_ROOT'].'/../model/activeConnectionModel.php';
@@ -41,10 +40,41 @@ $app->post('/user', function (Request $request, Response $response) {
             insertToken($u_auth['user_id'], $u_token);
         }
     }
-    $data =  encodeUserToken($u_auth['u_auth'],$p_auth, $u_token);
+     $data =  encodeUserToken($u_auth['u_auth'],$p_auth, $u_token);
     return $data;
 });
 /* END LOGIN SECTION */
+
+/* USER LOGOUT SECTION */
+$app->post('/auth/logout', function (Request $request, Response $response) {
+   require '../model/logoutModel.php';
+    require '../model/activeConnectionModel.php';
+    //$u_token = $request->getAttribute('token');
+    $u_token = $request->getParsedBody()['u_token'];
+    if (isset($u_token)) {
+        //$response->getBody()->write("Success");
+        $state = checkToken($u_token);
+       if ($state['state'] == 1) {
+            $response = removeLoginEntry($u_token);
+        } else { $response = 0; }
+        return json_encode($response);
+    }
+});
+/* END LOGOUT SECTION */
+
+/* CHECK SESSION */
+$app->post('/session/check', function (Request $request, Response $response) {
+    require '../model/activeConnectionModel.php';
+    //$u_token = $request->getAttribute('token');
+    $u_token = $request->getParsedBody()['u_token'];
+    if (isset($u_token)) {
+        $response = checkToken($u_token);
+        return json_encode($response);
+    }
+});
+
+
+/* END CHECK SESSION */
 
 $app->get('/userProfile/{token}', function (Request $request, Response $response) {
     $token = $request->getAttribute('token');
@@ -56,8 +86,6 @@ $app->get('/userProfile/{token}', function (Request $request, Response $response
     $sql->bindParam(':token', $token, PDO::PARAM_STR);
     if ($sql->execute()){
         $result = json_encode($sql->fetchAll(PDO::FETCH_ASSOC));
-
-        //$response->getBody()->write("$token\n $dbh->lastInsertId()");
     }
     return $result;
 });

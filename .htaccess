@@ -6,4 +6,6 @@ RewriteCond %{Request_Filename} !-d
 
 RewriteRule ^ index.php [QSA,L]
 
-RewriteRule ^(.*)$ https://api.olep.co.uk/$1 [R=301,L]
+RewriteCond %{HTTPS} !=on
+
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

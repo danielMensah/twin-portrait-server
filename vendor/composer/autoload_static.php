@@ -72,6 +72,13 @@ class ComposerStaticInitb1b1de417e1fbde17d3a1f7e954fcedf
     );
 
     public static $prefixesPsr0 = array (
+        'U' => 
+        array (
+            'Upload' => 
+            array (
+                0 => __DIR__ . '/..' . '/codeguy/upload/src',
+            ),
+        ),
         'T' => 
         array (
             'Twig_' => 

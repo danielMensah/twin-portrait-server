@@ -36,7 +36,7 @@ $app->get('/portrait', function (Request $request, Response $response) {
 });
 
 $app->post('/uploadPortrait', function (Request $request, Response $response) {
-    require('../model/imageModel.php');
+    require ('../model/imageModel.php');
 
     $uploadedFiles = $request->getUploadedFiles();
 
@@ -47,6 +47,6 @@ $app->post('/uploadPortrait', function (Request $request, Response $response) {
             $response->write('uploaded ' . $filename . '<br/>');
         }
     }
-}
+});
 
 $app->run();

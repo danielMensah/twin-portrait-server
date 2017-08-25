@@ -1,29 +1,35 @@
 <?php
 use Slim\Http\UploadedFile;
+require '../util/urlGeneratorUtil.php';
 
     function testConnection() {
         $dbh = getConnection();
     }
 
     function getRandomPortrait(){
+
         $dbh = getConnection();
-        $sql = $dbh->prepare("SELECT (image) FROM portrait ORDER BY RAND()");
+        $sql = $dbh->prepare("SELECT (image_url) FROM portrait ORDER BY RAND()");
         $sql->execute();
-        $sql->bindColumn(1, $image, PDO::PARAM_LOB);
+        $sql->bindColumn(1, $image_url, PDO::PARAM_LOB);
         $sql->fetch(PDO::FETCH_BOUND);
         header("Content-Type: image");
 
-        echo  '<img src="data:image/jpeg;base64,'.$image.'"/>';
-        return $image;
+        echo  '<img src="'.$image_url.'"/>';
+        return $image_url;
 
     }
 
-    function uploadImage(UploadedFile $file){
+    function uploadImage(UploadedFile $uploadedFile){
+
         $dbh = getConnection();
-        $image = base64_encode($file->getStream());
-        $sql = $dbh->prepare("INSERT INTO portrait ( image ) VALUES ( '$image')");
+        $image_url = portraitURL($uploadedFile->getClientFilename());
+
+        $sql = $dbh->prepare("INSERT INTO portrait ( image_url ) VALUES ( '$image_url')");
         $sql->execute();
         echo "Success!";
+
+        return $image_url;
     }
 
     function moveUploadedFile($directory, UploadedFile $uploadedFile) {

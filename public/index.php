@@ -17,8 +17,7 @@ $container = $app->getContainer();
 $container['upload_directory'] = $_SERVER['DOCUMENT_ROOT'].'/../images';
 
 $app->get('/', function (Request $request, Response $response) {
-    require '../model/formsModel.php';
-    echo uploadPortraitForm();
+    getConnection();
 });
 
 $app->get('/getPortrait', function (Request $request, Response $response) {
@@ -44,7 +43,7 @@ $app->post('/uploadPortrait', function (Request $request, Response $response) {
     // handle single input with multiple file uploads
     foreach ($uploadedFiles['portrait'] as $uploadedFile) {
         if (!empty($uploadedFile)) {
-            $filename = moveUploadedFile($directory, $uploadedFile);
+            $filename = uploadImage($uploadedFile);
             $response->write('uploaded ' . $filename . '<br/>');
         }
     }

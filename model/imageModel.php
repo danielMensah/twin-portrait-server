@@ -1,6 +1,10 @@
 <?php
 use Slim\Http\UploadedFile;
 
+    function testConnection() {
+        $dbh = getConnection();
+    }
+
     function getRandomPortrait(){
         $dbh = getConnection();
         $sql = $dbh->prepare("SELECT (image) FROM portrait ORDER BY RAND()");

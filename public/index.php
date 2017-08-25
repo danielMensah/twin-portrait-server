@@ -16,6 +16,11 @@ $app = new \Slim\App([
 $container = $app->getContainer();
 $container['upload_directory'] = $_SERVER['DOCUMENT_ROOT'].'/../images';
 
+$app->get('/', function (Request $request, Response $response) {
+    require '../model/formsModel.php';
+    echo uploadPortraitForm();
+});
+
 $app->get('/getPortrait', function (Request $request, Response $response) {
     require '../model/imageModel.php';
     $randomPortrait = json_encode(array(

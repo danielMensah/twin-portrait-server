@@ -1,14 +1,14 @@
 <?php
 function getConnection() {
-    $host_name = '127.0.0.1';
-    $database = 'test';
-    $user_name = 'root';
-    $password = '';
+    $host_name = 'db694556332.db.1and1.com';
+    $database = 'db694556332';
+    $user_name = 'dbo694556332';
+    $password = 'Mensah2929';
 
     $dbh = null;
     try {
         $dbh = new PDO("mysql:host=$host_name; dbname=$database;", $user_name, $password);
-        echo '<p>hello</p></br>';
+        echo '<p>Connected</p></br>';
         return $dbh;
     } catch (PDOException $e) {
         echo "Error!: " . $e->getMessage() . "<br/>";

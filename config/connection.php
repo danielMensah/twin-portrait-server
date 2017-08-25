@@ -13,7 +13,6 @@ function getConnection() {
     $dbh = null;
     try {
         $dbh = new PDO("mysql:host=$host_name; dbname=$database;", $user_name, $password);
-        echo '<p>Connected</p></br>';
         return $dbh;
     } catch (PDOException $e) {
         echo "Error!: " . $e->getMessage() . "<br/>";

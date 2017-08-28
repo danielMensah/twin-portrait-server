@@ -39,7 +39,7 @@ require '../util/urlGeneratorUtil.php';
         $nose = $arrayOfLandmarks['nose']['landmarkKey'];
         $lips = $arrayOfLandmarks['lips']['landmarkKey'];
 
-        $updatedLandmarks = getPortraitForUpdate($arrayOfLandmarks);
+        $updatedLandmarks = getPortraitForUpdate($arrayOfLandmarks, $portraitUrl);
 
         $sql = $dbh->prepare("UPDATE portrait SET $face = :face_value, $eye=:eye_value, $eyebrows=:eyebrows_value, $nose=:nose_value, $lips=:lips_value WHERE image_url=:portrait_url");
         $sql->bindParam(':face_value', $updatedLandmarks['face'], PDO::PARAM_INT);
@@ -51,19 +51,26 @@ require '../util/urlGeneratorUtil.php';
 
         $sql->execute();
 
-        $response = array(
-            'response' => 'updated'
-        );
+        $response = [];
+
+        if ($sql->execute()) {
+            $response = array(
+                'response' => 'updated'
+            );
+        } else {
+            $response = array(
+                'response' => 'error'
+            );
+        }
 
         return json_encode($response);
     }
 
-    function getPortraitForUpdate($arrayOfLandmarks) {
+    function getPortraitForUpdate($arrayOfLandmarks, $portraitUrl) {
         $dbh = getConnection();
-        $image_url = 'https://s3.eu-west-2.amazonaws.com/twinportraint/Portraits/_4uBmkGE2UUx5G-Moro9AYRaDGhgVXB8R-yy97AZgjzPfwNUVMA_0fe6GWe0=s512.jpg';
 
         $sql = $dbh->prepare("SELECT * FROM portrait WHERE image_url = :image_url");
-        $sql->bindParam(':image_url', $image_url, PDO::PARAM_STR);
+        $sql->bindParam(':image_url', $portraitUrl, PDO::PARAM_STR);
         $sql->execute();
         $sql->bindColumn($arrayOfLandmarks['face']['landmarkKey'], $face, PDO::PARAM_INT);
         $sql->bindColumn($arrayOfLandmarks['eye']['landmarkKey'], $eye, PDO::PARAM_INT);

@@ -50,7 +50,6 @@ require '../util/urlGeneratorUtil.php';
         $sql->bindParam(':portrait_url', $portraitUrl, PDO::PARAM_STR);
 
         $sql->execute();
-        echo "Updated";
     }
 
     function getPortraitForUpdate($arrayOfLandmarks) {

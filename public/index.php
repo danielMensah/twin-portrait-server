@@ -58,7 +58,6 @@ $app->post('/uploadPortrait', function (Request $request, Response $response) {
 //update portrait
 $app->post('/updatePortrait', function (Request $request, Response $response) {
     require ('../model/imageModel.php');
-    getConnection();
 
     $arrayOfLandmarks = [];
     $reqDecoded = json_decode($request->getBody(), true);
@@ -72,6 +71,14 @@ $app->post('/updatePortrait', function (Request $request, Response $response) {
     }
 
     echo updatePortrait($arrayOfLandmarks, $reqDecoded['portraitUrl']);
+});
+
+//set not applicable portrait
+$app->post('/setNotApplicable', function (Request $request, Response $response) {
+    require ('../model/imageModel.php');
+
+    $reqDecoded = json_decode($request->getBody(), true);
+    echo handleNotApplicationPortrait($reqDecoded['portraitUrl']);
 });
 
 $app->run();

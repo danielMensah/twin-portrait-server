@@ -16,10 +16,14 @@ $app = new \Slim\App([
 $container = $app->getContainer();
 $container['upload_directory'] = $_SERVER['DOCUMENT_ROOT'].'/../images';
 
+// test connection
 $app->get('/', function (Request $request, Response $response) {
     getConnection();
 });
 
+
+
+// display random portrait
 $app->get('/getPortrait', function (Request $request, Response $response) {
     require '../model/imageModel.php';
 
@@ -30,11 +34,13 @@ $app->get('/getPortrait', function (Request $request, Response $response) {
     return $randomPortrait;
 });
 
+// upload form
 $app->get('/portrait', function (Request $request, Response $response) {
     require '../model/formsModel.php';
     echo uploadPortraitForm();
 });
 
+//upload portrait
 $app->post('/uploadPortrait', function (Request $request, Response $response) {
     require ('../model/imageModel.php');
 
@@ -47,6 +53,25 @@ $app->post('/uploadPortrait', function (Request $request, Response $response) {
             $response->write('uploaded ' . $filename . '<br/>');
         }
     }
+});
+
+//update portrait
+$app->post('/updatePortrait', function (Request $request, Response $response) {
+    require ('../model/imageModel.php');
+    getConnection();
+
+    $arrayOfLandmarks = [];
+    $reqDecoded = json_decode($request->getBody(), true);
+    foreach ($reqDecoded as $feature) {
+        if (!empty($feature['landmark'])) {
+            $arrayOfLandmarks[$feature['landmark']] = array(
+                'landmark' => $feature['landmark'],
+                'landmarkKey' => $feature['landmarkKey']
+            );
+        }
+    }
+
+    updatePortrait($arrayOfLandmarks, $reqDecoded['portraitUrl']);
 });
 
 $app->run();

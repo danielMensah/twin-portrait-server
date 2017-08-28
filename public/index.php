@@ -71,7 +71,7 @@ $app->post('/updatePortrait', function (Request $request, Response $response) {
         }
     }
 
-    updatePortrait($arrayOfLandmarks, $reqDecoded['portraitUrl']);
+    echo updatePortrait($arrayOfLandmarks, $reqDecoded['portraitUrl']);
 });
 
 $app->run();

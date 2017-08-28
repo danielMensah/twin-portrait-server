@@ -91,6 +91,31 @@ require '../util/urlGeneratorUtil.php';
 
     }
 
+    function handleNotApplicationPortrait($portraitUrl) {
+        $dbh = getConnection();
+
+        $sql = $dbh->prepare("UPDATE portrait SET not_applicable = true WHERE image_url = :image_url");
+        $sql->bindParam(':image_url', $portraitUrl, PDO::PARAM_STR);
+        $sql->execute();
+
+        $response = [];
+        if ($sql->execute()) {
+            $response = array(
+                'response' => 'updated'
+            );
+        } else {
+            $response = array(
+                'response' => 'error'
+            );
+        }
+
+        return json_encode($response);
+    }
+
+    function showNotApplicationPortraits() {
+
+    }
+
 //    function moveUploadedFile($directory, UploadedFile $uploadedFile) {
 //        $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
 //        $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php

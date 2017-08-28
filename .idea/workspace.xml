@@ -24,7 +24,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/index.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="367">
@@ -34,18 +34,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="imageModel.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="imageModel.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model/imageModel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+            <state relative-caret-position="559">
+              <caret line="57" column="36" lean-forward="false" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
               <folding>
-                <marker date="1503931724918" expanded="true" signature="243:291" ph="SELECT (imag... portrait" />
-                <marker date="1503931724918" expanded="true" signature="679:723" ph="INSERT INTO images... " />
-                <marker date="1503931724918" expanded="true" signature="679:736" ph="INSERT INTO images... " />
-                <marker date="1503931724918" expanded="true" signature="1293:1432" ph="UPDATE portr... " />
-                <marker date="1503931724918" expanded="true" signature="1293:1444" ph="UPDATE portr... " />
-                <marker date="1503931724918" expanded="true" signature="2245:2296" ph="SELECT * FRO... portrait" />
+                <marker date="1503934740238" expanded="true" signature="243:291" ph="SELECT (imag... portrait" />
+                <marker date="1503934740238" expanded="true" signature="679:723" ph="INSERT INTO images... " />
+                <marker date="1503934740238" expanded="true" signature="679:736" ph="INSERT INTO images... " />
+                <marker date="1503934740238" expanded="true" signature="1293:1432" ph="UPDATE portr... " />
+                <marker date="1503934740238" expanded="true" signature="1293:1444" ph="UPDATE portr... " />
+                <marker date="1503934740238" expanded="true" signature="2360:2411" ph="SELECT * FRO... portrait" />
               </folding>
             </state>
           </provider>
@@ -657,12 +657,12 @@
       <updated>1503340540139</updated>
       <workItem from="1503340545532" duration="38011000" />
       <workItem from="1503662454085" duration="8353000" />
-      <workItem from="1503759280651" duration="14157000" />
+      <workItem from="1503759280651" duration="15592000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60521000" />
+    <option name="totallyTimeSpent" value="61956000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -722,12 +722,12 @@
         <state relative-caret-position="672">
           <caret line="32" column="20" lean-forward="false" selection-start-line="32" selection-start-column="20" selection-end-line="42" selection-end-column="7" />
           <folding>
-            <marker date="1503931724918" expanded="true" signature="243:291" ph="SELECT (imag... portrait" />
-            <marker date="1503931724918" expanded="true" signature="679:723" ph="INSERT INTO images... " />
-            <marker date="1503931724918" expanded="true" signature="679:736" ph="INSERT INTO images... " />
-            <marker date="1503931724918" expanded="true" signature="1293:1432" ph="UPDATE portr... " />
-            <marker date="1503931724918" expanded="true" signature="1293:1444" ph="UPDATE portr... " />
-            <marker date="1503931724918" expanded="true" signature="2245:2296" ph="SELECT * FRO... portrait" />
+            <marker date="1503934740238" expanded="true" signature="243:291" ph="SELECT (imag... portrait" />
+            <marker date="1503934740238" expanded="true" signature="679:723" ph="INSERT INTO images... " />
+            <marker date="1503934740238" expanded="true" signature="679:736" ph="INSERT INTO images... " />
+            <marker date="1503934740238" expanded="true" signature="1293:1432" ph="UPDATE portr... " />
+            <marker date="1503934740238" expanded="true" signature="1293:1444" ph="UPDATE portr... " />
+            <marker date="1503934740238" expanded="true" signature="2360:2411" ph="SELECT * FRO... portrait" />
           </folding>
         </state>
       </provider>
@@ -911,6 +911,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/connection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model/logoutModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -921,11 +929,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/connection.php">
+    <entry file="file://$PROJECT_DIR$/model/imageModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="559">
+          <caret line="57" column="36" lean-forward="false" selection-start-line="57" selection-start-column="36" selection-end-line="57" selection-end-column="36" />
+          <folding>
+            <marker date="1503934740238" expanded="true" signature="243:291" ph="SELECT (imag... portrait" />
+            <marker date="1503934740238" expanded="true" signature="679:723" ph="INSERT INTO images... " />
+            <marker date="1503934740238" expanded="true" signature="679:736" ph="INSERT INTO images... " />
+            <marker date="1503934740238" expanded="true" signature="1293:1432" ph="UPDATE portr... " />
+            <marker date="1503934740238" expanded="true" signature="1293:1444" ph="UPDATE portr... " />
+            <marker date="1503934740238" expanded="true" signature="2360:2411" ph="SELECT * FRO... portrait" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -934,21 +949,6 @@
         <state relative-caret-position="367">
           <caret line="60" column="13" lean-forward="false" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/imageModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding>
-            <marker date="1503931724918" expanded="true" signature="243:291" ph="SELECT (imag... portrait" />
-            <marker date="1503931724918" expanded="true" signature="679:723" ph="INSERT INTO images... " />
-            <marker date="1503931724918" expanded="true" signature="679:736" ph="INSERT INTO images... " />
-            <marker date="1503931724918" expanded="true" signature="1293:1432" ph="UPDATE portr... " />
-            <marker date="1503931724918" expanded="true" signature="1293:1444" ph="UPDATE portr... " />
-            <marker date="1503931724918" expanded="true" signature="2245:2296" ph="SELECT * FRO... portrait" />
-          </folding>
         </state>
       </provider>
     </entry>

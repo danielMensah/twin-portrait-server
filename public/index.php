@@ -81,4 +81,12 @@ $app->post('/setNotApplicable', function (Request $request, Response $response) 
     echo handleNotApplicationPortrait($reqDecoded['portraitUrl']);
 });
 
+//register user
+$app->post('/registerUser', function (Request $request, Response $response) {
+    require ('../model/userModel.php');
+
+    $reqDecoded = json_decode($request->getBody(), true);
+     echo registerUser($reqDecoded);
+});
+
 $app->run();

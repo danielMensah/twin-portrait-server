@@ -49,8 +49,6 @@ require '../util/urlGeneratorUtil.php';
         $sql->bindParam(':lips_value', $updatedLandmarks['lips'], PDO::PARAM_INT);
         $sql->bindParam(':portrait_url', $portraitUrl, PDO::PARAM_STR);
 
-        $sql->execute();
-
         $response = [];
 
         if ($sql->execute()) {
@@ -96,7 +94,6 @@ require '../util/urlGeneratorUtil.php';
 
         $sql = $dbh->prepare("UPDATE portrait SET not_applicable = true WHERE image_url = :image_url");
         $sql->bindParam(':image_url', $portraitUrl, PDO::PARAM_STR);
-        $sql->execute();
 
         $response = [];
         if ($sql->execute()) {

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54f348b9-8a1b-4dc9-bab2-5930646074cf" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/connection.php" afterPath="$PROJECT_DIR$/config/connection.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/userModel.php" afterPath="$PROJECT_DIR$/model/userModel.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,7 +15,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="connection.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="connection.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/connection.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="147">
@@ -54,16 +55,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userModel.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="userModel.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model/userModel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state relative-caret-position="307">
+              <caret line="25" column="57" lean-forward="false" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
               <folding>
-                <marker date="1504030689535" expanded="true" signature="275:369" ph="INSERT INTO users... " />
-                <marker date="1504030689535" expanded="true" signature="1076:1193" ph="INSERT INTO promo_codes... " />
-                <marker date="1504030689535" expanded="true" signature="1133:1176" ph="select custo... customer" />
-                <marker date="1504030689535" expanded="true" signature="1362:1409" ph="SELECT COUNT... users" />
+                <marker date="1504108795757" expanded="true" signature="275:369" ph="INSERT INTO users... " />
+                <marker date="1504108795757" expanded="true" signature="1077:1194" ph="INSERT INTO promo_codes... " />
+                <marker date="1504108795757" expanded="true" signature="1134:1177" ph="select custo... customer" />
+                <marker date="1504108795757" expanded="true" signature="1363:1410" ph="SELECT COUNT... users" />
               </folding>
             </state>
           </provider>
@@ -139,8 +140,8 @@
         <option value="$PROJECT_DIR$/model/imageModel.php" />
         <option value="$PROJECT_DIR$/util/promoCodeGeneratorUtil.php" />
         <option value="$PROJECT_DIR$/public/index.php" />
-        <option value="$PROJECT_DIR$/model/userModel.php" />
         <option value="$PROJECT_DIR$/config/connection.php" />
+        <option value="$PROJECT_DIR$/model/userModel.php" />
       </list>
     </option>
   </component>
@@ -687,12 +688,12 @@
       <updated>1503340540139</updated>
       <workItem from="1503340545532" duration="38011000" />
       <workItem from="1503662454085" duration="8353000" />
-      <workItem from="1503759280651" duration="33971000" />
+      <workItem from="1503759280651" duration="35128000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80335000" />
+    <option name="totallyTimeSpent" value="81492000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -955,6 +956,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="640">
+          <caret line="88" column="16" lean-forward="true" selection-start-line="88" selection-start-column="16" selection-end-line="88" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/connection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="10" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model/imageModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="559">
@@ -973,32 +990,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="640">
-          <caret line="88" column="16" lean-forward="true" selection-start-line="88" selection-start-column="16" selection-end-line="88" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/userModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state relative-caret-position="307">
+          <caret line="25" column="57" lean-forward="false" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
           <folding>
-            <marker date="1504030689535" expanded="true" signature="275:369" ph="INSERT INTO users... " />
-            <marker date="1504030689535" expanded="true" signature="1076:1193" ph="INSERT INTO promo_codes... " />
-            <marker date="1504030689535" expanded="true" signature="1133:1176" ph="select custo... customer" />
-            <marker date="1504030689535" expanded="true" signature="1362:1409" ph="SELECT COUNT... users" />
+            <marker date="1504108795757" expanded="true" signature="275:369" ph="INSERT INTO users... " />
+            <marker date="1504108795757" expanded="true" signature="1077:1194" ph="INSERT INTO promo_codes... " />
+            <marker date="1504108795757" expanded="true" signature="1134:1177" ph="select custo... customer" />
+            <marker date="1504108795757" expanded="true" signature="1363:1410" ph="SELECT COUNT... users" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/connection.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="10" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>

@@ -23,7 +23,7 @@
 
             return json_encode($response);
         } else {
-            return json_encode(array('response' => 'User already exists'));
+            return json_encode(array('response' => 'Email already exists'));
         }
 
     }

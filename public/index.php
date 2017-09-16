@@ -70,7 +70,12 @@ $app->post('/updatePortrait', function (Request $request, Response $response) {
         }
     }
 
-    echo updatePortrait($arrayOfLandmarks, $reqDecoded['portraitUrl']);
+    echo updatePortrait(
+        $arrayOfLandmarks,
+        $reqDecoded['portraitUrl'],
+        $reqDecoded['gender'],
+        $reqDecoded['mustache'],
+        $reqDecoded['beard']);
 });
 
 //set not applicable portrait

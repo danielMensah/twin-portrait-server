@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="54f348b9-8a1b-4dc9-bab2-5930646074cf" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/userModel.php" afterPath="$PROJECT_DIR$/model/userModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/imageModel.php" afterPath="$PROJECT_DIR$/model/imageModel.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.php" afterPath="$PROJECT_DIR$/public/index.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,83 +15,76 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="connection.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/connection.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="10" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="640">
-              <caret line="88" column="16" lean-forward="true" selection-start-line="88" selection-start-column="16" selection-end-line="88" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="imageModel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/imageModel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
-              <caret line="82" column="38" lean-forward="true" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
-              <folding>
-                <marker date="1503956572067" expanded="true" signature="243:291" ph="SELECT (imag... portrait" />
-                <marker date="1503956572067" expanded="true" signature="679:723" ph="INSERT INTO images... " />
-                <marker date="1503956572067" expanded="true" signature="679:736" ph="INSERT INTO images... " />
-                <marker date="1503956572067" expanded="true" signature="1307:1446" ph="UPDATE portr... " />
-                <marker date="1503956572067" expanded="true" signature="1307:1458" ph="UPDATE portr... " />
-                <marker date="1503956572067" expanded="true" signature="2388:2439" ph="SELECT * FRO... portrait" />
-                <marker date="1503956572067" expanded="true" signature="3420:3490" ph="UPDATE portr... " />
-                <marker date="1503956572067" expanded="true" signature="3426:3490" ph="SELECT * FRO... portrait" />
-                <marker date="1503956572067" expanded="true" signature="3435:3490" ph="SELECT * FRO... portrait" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="userModel.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/model/userModel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="25" column="57" lean-forward="false" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
-              <folding>
-                <marker date="1504108795757" expanded="true" signature="275:369" ph="INSERT INTO users... " />
-                <marker date="1504108795757" expanded="true" signature="1077:1194" ph="INSERT INTO promo_codes... " />
-                <marker date="1504108795757" expanded="true" signature="1134:1177" ph="select custo... customer" />
-                <marker date="1504108795757" expanded="true" signature="1363:1410" ph="SELECT COUNT... users" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="loginModel.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/loginModel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="16" column="4" lean-forward="true" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="promoCodeGeneratorUtil.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/util/promoCodeGeneratorUtil.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="2" column="37" lean-forward="true" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.8307292">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+          <file leaf-file-name="connection.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/config/connection.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="42">
+                  <caret line="2" column="21" lean-forward="true" selection-start-line="2" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/public/index.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="409">
+                  <caret line="51" column="31" lean-forward="false" selection-start-line="51" selection-start-column="31" selection-end-line="51" selection-end-column="31" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="imageModel.php" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/model/imageModel.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-567">
+                  <caret line="108" column="23" lean-forward="true" selection-start-line="108" selection-start-column="23" selection-end-line="108" selection-end-column="23" />
+                  <folding>
+                    <marker date="1505563017022" expanded="true" signature="243:295" ph="SELECT (imag... portrait" />
+                    <marker date="1505563017022" expanded="true" signature="683:731" ph="INSERT INTO images... " />
+                    <marker date="1505563017022" expanded="true" signature="683:744" ph="INSERT INTO images... " />
+                    <marker date="1505563017022" expanded="true" signature="1065:1494" ph="UPDATE portr... " />
+                    <marker date="1505563017022" expanded="true" signature="1065:1506" ph="UPDATE portr... " />
+                    <marker date="1505563017022" expanded="true" signature="3278:3333" ph="SELECT * FRO... portrait" />
+                    <marker date="1505563017022" expanded="true" signature="7389:7463" ph="UPDATE portr... " />
+                    <marker date="1505563017022" expanded="true" signature="7395:7463" ph="SELECT * FRO... portrait" />
+                    <marker date="1505563017022" expanded="true" signature="7408:7463" ph="SELECT * FRO... portrait" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="imageModel.php" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/model/imageModel.php">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="346">
+                  <caret line="91" column="25" lean-forward="false" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="25" />
+                  <folding>
+                    <marker date="1505563017022" expanded="true" signature="243:295" ph="SELECT (imag... portrait" />
+                    <marker date="1505563017022" expanded="true" signature="683:731" ph="INSERT INTO images... " />
+                    <marker date="1505563017022" expanded="true" signature="683:744" ph="INSERT INTO images... " />
+                    <marker date="1505563017022" expanded="true" signature="1065:1494" ph="UPDATE portr... " />
+                    <marker date="1505563017022" expanded="true" signature="1065:1506" ph="UPDATE portr... " />
+                    <marker date="1505563017022" expanded="true" signature="3278:3333" ph="SELECT * FRO... portrait" />
+                    <marker date="1505563017022" expanded="true" signature="7389:7463" ph="UPDATE portr... " />
+                    <marker date="1505563017022" expanded="true" signature="7395:7463" ph="SELECT * FRO... portrait" />
+                    <marker date="1505563017022" expanded="true" signature="7408:7463" ph="SELECT * FRO... portrait" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -137,11 +131,11 @@
         <option value="$PROJECT_DIR$/util/urlGeneretorUtil.php" />
         <option value="$PROJECT_DIR$/util/urlGeneratorUtil.php" />
         <option value="$PROJECT_DIR$/util/tokenGeneratorUtil.php" />
-        <option value="$PROJECT_DIR$/model/imageModel.php" />
         <option value="$PROJECT_DIR$/util/promoCodeGeneratorUtil.php" />
+        <option value="$PROJECT_DIR$/model/userModel.php" />
         <option value="$PROJECT_DIR$/public/index.php" />
         <option value="$PROJECT_DIR$/config/connection.php" />
-        <option value="$PROJECT_DIR$/model/userModel.php" />
+        <option value="$PROJECT_DIR$/model/imageModel.php" />
       </list>
     </option>
   </component>
@@ -233,8 +227,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -688,12 +682,13 @@
       <updated>1503340540139</updated>
       <workItem from="1503340545532" duration="38011000" />
       <workItem from="1503662454085" duration="8353000" />
-      <workItem from="1503759280651" duration="35128000" />
+      <workItem from="1503759280651" duration="36605000" />
+      <workItem from="1505486958965" duration="17520000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81492000" />
+    <option name="totallyTimeSpent" value="100489000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -713,7 +708,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2046875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25885418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -728,6 +723,36 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25885418" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="processedProjectFiles" value="true" />
@@ -742,6 +767,69 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/config/connection.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="10" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/imageModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="17" column="22" lean-forward="true" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+          <folding>
+            <marker date="1505563017022" expanded="true" signature="243:295" ph="SELECT (imag... portrait" />
+            <marker date="1505563017022" expanded="true" signature="683:731" ph="INSERT INTO images... " />
+            <marker date="1505563017022" expanded="true" signature="683:744" ph="INSERT INTO images... " />
+            <marker date="1505563017022" expanded="true" signature="1065:1494" ph="UPDATE portr... " />
+            <marker date="1505563017022" expanded="true" signature="1065:1506" ph="UPDATE portr... " />
+            <marker date="1505563017022" expanded="true" signature="3278:3333" ph="SELECT * FRO... portrait" />
+            <marker date="1505563017022" expanded="true" signature="7389:7463" ph="UPDATE portr... " />
+            <marker date="1505563017022" expanded="true" signature="7395:7463" ph="SELECT * FRO... portrait" />
+            <marker date="1505563017022" expanded="true" signature="7408:7463" ph="SELECT * FRO... portrait" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/userModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="987">
+          <caret line="47" column="19" lean-forward="true" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
+          <folding>
+            <marker date="1504108795757" expanded="true" signature="275:369" ph="INSERT INTO users... " />
+            <marker date="1504108795757" expanded="true" signature="1077:1194" ph="INSERT INTO promo_codes... " />
+            <marker date="1504108795757" expanded="true" signature="1134:1177" ph="select custo... customer" />
+            <marker date="1504108795757" expanded="true" signature="1363:1410" ph="SELECT COUNT... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/loginModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="16" column="4" lean-forward="true" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/promoCodeGeneratorUtil.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="37" lean-forward="true" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1197">
+          <caret line="58" column="20" lean-forward="true" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/connection.php">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
@@ -753,15 +841,15 @@
         <state relative-caret-position="672">
           <caret line="32" column="20" lean-forward="false" selection-start-line="32" selection-start-column="20" selection-end-line="42" selection-end-column="7" />
           <folding>
-            <marker date="1503956572067" expanded="true" signature="243:291" ph="SELECT (imag... portrait" />
-            <marker date="1503956572067" expanded="true" signature="679:723" ph="INSERT INTO images... " />
-            <marker date="1503956572067" expanded="true" signature="679:736" ph="INSERT INTO images... " />
-            <marker date="1503956572067" expanded="true" signature="1307:1446" ph="UPDATE portr... " />
-            <marker date="1503956572067" expanded="true" signature="1307:1458" ph="UPDATE portr... " />
-            <marker date="1503956572067" expanded="true" signature="2388:2439" ph="SELECT * FRO... portrait" />
-            <marker date="1503956572067" expanded="true" signature="3420:3490" ph="UPDATE portr... " />
-            <marker date="1503956572067" expanded="true" signature="3426:3490" ph="SELECT * FRO... portrait" />
-            <marker date="1503956572067" expanded="true" signature="3435:3490" ph="SELECT * FRO... portrait" />
+            <marker date="1505563017022" expanded="true" signature="243:295" ph="SELECT (imag... portrait" />
+            <marker date="1505563017022" expanded="true" signature="683:731" ph="INSERT INTO images... " />
+            <marker date="1505563017022" expanded="true" signature="683:744" ph="INSERT INTO images... " />
+            <marker date="1505563017022" expanded="true" signature="1065:1494" ph="UPDATE portr... " />
+            <marker date="1505563017022" expanded="true" signature="1065:1506" ph="UPDATE portr... " />
+            <marker date="1505563017022" expanded="true" signature="3278:3333" ph="SELECT * FRO... portrait" />
+            <marker date="1505563017022" expanded="true" signature="7389:7463" ph="UPDATE portr... " />
+            <marker date="1505563017022" expanded="true" signature="7395:7463" ph="SELECT * FRO... portrait" />
+            <marker date="1505563017022" expanded="true" signature="7408:7463" ph="SELECT * FRO... portrait" />
           </folding>
         </state>
       </provider>
@@ -940,65 +1028,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/util/promoCodeGeneratorUtil.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="37" lean-forward="true" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/loginModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
-          <caret line="16" column="4" lean-forward="true" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="28" />
+          <caret line="16" column="4" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="640">
-          <caret line="88" column="16" lean-forward="true" selection-start-line="88" selection-start-column="16" selection-end-line="88" selection-end-column="16" />
+        <state relative-caret-position="409">
+          <caret line="51" column="31" lean-forward="false" selection-start-line="51" selection-start-column="31" selection-end-line="51" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/connection.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="10" selection-end-column="29" />
+        <state relative-caret-position="42">
+          <caret line="2" column="21" lean-forward="true" selection-start-line="2" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/imageModel.php">
+    <entry file="file://$PROJECT_DIR$/util/promoCodeGeneratorUtil.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
-          <caret line="82" column="38" lean-forward="true" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
-          <folding>
-            <marker date="1503956572067" expanded="true" signature="243:291" ph="SELECT (imag... portrait" />
-            <marker date="1503956572067" expanded="true" signature="679:723" ph="INSERT INTO images... " />
-            <marker date="1503956572067" expanded="true" signature="679:736" ph="INSERT INTO images... " />
-            <marker date="1503956572067" expanded="true" signature="1307:1446" ph="UPDATE portr... " />
-            <marker date="1503956572067" expanded="true" signature="1307:1458" ph="UPDATE portr... " />
-            <marker date="1503956572067" expanded="true" signature="2388:2439" ph="SELECT * FRO... portrait" />
-            <marker date="1503956572067" expanded="true" signature="3420:3490" ph="UPDATE portr... " />
-            <marker date="1503956572067" expanded="true" signature="3426:3490" ph="SELECT * FRO... portrait" />
-            <marker date="1503956572067" expanded="true" signature="3435:3490" ph="SELECT * FRO... portrait" />
-          </folding>
+        <state relative-caret-position="42">
+          <caret line="2" column="37" lean-forward="false" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/userModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="25" column="57" lean-forward="false" selection-start-line="25" selection-start-column="57" selection-end-line="25" selection-end-column="57" />
+        <state relative-caret-position="661">
+          <caret line="47" column="19" lean-forward="false" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
           <folding>
             <marker date="1504108795757" expanded="true" signature="275:369" ph="INSERT INTO users... " />
             <marker date="1504108795757" expanded="true" signature="1077:1194" ph="INSERT INTO promo_codes... " />
             <marker date="1504108795757" expanded="true" signature="1134:1177" ph="select custo... customer" />
             <marker date="1504108795757" expanded="true" signature="1363:1410" ph="SELECT COUNT... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/imageModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-567">
+          <caret line="108" column="23" lean-forward="true" selection-start-line="108" selection-start-column="23" selection-end-line="108" selection-end-column="23" />
+          <folding>
+            <marker date="1505563017022" expanded="true" signature="243:295" ph="SELECT (imag... portrait" />
+            <marker date="1505563017022" expanded="true" signature="683:731" ph="INSERT INTO images... " />
+            <marker date="1505563017022" expanded="true" signature="683:744" ph="INSERT INTO images... " />
+            <marker date="1505563017022" expanded="true" signature="1065:1494" ph="UPDATE portr... " />
+            <marker date="1505563017022" expanded="true" signature="1065:1506" ph="UPDATE portr... " />
+            <marker date="1505563017022" expanded="true" signature="3278:3333" ph="SELECT * FRO... portrait" />
+            <marker date="1505563017022" expanded="true" signature="7389:7463" ph="UPDATE portr... " />
+            <marker date="1505563017022" expanded="true" signature="7395:7463" ph="SELECT * FRO... portrait" />
+            <marker date="1505563017022" expanded="true" signature="7408:7463" ph="SELECT * FRO... portrait" />
           </folding>
         </state>
       </provider>

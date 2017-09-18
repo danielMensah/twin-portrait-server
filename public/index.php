@@ -21,17 +21,37 @@ $app->get('/', function (Request $request, Response $response) {
     getConnection();
 });
 
+// test portraitURL
+$app->get('/testUrl', function (Request $request, Response $response) {
+    require '../model/imageModel.php';
+
+//    for ($i = 0; $i < 8; $i++) {
+//        $ch = curl_init();
+//        curl_setopt($ch, CURLOPT_URL, "https://storage.googleapis.com/tags_data/new_labels_assets/Portrait/$i.json");
+//        curl_setopt($ch, CURLOPT_HEADER, 0);            // No header in the result
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return, do not echo result
+//
+//// Fetch and return content, save it.
+//        $raw_data = curl_exec($ch);
+//        curl_close($ch);
+//
+//// If the API is JSON, use json_decode.
+//        $data = json_decode($raw_data);
+//
+//        foreach ($data as $item) {
+//            echo addImage($item->id, $item->img);
+//        }
+//    }
+
+});
+
 
 
 // display random portrait
 $app->get('/getPortrait', function (Request $request, Response $response) {
     require '../model/imageModel.php';
 
-    $randomPortrait = json_encode(array(
-        'portraitURL' => getRandomPortrait()
-    ));
-
-    return $randomPortrait;
+    return getRandomPortrait();
 });
 
 // upload form

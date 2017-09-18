@@ -9,14 +9,27 @@ require '../util/urlGeneratorUtil.php';
     function getRandomPortrait(){
 
         $dbh = getConnection();
-        $sql = $dbh->prepare("SELECT (image_url) FROM portrait_dev ORDER BY RAND()");
+        $sql = $dbh->prepare("SELECT id, image_url FROM portrait ORDER BY RAND()");
         $sql->execute();
-        $sql->bindColumn(1, $image_url, PDO::PARAM_LOB);
+        $sql->bindColumn(1, $id, PDO::PARAM_STR);
+        $sql->bindColumn(2, $image_url, PDO::PARAM_STR);
         $sql->fetch(PDO::FETCH_BOUND);
-        header("Content-Type: image");
 
-        return $image_url;
+        return json_encode(array(
+            'id' => $id,
+            'portraitURL' => $image_url,
+        ));
 
+    }
+
+    function addImage($id, $image_url) {
+        $dbh = getConnection();
+
+        $sql = $dbh->prepare("INSERT INTO portrait ( id, image_url ) VALUES ( '$id', '$image_url' )");
+        $sql->bindParam('id', $id, PDO::PARAM_STR);
+        $sql->bindParam('image_url', $image_url, PDO::PARAM_STR);
+
+        return $sql->execute() ? 'update' : 'error';
     }
 
     function uploadImage(UploadedFile $uploadedFile){
@@ -33,9 +46,9 @@ require '../util/urlGeneratorUtil.php';
     function updatePortrait($arrayOfLandmarks, $portraitUrl, $gender, $mustache, $beard) {
         $dbh = getConnection();
 
-        $updatedLandmarks = getPortraitForUpdate($arrayOfLandmarks, $portraitUrl, $mustache, $beard);
+        $updatedLandmarks = portraitLandmarkCalculation($arrayOfLandmarks, $portraitUrl, $mustache, $beard);
 
-        $sql = $dbh->prepare("UPDATE portrait_dev SET EB_FLAT_SHAPED=:EB_FLAT_SHAPED, EB_ANGLED=:EB_ANGLED, 
+        $sql = $dbh->prepare("UPDATE portrait SET EB_FLAT_SHAPED=:EB_FLAT_SHAPED, EB_ANGLED=:EB_ANGLED, 
         EB_ROUNDED=:EB_ROUNDED, EYE_MONOLID_ALMOND=:EYE_MONOLID_ALMOND, EYE_DEEP_SET=:EYE_DEEP_SET, EYE_DOWNTURNED=:EYE_DOWNTURNED,
         EYE_HOODED=:EYE_HOODED, NOSE_AQUILINE=:NOSE_AQUILINE, NOSE_FLAT=:NOSE_FLAT, NOSE_ROMAN_HOOKED=:NOSE_ROMAN_HOOKED,
         NOSE_SNUB=:NOSE_SNUB, mustache=:mustache, beard=:beard, gender=:gender WHERE image_url=:portrait_url");
@@ -55,26 +68,18 @@ require '../util/urlGeneratorUtil.php';
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
         $sql->bindParam(':portrait_url', $portraitUrl, PDO::PARAM_STR);
 
-        $response = [];
-
-        if ($sql->execute()) {
-            $response = array(
-                'response' => 'updated'
-            );
-        } else {
-            $response = array(
-                'response' => 'error'
-            );
-        }
-
-        return json_encode($response);
+        return $sql->execute() ? json_encode(array(
+            'response' => 'updated'
+        )) : json_encode(array(
+            'response' => 'error'
+        ));
 
     }
 
-    function getPortraitForUpdate($arrayOfLandmarks, $portraitUrl, $mustache, $beard) {
+    function portraitLandmarkCalculation($arrayOfLandmarks, $portraitUrl, $mustache, $beard) {
         $dbh = getConnection();
 
-        $sql = $dbh->prepare("SELECT * FROM portrait_dev WHERE image_url = :image_url");
+        $sql = $dbh->prepare("SELECT * FROM portrait WHERE image_url = :image_url");
         $sql->bindParam(':image_url', $portraitUrl, PDO::PARAM_STR);
         $sql->execute();
         $sql->bindColumn('EB_FLAT_SHAPED', $eb_flat_shaped, PDO::PARAM_STR);
@@ -130,7 +135,7 @@ require '../util/urlGeneratorUtil.php';
         switch ($arrayOfLandmarks['nose']['landmarkKey']) {
             case 'NOSE_AQUILINE':
                 $nose_aquiline = $nose_aquiline + 1;
-                $nose_roman_hooked = $nose_roman_hooked + 0.5;
+                $nose_roman_hooked = $nose_roman_hooked + 0.8;
                 break;
             case 'NOSE_FLAT':
                 $nose_flat = $nose_flat + 1;
@@ -138,7 +143,7 @@ require '../util/urlGeneratorUtil.php';
                 break;
             case 'NOSE_ROMAN_HOOKED':
                 $nose_roman_hooked = $nose_roman_hooked + 1;
-                $nose_aquiline = $nose_aquiline + 0.5;
+                $nose_aquiline = $nose_aquiline + 0.8;
                 break;
             case 'NOSE_SNUB':
                 $nose_snub = $nose_snub + 1;
@@ -169,35 +174,16 @@ require '../util/urlGeneratorUtil.php';
     function handleNotApplicationPortrait($portraitUrl) {
         $dbh = getConnection();
 
-        $sql = $dbh->prepare("UPDATE portrait_dev SET not_applicable = true WHERE image_url = :image_url");
+        $sql = $dbh->prepare("UPDATE portrait SET not_applicable = true WHERE image_url = :image_url");
         $sql->bindParam(':image_url', $portraitUrl, PDO::PARAM_STR);
 
-        $response = [];
-        if ($sql->execute()) {
-            $response = array(
-                'response' => 'updated'
-            );
-        } else {
-            $response = array(
-                'response' => 'error'
-            );
-        }
-
-        return json_encode($response);
+        return $sql->execute() ? json_encode(array(
+            'response' => 'updated'
+        )) : json_encode(array(
+            'response' => 'error'
+        ));
     }
 
     function showNotApplicationPortraits() {
 
     }
-
-//    function moveUploadedFile($directory, UploadedFile $uploadedFile) {
-//        $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-//        $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php
-//        $filename = sprintf('%s.%0.8s', $basename, $extension);
-//
-//        uploadImage($uploadedFile);
-//
-//        $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
-//
-//        return $filename;
-//    }

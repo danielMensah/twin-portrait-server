@@ -220,6 +220,7 @@ require '../util/urlGeneratorUtil.php';
     }
 
     function getPortraitInfo($id) {
+        $unknown = 'Unknown';
         $dbh = getConnection();
 
         $sql = $dbh->prepare("SELECT * FROM portrait_info WHERE portrait_id = :id");
@@ -234,11 +235,11 @@ require '../util/urlGeneratorUtil.php';
         $sql->fetch(PDO::FETCH_BOUND);
 
         return json_encode(array(
-           'title' => $title,
-           'creator' => $creator,
-           'date_created' => $dateCreated,
-           'physical_dimensions' => $physicalDimensions,
-           'external_link' => $externalLinkUrl,
-           'external_link_text' => $externalLinkText,
+           'title' => !empty($title) ? $title : $unknown,
+           'creator' => !empty($creator) ? $creator : $unknown,
+           'date_created' => !empty($dateCreated) ? $dateCreated : $unknown,
+           'physical_dimensions' => !empty($physicalDimensions) ? $physicalDimensions : $unknown,
+           'external_link' => !empty($externalLinkUrl) ? $externalLinkUrl : $unknown,
+           'external_link_text' => !empty($externalLinkText) ? $externalLinkText : $unknown,
         ));
     }

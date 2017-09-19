@@ -60,7 +60,7 @@ $app->get('/uploadPortrait', function (Request $request, Response $response) {
 
 ////    for ($i = 0; $i < 8; $i++) {
 //        $ch = curl_init();
-//        curl_setopt($ch, CURLOPT_URL, "https://storage.googleapis.com/tags_data/new_labels_assets/Portrait/7.json");
+//        curl_setopt($ch, CURLOPT_URL, "https://storage.googleapis.com/tags_data/new_labels_assets/Self_portrait/7.json");
 //        curl_setopt($ch, CURLOPT_HEADER, 0);            // No header in the result
 //        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return, do not echo result
 //
@@ -76,6 +76,7 @@ $app->get('/uploadPortrait', function (Request $request, Response $response) {
 //        }
 ////    }
     echo 'Uncomment script to be able to upload portraits';
+//    echo addImage('PAEeCdN0S0qgNg', 'http://lh5.ggpht.com/jgpYFmLNAWJL3734TQOgoVZRUOOOuFskI_2XXSgahS_jjwRblaHKtyK_BH3U');
 });
 
 //update portrait

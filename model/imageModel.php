@@ -25,22 +25,53 @@ require '../util/urlGeneratorUtil.php';
     function addImage($id, $image_url) {
         $dbh = getConnection();
 
-        $sql = $dbh->prepare("INSERT INTO portrait ( id, image_url ) VALUES ( '$id', '$image_url' )");
+        $sql = $dbh->prepare("INSERT INTO portrait ( id, image_url ) VALUES ( :id, :image_url )");
         $sql->bindParam('id', $id, PDO::PARAM_STR);
         $sql->bindParam('image_url', $image_url, PDO::PARAM_STR);
 
-        return $sql->execute() ? 'update' : 'error';
+        return $sql->execute() ? prepareImageInfo($id) : 'error2';
     }
 
-    function uploadImage(UploadedFile $uploadedFile){
+    function prepareImageInfo($id) {
+        $url = "https://artsexperiments.withgoogle.com/tags/api/og/search/$id";
 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);            // No header in the result
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return, do not echo result
+
+// Fetch and return content, save it.
+        $raw_data = curl_exec($ch);
+        curl_close($ch);
+
+// If the API is JSON, use json_decode.
+        $data = json_decode($raw_data, true);
+
+        return addImageInfo(
+            $id,
+            !empty($data['title']) ? $data['title'] : null,
+            !empty($data['creators'][0]['title']) ? $data['creators'][0]['title'] : null,
+            !empty($data['datesCreated'][0]['text']) ? $data['datesCreated'][0]['text'] : null,
+            !empty($data['physicalDimensions'][0]) ? $data['physicalDimensions'][0] : null,
+            !empty($data['externalLinks'][0]['url']) ? $data['externalLinks'][0]['url'] : null,
+            !empty($data['externalLinks'][0]['text']) ? $data['externalLinks'][0]['text'] : null
+        );
+    }
+
+    function addImageInfo($id, $title, $creator, $dateCreated, $physicalDimensions, $externalLinkUrl, $externalLinkText) {
         $dbh = getConnection();
-        $image_url = portraitURL($uploadedFile->getClientFilename());
 
-        $sql = $dbh->prepare("INSERT INTO portrait_dev ( image_url ) VALUES ( '$image_url')");
-        $sql->execute();
+        $sql = $dbh->prepare("INSERT INTO portrait_info ( portrait_id, title, creator, date_created, physical_dimensions, external_link, external_link_text ) VALUES ( 
+        :id, :title, :creator, :dateCreated, :physicalDimensions, :externalLinkUrl, :externalLinkText)");
+        $sql->bindParam('id', $id, PDO::PARAM_STR);
+        $sql->bindParam('title', $title, PDO::PARAM_STR);
+        $sql->bindParam('creator', $creator, PDO::PARAM_STR);
+        $sql->bindParam('dateCreated', $dateCreated, PDO::PARAM_STR);
+        $sql->bindParam('physicalDimensions', $physicalDimensions, PDO::PARAM_STR);
+        $sql->bindParam('externalLinkUrl', $externalLinkUrl, PDO::PARAM_STR);
+        $sql->bindParam('externalLinkText', $externalLinkText, PDO::PARAM_STR);
 
-        return $image_url;
+        return $sql->execute() ? 'update' : "error for id: $id";
     }
 
     function updatePortrait($arrayOfLandmarks, $portraitUrl, $gender, $mustache, $beard) {
@@ -186,4 +217,28 @@ require '../util/urlGeneratorUtil.php';
 
     function showNotApplicationPortraits() {
 
+    }
+
+    function getPortraitInfo($id) {
+        $dbh = getConnection();
+
+        $sql = $dbh->prepare("SELECT * FROM portrait_info WHERE portrait_id = :id");
+        $sql->bindParam(':id', $id, PDO::PARAM_STR);
+        $sql->execute();
+        $sql->bindColumn('title', $title, PDO::PARAM_STR);
+        $sql->bindColumn('creator', $creator, PDO::PARAM_STR);
+        $sql->bindColumn('date_created', $dateCreated, PDO::PARAM_STR);
+        $sql->bindColumn('physical_dimensions', $physicalDimensions, PDO::PARAM_STR);
+        $sql->bindColumn('external_link', $externalLinkUrl, PDO::PARAM_STR);
+        $sql->bindColumn('external_link_text', $externalLinkText, PDO::PARAM_STR);
+        $sql->fetch(PDO::FETCH_BOUND);
+
+        return json_encode(array(
+           'title' => $title,
+           'creator' => $creator,
+           'date_created' => $dateCreated,
+           'physical_dimensions' => $physicalDimensions,
+           'external_link' => $externalLinkUrl,
+           'external_link_text' => $externalLinkText,
+        ));
     }

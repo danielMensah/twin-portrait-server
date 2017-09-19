@@ -18,16 +18,49 @@ $container['upload_directory'] = $_SERVER['DOCUMENT_ROOT'].'/../images';
 
 // test connection
 $app->get('/', function (Request $request, Response $response) {
+    require '../model/imageModel.php';
+
     getConnection();
 });
 
-// test portraitURL
-$app->get('/testUrl', function (Request $request, Response $response) {
+// display random portrait
+$app->get('/getPortrait', function (Request $request, Response $response) {
     require '../model/imageModel.php';
 
-//    for ($i = 0; $i < 8; $i++) {
+    return getRandomPortrait();
+});
+
+// get portrait info
+$app->post('/getPortraitInfo', function (Request $request, Response $response) {
+    require '../model/imageModel.php';
+    $portraitId = $request->getParsedBody()['id'];
+
+    echo getPortraitInfo($portraitId);
+});
+
+// upload form
+$app->get('/portrait', function (Request $request, Response $response) {
+    require '../model/formsModel.php';
+    echo uploadPortraitForm();
+});
+
+//upload portrait
+$app->get('/uploadPortrait', function (Request $request, Response $response) {
+    require ('../model/imageModel.php');
+
+//    $uploadedFiles = $request->getUploadedFiles();
+//
+//    // handle single input with multiple file uploads
+//    foreach ($uploadedFiles['portrait'] as $uploadedFile) {
+//        if (!empty($uploadedFile)) {
+//            $filename = uploadImage($uploadedFile);
+//            $response->write('uploaded ' . $filename . '<br/>');
+//        }
+//    }
+
+////    for ($i = 0; $i < 8; $i++) {
 //        $ch = curl_init();
-//        curl_setopt($ch, CURLOPT_URL, "https://storage.googleapis.com/tags_data/new_labels_assets/Portrait/$i.json");
+//        curl_setopt($ch, CURLOPT_URL, "https://storage.googleapis.com/tags_data/new_labels_assets/Portrait/7.json");
 //        curl_setopt($ch, CURLOPT_HEADER, 0);            // No header in the result
 //        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return, do not echo result
 //
@@ -41,38 +74,8 @@ $app->get('/testUrl', function (Request $request, Response $response) {
 //        foreach ($data as $item) {
 //            echo addImage($item->id, $item->img);
 //        }
-//    }
-
-});
-
-
-
-// display random portrait
-$app->get('/getPortrait', function (Request $request, Response $response) {
-    require '../model/imageModel.php';
-
-    return getRandomPortrait();
-});
-
-// upload form
-$app->get('/portrait', function (Request $request, Response $response) {
-    require '../model/formsModel.php';
-    echo uploadPortraitForm();
-});
-
-//upload portrait
-$app->post('/uploadPortrait', function (Request $request, Response $response) {
-    require ('../model/imageModel.php');
-
-    $uploadedFiles = $request->getUploadedFiles();
-
-    // handle single input with multiple file uploads
-    foreach ($uploadedFiles['portrait'] as $uploadedFile) {
-        if (!empty($uploadedFile)) {
-            $filename = uploadImage($uploadedFile);
-            $response->write('uploaded ' . $filename . '<br/>');
-        }
-    }
+////    }
+    echo 'Uncomment script to be able to upload portraits';
 });
 
 //update portrait

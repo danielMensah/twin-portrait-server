@@ -1,14 +1,23 @@
 <?php
 function getConnection() {
-//    $host_name = '127.0.0.1';
-//    $database = 'test';
-//    $user_name = 'root';
-//    $password = '';
+    //testing = 1
+    //production = 2
+    $option = 1;
 
-    $host_name = 'twinportrait.ca0ainbas4d3.us-west-2.rds.amazonaws.com';
-    $database = 'twinportrait_server';
-    $user_name = 'ovothebest';
-    $password = 'Mensah2929';
+    switch($option){
+        case 1:
+            $host_name = '127.0.0.1';
+            $database = 'test';
+            $user_name = 'root';
+            $password = '';
+            break;
+        case 2:
+            $host_name = 'twinportrait.ca0ainbas4d3.us-west-2.rds.amazonaws.com';
+            $database = 'twinportrait_server';
+            $user_name = 'ovothebest';
+            $password = 'Mensah2929';
+            break;
+    }
 
     $dbh = null;
     try {

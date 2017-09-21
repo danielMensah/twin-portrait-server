@@ -9,7 +9,7 @@ require '../util/urlGeneratorUtil.php';
     function getRandomPortrait(){
 
         $dbh = getConnection();
-        $sql = $dbh->prepare("SELECT id, image_url FROM portrait ORDER BY RAND()");
+        $sql = $dbh->prepare("SELECT id, image_url FROM portrait WHERE features_completed = FALSE ORDER BY RAND()");
         $sql->execute();
         $sql->bindColumn(1, $id, PDO::PARAM_STR);
         $sql->bindColumn(2, $image_url, PDO::PARAM_STR);
@@ -82,7 +82,7 @@ require '../util/urlGeneratorUtil.php';
         $sql = $dbh->prepare("UPDATE portrait SET EB_FLAT_SHAPED=:EB_FLAT_SHAPED, EB_ANGLED=:EB_ANGLED, 
         EB_ROUNDED=:EB_ROUNDED, EYE_MONOLID_ALMOND=:EYE_MONOLID_ALMOND, EYE_DEEP_SET=:EYE_DEEP_SET, EYE_DOWNTURNED=:EYE_DOWNTURNED,
         EYE_HOODED=:EYE_HOODED, NOSE_AQUILINE=:NOSE_AQUILINE, NOSE_FLAT=:NOSE_FLAT, NOSE_ROMAN_HOOKED=:NOSE_ROMAN_HOOKED,
-        NOSE_SNUB=:NOSE_SNUB, mustache=:mustache, beard=:beard, gender=:gender WHERE image_url=:portrait_url");
+        NOSE_SNUB=:NOSE_SNUB, mustache=:mustache, beard=:beard, gender=:gender, features_completed = TRUE WHERE image_url=:portrait_url");
         $sql->bindParam('EB_FLAT_SHAPED', $updatedLandmarks['EB_FLAT_SHAPED'], PDO::PARAM_STR);
         $sql->bindParam('EB_ANGLED', $updatedLandmarks['EB_ANGLED'], PDO::PARAM_STR);
         $sql->bindParam('EB_ROUNDED', $updatedLandmarks['EB_ROUNDED'], PDO::PARAM_STR);

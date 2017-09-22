@@ -118,4 +118,10 @@ $app->post('/registerUser', function (Request $request, Response $response) {
      echo registerUser($reqDecoded);
 });
 
+$app->post('/statistics', function (Request $request, Response $response) {
+   require ('../model/imageModel.php');
+
+    echo getStatistics($request->getParsedBody()['type']);
+});
+
 $app->run();

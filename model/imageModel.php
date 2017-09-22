@@ -243,3 +243,22 @@ require '../util/urlGeneratorUtil.php';
            'external_link_text' => !empty($externalLinkText) ? $externalLinkText : $unknown,
         ));
     }
+
+    function getStatistics($table) {
+        $dbh = getConnection();
+
+        switch ($table) {
+            case 'users':
+                $sql = $dbh->prepare("SELECT COUNT(*) FROM $table");
+                break;
+            case 'portrait':
+                $sql = $dbh->prepare("SELECT COUNT(*) FROM portrait WHERE features_completed = TRUE");
+                break;
+            default:
+                return json_encode(array("error" => "Table does not exists."));
+        }
+
+        $sql->execute();
+
+        return json_encode(array( $table => $sql->fetchColumn()));
+    }

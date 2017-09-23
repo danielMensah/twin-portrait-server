@@ -205,7 +205,7 @@ require '../util/urlGeneratorUtil.php';
     function handleNotApplicationPortrait($portraitUrl) {
         $dbh = getConnection();
 
-        $sql = $dbh->prepare("UPDATE portrait SET not_applicable = true WHERE image_url = :image_url");
+        $sql = $dbh->prepare("UPDATE portrait SET not_applicable = TRUE, features_completed = TRUE WHERE image_url = :image_url");
         $sql->bindParam(':image_url', $portraitUrl, PDO::PARAM_STR);
 
         return $sql->execute() ? json_encode(array(

@@ -3,8 +3,9 @@
     function uploadPortraitForm() {
         $form  = '
             <form method="POST" action="/uploadPortrait" enctype="multipart/form-data">
-                <input type="file" name="portrait[]" value="" multiple/>
-                <input type="submit" value="Upload File"/>
+                <input type="number" name="json" value="0" />
+                <button name="api" value="1">API 1</button>
+                <button name="api" value="2">API 2</button>
             </form>
         ';
 

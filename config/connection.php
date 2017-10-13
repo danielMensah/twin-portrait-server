@@ -7,7 +7,7 @@ function getConnection() {
     switch($option){
         case 1:
             $host_name = '127.0.0.1';
-            $database = 'test';
+            $database = 'twinportrait';
             $user_name = 'root';
             $password = '';
             break;

@@ -2,15 +2,11 @@
     function registerUser($user){
         $dbh = getConnection();
 
-        $user_name = $user['name'];
-        $user_lastName = $user['lastName'];
         $email = strtolower($user['email']);
         $feedback = $user['feedback'];
 
         if (!checkIfUserExists($email)) {
-            $sql = $dbh->prepare("INSERT INTO users ( name, lastName, email, feedback ) VALUES ( :user_name, :last_name, :email, :feedback )");
-            $sql->bindParam(':user_name', $user_name, PDO::PARAM_STR);
-            $sql->bindParam(':last_name', $user_lastName, PDO::PARAM_STR);
+            $sql = $dbh->prepare("INSERT INTO users ( email, feedback ) VALUES ( :email, :feedback )");
             $sql->bindParam(':email', $email, PDO::PARAM_STR);
             $sql->bindParam(':feedback', $feedback, PDO::PARAM_STR);
 

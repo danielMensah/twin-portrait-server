@@ -45,37 +45,36 @@ $app->get('/portrait', function (Request $request, Response $response) {
 });
 
 //upload portrait
-$app->get('/uploadPortrait', function (Request $request, Response $response) {
+$app->post('/uploadPortrait', function (Request $request, Response $response) {
     require ('../model/imageModel.php');
 
-//    $uploadedFiles = $request->getUploadedFiles();
-//
-//    // handle single input with multiple file uploads
-//    foreach ($uploadedFiles['portrait'] as $uploadedFile) {
-//        if (!empty($uploadedFile)) {
-//            $filename = uploadImage($uploadedFile);
-//            $response->write('uploaded ' . $filename . '<br/>');
-//        }
-//    }
+    $num = $_POST["json"];
+    $api = $_POST["api"];
 
-////    for ($i = 0; $i < 8; $i++) {
-//        $ch = curl_init();
-//        curl_setopt($ch, CURLOPT_URL, "https://storage.googleapis.com/tags_data/new_labels_assets/Self_portrait/7.json");
-//        curl_setopt($ch, CURLOPT_HEADER, 0);            // No header in the result
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return, do not echo result
-//
-//// Fetch and return content, save it.
-//        $raw_data = curl_exec($ch);
-//        curl_close($ch);
-//
-//// If the API is JSON, use json_decode.
-//        $data = json_decode($raw_data);
-//
-//        foreach ($data as $item) {
-//            echo addImage($item->id, $item->img);
-//        }
-////    }
-    echo 'Uncomment script to be able to upload portraits';
+    switch ($api) {
+        case 1:
+            $url = "https://storage.googleapis.com/tags_data/new_labels_assets/Self_portrait/$num.json";
+            break;
+        case 2:
+            $url = "https://storage.googleapis.com/tags_data/new_labels_assets/Portrait/$num.json";
+            break;
+    }
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);            // No header in the result
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return, do not echo result
+
+// Fetch and return content, save it.
+        $raw_data = curl_exec($ch);
+        curl_close($ch);
+
+// If the API is JSON, use json_decode.
+        $data = json_decode($raw_data);
+
+        foreach ($data as $item) {
+            echo addImage($item->id, $item->img);
+        }
 //    echo addImage('PAEeCdN0S0qgNg', 'http://lh5.ggpht.com/jgpYFmLNAWJL3734TQOgoVZRUOOOuFskI_2XXSgahS_jjwRblaHKtyK_BH3U');
 });
 
@@ -96,7 +95,7 @@ $app->post('/updatePortrait', function (Request $request, Response $response) {
 
     echo updatePortrait(
         $arrayOfLandmarks,
-        $reqDecoded['portraitUrl'],
+        $reqDecoded['portraitId'],
         $reqDecoded['gender'],
         $reqDecoded['mustache'],
         $reqDecoded['beard']);
@@ -107,7 +106,7 @@ $app->post('/setNotApplicable', function (Request $request, Response $response) 
     require ('../model/imageModel.php');
 
     $reqDecoded = json_decode($request->getBody(), true);
-    echo handleNotApplicationPortrait($reqDecoded['portraitUrl']);
+    echo handleNotApplicationPortrait($reqDecoded['portraitId']);
 });
 
 //register user

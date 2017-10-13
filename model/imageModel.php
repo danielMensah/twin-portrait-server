@@ -9,7 +9,7 @@ require '../util/urlGeneratorUtil.php';
     function getRandomPortrait(){
 
         $dbh = getConnection();
-        $sql = $dbh->prepare("SELECT id, image_url FROM portrait WHERE features_completed = FALSE ORDER BY RAND()");
+        $sql = $dbh->prepare("SELECT p.id, p.image_url FROM portrait p, portrait_landmarks ps WHERE ps.features_completed = FALSE ORDER BY RAND()");
         $sql->execute();
         $sql->bindColumn(1, $id, PDO::PARAM_STR);
         $sql->bindColumn(2, $image_url, PDO::PARAM_STR);
@@ -25,11 +25,11 @@ require '../util/urlGeneratorUtil.php';
     function addImage($id, $image_url) {
         $dbh = getConnection();
 
-        $sql = $dbh->prepare("INSERT INTO portrait ( id, image_url ) VALUES ( :id, :image_url )");
-        $sql->bindParam('id', $id, PDO::PARAM_STR);
-        $sql->bindParam('image_url', $image_url, PDO::PARAM_STR);
+            $sql = $dbh->prepare("INSERT INTO portrait ( id, image_url ) VALUES ( :id, :image_url )");
+            $sql->bindParam('id', $id, PDO::PARAM_STR);
+            $sql->bindParam('image_url', $image_url, PDO::PARAM_STR);
 
-        return $sql->execute() ? prepareImageInfo($id) : 'error2';
+        return $sql->execute() ? prepareImageInfo($id) : 'Error when adding image, might already exist.';
     }
 
     function prepareImageInfo($id) {
@@ -58,6 +58,14 @@ require '../util/urlGeneratorUtil.php';
         );
     }
 
+    function initialiseLandmarks($id) {
+        $dbh = getConnection();
+        $sql = $dbh->prepare("INSERT INTO portrait_landmarks ( portrait_id ) VALUES (:id)");
+        $sql->bindParam('id', $id, PDO::PARAM_STR);
+
+        return $sql->execute();
+    }
+
     function addImageInfo($id, $title, $creator, $dateCreated, $physicalDimensions, $externalLinkUrl, $externalLinkText) {
         $dbh = getConnection();
 
@@ -71,18 +79,18 @@ require '../util/urlGeneratorUtil.php';
         $sql->bindParam('externalLinkUrl', $externalLinkUrl, PDO::PARAM_STR);
         $sql->bindParam('externalLinkText', $externalLinkText, PDO::PARAM_STR);
 
-        return $sql->execute() ? 'update' : "error for id: $id";
+        return $sql->execute() && initialiseLandmarks($id) ? 'update' : "error adding image info for id: $id";
     }
 
-    function updatePortrait($arrayOfLandmarks, $portraitUrl, $gender, $mustache, $beard) {
+    function updatePortrait($arrayOfLandmarks, $portraitId, $gender, $mustache, $beard) {
         $dbh = getConnection();
 
-        $updatedLandmarks = portraitLandmarkCalculation($arrayOfLandmarks, $portraitUrl, $mustache, $beard);
+        $updatedLandmarks = portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard);
 
-        $sql = $dbh->prepare("UPDATE portrait SET EB_FLAT_SHAPED=:EB_FLAT_SHAPED, EB_ANGLED=:EB_ANGLED, 
+        $sql = $dbh->prepare("UPDATE portrait_landmarks SET EB_FLAT_SHAPED=:EB_FLAT_SHAPED, EB_ANGLED=:EB_ANGLED, 
         EB_ROUNDED=:EB_ROUNDED, EYE_MONOLID_ALMOND=:EYE_MONOLID_ALMOND, EYE_DEEP_SET=:EYE_DEEP_SET, EYE_DOWNTURNED=:EYE_DOWNTURNED,
         EYE_HOODED=:EYE_HOODED, NOSE_AQUILINE=:NOSE_AQUILINE, NOSE_FLAT=:NOSE_FLAT, NOSE_ROMAN_HOOKED=:NOSE_ROMAN_HOOKED,
-        NOSE_SNUB=:NOSE_SNUB, mustache=:mustache, beard=:beard, gender=:gender, features_completed = TRUE WHERE image_url=:portrait_url");
+        NOSE_SNUB=:NOSE_SNUB, mustache=:mustache, beard=:beard, gender=:gender, features_completed = TRUE WHERE portrait_id=:portrait_id");
         $sql->bindParam('EB_FLAT_SHAPED', $updatedLandmarks['EB_FLAT_SHAPED'], PDO::PARAM_STR);
         $sql->bindParam('EB_ANGLED', $updatedLandmarks['EB_ANGLED'], PDO::PARAM_STR);
         $sql->bindParam('EB_ROUNDED', $updatedLandmarks['EB_ROUNDED'], PDO::PARAM_STR);
@@ -97,7 +105,7 @@ require '../util/urlGeneratorUtil.php';
         $sql->bindParam(':mustache', $updatedLandmarks['mustache'], PDO::PARAM_STR);
         $sql->bindParam(':beard', $updatedLandmarks['beard'], PDO::PARAM_STR);
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
-        $sql->bindParam(':portrait_url', $portraitUrl, PDO::PARAM_STR);
+        $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
 
         return $sql->execute() ? json_encode(array(
             'response' => 'updated'
@@ -107,11 +115,11 @@ require '../util/urlGeneratorUtil.php';
 
     }
 
-    function portraitLandmarkCalculation($arrayOfLandmarks, $portraitUrl, $mustache, $beard) {
+    function portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard) {
         $dbh = getConnection();
 
-        $sql = $dbh->prepare("SELECT * FROM portrait WHERE image_url = :image_url");
-        $sql->bindParam(':image_url', $portraitUrl, PDO::PARAM_STR);
+        $sql = $dbh->prepare("SELECT * FROM portrait_landmarks WHERE portrait_id = :portrait_id");
+        $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
         $sql->execute();
         $sql->bindColumn('EB_FLAT_SHAPED', $eb_flat_shaped, PDO::PARAM_STR);
         $sql->bindColumn('EB_ANGLED', $eb_angled, PDO::PARAM_STR);
@@ -178,7 +186,7 @@ require '../util/urlGeneratorUtil.php';
                 break;
             case 'NOSE_SNUB':
                 $nose_snub = $nose_snub + 1;
-                $nose_flat = $nose_flat + 0.3;
+                $nose_flat = $nose_flat + 0.4;
                 break;
         };
 
@@ -202,11 +210,11 @@ require '../util/urlGeneratorUtil.php';
 
     }
 
-    function handleNotApplicationPortrait($portraitUrl) {
+    function handleNotApplicationPortrait($portraitId) {
         $dbh = getConnection();
 
-        $sql = $dbh->prepare("UPDATE portrait SET not_applicable = TRUE, features_completed = TRUE WHERE image_url = :image_url");
-        $sql->bindParam(':image_url', $portraitUrl, PDO::PARAM_STR);
+        $sql = $dbh->prepare("UPDATE portrait_landmarks SET not_applicable = TRUE, features_completed = TRUE WHERE portrait_id = :portrait_id");
+        $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
 
         return $sql->execute() ? json_encode(array(
             'response' => 'updated'

@@ -93,6 +93,7 @@ $app->post('/updatePortrait', function (Request $request, Response $response) {
         }
     }
 
+
     echo updatePortrait(
         $arrayOfLandmarks,
         $reqDecoded['portraitId'],

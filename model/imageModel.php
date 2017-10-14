@@ -19,7 +19,7 @@ require '../util/exceptionHandler.php';
                 throw new PDOException("Error while fetching portraits", 500);
             }
         } catch (PDOException $exception) {
-            return exceptionHandler($exception);
+            throw $exception;
         }
 
         $sql->bindColumn(1, $id, PDO::PARAM_STR);

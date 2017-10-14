@@ -1,6 +1,6 @@
 <?php
-use Slim\Http\UploadedFile;
 require '../util/urlGeneratorUtil.php';
+require '../util/exceptionHandler.php';
 
     function testConnection() {
         $dbh = getConnection();
@@ -13,8 +13,15 @@ require '../util/urlGeneratorUtil.php';
           INNER JOIN portrait_landmarks ps 
             ON p.id = ps.portrait_id 
           WHERE ps.features_completed = FALSE ORDER BY RAND() LIMIT 1");
-//        $sql = $dbh->prepare("SELECT id, image_url FROM portrait INNER JOIN portrait_landmarks.features_completed = TRUE ORDER BY RAND() LIMIT 1");
-        $sql->execute();
+
+        try {
+            if (!$sql->execute()) {
+                throw new PDOException("Error while fetching portraits", 500);
+            }
+        } catch (PDOException $exception) {
+            return exceptionHandler($exception);
+        }
+
         $sql->bindColumn(1, $id, PDO::PARAM_STR);
         $sql->bindColumn(2, $image_url, PDO::PARAM_STR);
         $sql->fetch(PDO::FETCH_BOUND);
@@ -111,12 +118,13 @@ require '../util/urlGeneratorUtil.php';
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
         $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
 
-        return $sql->execute() ? json_encode(array(
-            'response' => 'updated'
-        )) : json_encode(array(
-            'response' => 'error'
-        ));
-
+        try {
+            if (!$sql->execute()) {
+                throw new PDOException("Error while assigning landmark score!", 500);
+            }
+        } catch (PDOException $exception) {
+            return exceptionHandler($exception);
+        }
     }
 
     function portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard) {

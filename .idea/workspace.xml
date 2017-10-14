@@ -17,44 +17,33 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file leaf-file-name="imageModel.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model/imageModel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="8" column="33" lean-forward="true" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
+            <state relative-caret-position="-189">
+              <caret line="12" column="39" lean-forward="true" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
               <folding>
-                <marker date="1507979939707" expanded="true" signature="243:436" ph="SELECT p.id,... portrait" />
-                <marker date="1507979939707" expanded="true" signature="472:586" ph="SELECT id, i... portrait" />
-                <marker date="1507979939707" expanded="true" signature="990:1055" ph="INSERT INTO portrait... " />
-                <marker date="1507979939707" expanded="true" signature="2543:2602" ph="INSERT INTO portrait_landmarks... " />
-                <marker date="1507979939707" expanded="true" signature="2884:3124" ph="INSERT INTO portrait_info... " />
-                <marker date="1507979939707" expanded="true" signature="3993:4468" ph="UPDATE portr... " />
-                <marker date="1507979939707" expanded="true" signature="6117:6182" ph="SELECT * FRO... portrait" />
-                <marker date="1507979939707" expanded="true" signature="10238:10349" ph="UPDATE portr... " />
-                <marker date="1507979939707" expanded="true" signature="10779:10830" ph="SELECT * FRO... portrait_info" />
-                <marker date="1507979939707" expanded="true" signature="12081:12102" ph="SELECT COUNT... ${$table}" />
-                <marker date="1507979939707" expanded="true" signature="12202:12263" ph="SELECT COUNT... portrait" />
+                <marker date="1508013998768" expanded="true" signature="255:448" ph="SELECT p.id,... portrait" />
+                <marker date="1508013998768" expanded="true" signature="1075:1140" ph="INSERT INTO portrait... " />
+                <marker date="1508013998768" expanded="true" signature="2628:2687" ph="INSERT INTO portrait_landmarks... " />
+                <marker date="1508013998768" expanded="true" signature="2969:3209" ph="INSERT INTO portrait_info... " />
+                <marker date="1508013998768" expanded="true" signature="4078:4553" ph="UPDATE portr... " />
+                <marker date="1508013998768" expanded="true" signature="6288:6353" ph="SELECT * FRO... portrait" />
+                <marker date="1508013998768" expanded="true" signature="10409:10520" ph="UPDATE portr... " />
+                <marker date="1508013998768" expanded="true" signature="10950:11001" ph="SELECT * FRO... portrait_info" />
+                <marker date="1508013998768" expanded="true" signature="12252:12273" ph="SELECT COUNT... ${$table}" />
+                <marker date="1508013998768" expanded="true" signature="12373:12434" ph="SELECT COUNT... portrait" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="connection.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/connection.php">
+      <file leaf-file-name="exceptionHandler.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/util/exceptionHandler.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="4" column="15" lean-forward="false" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+            <state relative-caret-position="42">
+              <caret line="2" column="29" lean-forward="false" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -114,8 +103,9 @@
         <option value="$PROJECT_DIR$/model/formsModel.php" />
         <option value="$PROJECT_DIR$/model/userModel.php" />
         <option value="$PROJECT_DIR$/public/index.php" />
-        <option value="$PROJECT_DIR$/model/imageModel.php" />
         <option value="$PROJECT_DIR$/config/connection.php" />
+        <option value="$PROJECT_DIR$/util/exceptionHandler.php" />
+        <option value="$PROJECT_DIR$/model/imageModel.php" />
       </list>
     </option>
   </component>
@@ -165,8 +155,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -176,6 +165,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="twinportrait-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="twinportrait-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="twinportrait-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -223,7 +226,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -695,12 +699,13 @@
       <workItem from="1507233345178" duration="739000" />
       <workItem from="1507835334891" duration="2084000" />
       <workItem from="1507913279639" duration="10783000" />
-      <workItem from="1507928819275" duration="5478000" />
+      <workItem from="1507928819275" duration="7487000" />
+      <workItem from="1508011595253" duration="2464000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157785000" />
+    <option name="totallyTimeSpent" value="162258000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -720,7 +725,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17083333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -747,26 +752,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/model/imageModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5082">
-          <caret line="242" column="91" lean-forward="false" selection-start-line="242" selection-start-column="91" selection-end-line="242" selection-end-column="91" />
-          <folding>
-            <marker date="1507979939707" expanded="true" signature="243:436" ph="SELECT p.id,... portrait" />
-            <marker date="1507979939707" expanded="true" signature="472:586" ph="SELECT id, i... portrait" />
-            <marker date="1507979939707" expanded="true" signature="990:1055" ph="INSERT INTO portrait... " />
-            <marker date="1507979939707" expanded="true" signature="2543:2602" ph="INSERT INTO portrait_landmarks... " />
-            <marker date="1507979939707" expanded="true" signature="2884:3124" ph="INSERT INTO portrait_info... " />
-            <marker date="1507979939707" expanded="true" signature="3993:4468" ph="UPDATE portr... " />
-            <marker date="1507979939707" expanded="true" signature="6117:6182" ph="SELECT * FRO... portrait" />
-            <marker date="1507979939707" expanded="true" signature="10238:10349" ph="UPDATE portr... " />
-            <marker date="1507979939707" expanded="true" signature="10779:10830" ph="SELECT * FRO... portrait_info" />
-            <marker date="1507979939707" expanded="true" signature="12081:12102" ph="SELECT COUNT... ${$table}" />
-            <marker date="1507979939707" expanded="true" signature="12202:12263" ph="SELECT COUNT... portrait" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/connection.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="672">
@@ -788,17 +773,16 @@
         <state relative-caret-position="5082">
           <caret line="242" column="91" lean-forward="false" selection-start-line="242" selection-start-column="91" selection-end-line="242" selection-end-column="91" />
           <folding>
-            <marker date="1507979939707" expanded="true" signature="243:436" ph="SELECT p.id,... portrait" />
-            <marker date="1507979939707" expanded="true" signature="472:586" ph="SELECT id, i... portrait" />
-            <marker date="1507979939707" expanded="true" signature="990:1055" ph="INSERT INTO portrait... " />
-            <marker date="1507979939707" expanded="true" signature="2543:2602" ph="INSERT INTO portrait_landmarks... " />
-            <marker date="1507979939707" expanded="true" signature="2884:3124" ph="INSERT INTO portrait_info... " />
-            <marker date="1507979939707" expanded="true" signature="3993:4468" ph="UPDATE portr... " />
-            <marker date="1507979939707" expanded="true" signature="6117:6182" ph="SELECT * FRO... portrait" />
-            <marker date="1507979939707" expanded="true" signature="10238:10349" ph="UPDATE portr... " />
-            <marker date="1507979939707" expanded="true" signature="10779:10830" ph="SELECT * FRO... portrait_info" />
-            <marker date="1507979939707" expanded="true" signature="12081:12102" ph="SELECT COUNT... ${$table}" />
-            <marker date="1507979939707" expanded="true" signature="12202:12263" ph="SELECT COUNT... portrait" />
+            <marker date="1508013998768" expanded="true" signature="255:448" ph="SELECT p.id,... portrait" />
+            <marker date="1508013998768" expanded="true" signature="1075:1140" ph="INSERT INTO portrait... " />
+            <marker date="1508013998768" expanded="true" signature="2628:2687" ph="INSERT INTO portrait_landmarks... " />
+            <marker date="1508013998768" expanded="true" signature="2969:3209" ph="INSERT INTO portrait_info... " />
+            <marker date="1508013998768" expanded="true" signature="4078:4553" ph="UPDATE portr... " />
+            <marker date="1508013998768" expanded="true" signature="6288:6353" ph="SELECT * FRO... portrait" />
+            <marker date="1508013998768" expanded="true" signature="10409:10520" ph="UPDATE portr... " />
+            <marker date="1508013998768" expanded="true" signature="10950:11001" ph="SELECT * FRO... portrait_info" />
+            <marker date="1508013998768" expanded="true" signature="12252:12273" ph="SELECT COUNT... ${$table}" />
+            <marker date="1508013998768" expanded="true" signature="12373:12434" ph="SELECT COUNT... portrait" />
           </folding>
         </state>
       </provider>
@@ -1020,13 +1004,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/util/urlGeneratorUtil.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="16" lean-forward="true" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/activeConnectionModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
@@ -1064,36 +1041,51 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+        <state relative-caret-position="546">
+          <caret line="99" column="32" lean-forward="true" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/connection.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="15" lean-forward="false" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+        <state relative-caret-position="504">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/urlGeneratorUtil.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="4" lean-forward="false" selection-start-line="2" selection-start-column="4" selection-end-line="4" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/exceptionHandler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="29" lean-forward="false" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/imageModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="33" lean-forward="true" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
+        <state relative-caret-position="-189">
+          <caret line="12" column="39" lean-forward="true" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
           <folding>
-            <marker date="1507979939707" expanded="true" signature="243:436" ph="SELECT p.id,... portrait" />
-            <marker date="1507979939707" expanded="true" signature="472:586" ph="SELECT id, i... portrait" />
-            <marker date="1507979939707" expanded="true" signature="990:1055" ph="INSERT INTO portrait... " />
-            <marker date="1507979939707" expanded="true" signature="2543:2602" ph="INSERT INTO portrait_landmarks... " />
-            <marker date="1507979939707" expanded="true" signature="2884:3124" ph="INSERT INTO portrait_info... " />
-            <marker date="1507979939707" expanded="true" signature="3993:4468" ph="UPDATE portr... " />
-            <marker date="1507979939707" expanded="true" signature="6117:6182" ph="SELECT * FRO... portrait" />
-            <marker date="1507979939707" expanded="true" signature="10238:10349" ph="UPDATE portr... " />
-            <marker date="1507979939707" expanded="true" signature="10779:10830" ph="SELECT * FRO... portrait_info" />
-            <marker date="1507979939707" expanded="true" signature="12081:12102" ph="SELECT COUNT... ${$table}" />
-            <marker date="1507979939707" expanded="true" signature="12202:12263" ph="SELECT COUNT... portrait" />
+            <marker date="1508013998768" expanded="true" signature="255:448" ph="SELECT p.id,... portrait" />
+            <marker date="1508013998768" expanded="true" signature="1075:1140" ph="INSERT INTO portrait... " />
+            <marker date="1508013998768" expanded="true" signature="2628:2687" ph="INSERT INTO portrait_landmarks... " />
+            <marker date="1508013998768" expanded="true" signature="2969:3209" ph="INSERT INTO portrait_info... " />
+            <marker date="1508013998768" expanded="true" signature="4078:4553" ph="UPDATE portr... " />
+            <marker date="1508013998768" expanded="true" signature="6288:6353" ph="SELECT * FRO... portrait" />
+            <marker date="1508013998768" expanded="true" signature="10409:10520" ph="UPDATE portr... " />
+            <marker date="1508013998768" expanded="true" signature="10950:11001" ph="SELECT * FRO... portrait_info" />
+            <marker date="1508013998768" expanded="true" signature="12252:12273" ph="SELECT COUNT... ${$table}" />
+            <marker date="1508013998768" expanded="true" signature="12373:12434" ph="SELECT COUNT... portrait" />
           </folding>
         </state>
       </provider>

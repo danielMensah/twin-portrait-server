@@ -94,7 +94,7 @@ $app->post('/updatePortrait', function (Request $request, Response $response) {
     }
 
 
-    echo updatePortrait(
+    return updatePortrait(
         $arrayOfLandmarks,
         $reqDecoded['portraitId'],
         $reqDecoded['gender'],

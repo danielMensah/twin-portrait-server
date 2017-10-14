@@ -120,11 +120,13 @@ require '../util/exceptionHandler.php';
 
         try {
             if (!$sql->execute()) {
-                throw new PDOException("Error while assigning landmark score!", 500);
+                throw new PDOException("Error while update landmarks!", 500);
             }
         } catch (PDOException $exception) {
-            return exceptionHandler($exception);
+            throw $exception;
         }
+
+        return json_encode(array( 'response' => 'updated '));
     }
 
     function portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard) {

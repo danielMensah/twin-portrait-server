@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54f348b9-8a1b-4dc9-bab2-5930646074cf" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/model/imageModel.php" afterPath="$PROJECT_DIR$/model/imageModel.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,20 +20,30 @@
       <file leaf-file-name="imageModel.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model/imageModel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-189">
-              <caret line="12" column="39" lean-forward="true" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
+            <state relative-caret-position="252">
+              <caret line="12" column="38" lean-forward="false" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
               <folding>
-                <marker date="1508013998768" expanded="true" signature="255:448" ph="SELECT p.id,... portrait" />
-                <marker date="1508013998768" expanded="true" signature="1075:1140" ph="INSERT INTO portrait... " />
-                <marker date="1508013998768" expanded="true" signature="2628:2687" ph="INSERT INTO portrait_landmarks... " />
-                <marker date="1508013998768" expanded="true" signature="2969:3209" ph="INSERT INTO portrait_info... " />
-                <marker date="1508013998768" expanded="true" signature="4078:4553" ph="UPDATE portr... " />
-                <marker date="1508013998768" expanded="true" signature="6288:6353" ph="SELECT * FRO... portrait" />
-                <marker date="1508013998768" expanded="true" signature="10409:10520" ph="UPDATE portr... " />
-                <marker date="1508013998768" expanded="true" signature="10950:11001" ph="SELECT * FRO... portrait_info" />
-                <marker date="1508013998768" expanded="true" signature="12252:12273" ph="SELECT COUNT... ${$table}" />
-                <marker date="1508013998768" expanded="true" signature="12373:12434" ph="SELECT COUNT... portrait" />
+                <marker date="1508014702921" expanded="true" signature="255:447" ph="SELECT p.id,... portrait" />
+                <marker date="1508014702921" expanded="true" signature="1074:1139" ph="INSERT INTO portrait... " />
+                <marker date="1508014702921" expanded="true" signature="2627:2686" ph="INSERT INTO portrait_landmarks... " />
+                <marker date="1508014702921" expanded="true" signature="2968:3208" ph="INSERT INTO portrait_info... " />
+                <marker date="1508014702921" expanded="true" signature="4077:4552" ph="UPDATE portr... " />
+                <marker date="1508014702921" expanded="true" signature="6287:6352" ph="SELECT * FRO... portrait" />
+                <marker date="1508014702921" expanded="true" signature="10408:10519" ph="UPDATE portr... " />
+                <marker date="1508014702921" expanded="true" signature="10949:11000" ph="SELECT * FRO... portrait_info" />
+                <marker date="1508014702921" expanded="true" signature="12251:12272" ph="SELECT COUNT... ${$table}" />
+                <marker date="1508014702921" expanded="true" signature="12372:12433" ph="SELECT COUNT... portrait" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="connection.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/connection.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -700,12 +709,12 @@
       <workItem from="1507835334891" duration="2084000" />
       <workItem from="1507913279639" duration="10783000" />
       <workItem from="1507928819275" duration="7487000" />
-      <workItem from="1508011595253" duration="2464000" />
+      <workItem from="1508011595253" duration="3107000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="162258000" />
+    <option name="totallyTimeSpent" value="162901000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -773,16 +782,16 @@
         <state relative-caret-position="5082">
           <caret line="242" column="91" lean-forward="false" selection-start-line="242" selection-start-column="91" selection-end-line="242" selection-end-column="91" />
           <folding>
-            <marker date="1508013998768" expanded="true" signature="255:448" ph="SELECT p.id,... portrait" />
-            <marker date="1508013998768" expanded="true" signature="1075:1140" ph="INSERT INTO portrait... " />
-            <marker date="1508013998768" expanded="true" signature="2628:2687" ph="INSERT INTO portrait_landmarks... " />
-            <marker date="1508013998768" expanded="true" signature="2969:3209" ph="INSERT INTO portrait_info... " />
-            <marker date="1508013998768" expanded="true" signature="4078:4553" ph="UPDATE portr... " />
-            <marker date="1508013998768" expanded="true" signature="6288:6353" ph="SELECT * FRO... portrait" />
-            <marker date="1508013998768" expanded="true" signature="10409:10520" ph="UPDATE portr... " />
-            <marker date="1508013998768" expanded="true" signature="10950:11001" ph="SELECT * FRO... portrait_info" />
-            <marker date="1508013998768" expanded="true" signature="12252:12273" ph="SELECT COUNT... ${$table}" />
-            <marker date="1508013998768" expanded="true" signature="12373:12434" ph="SELECT COUNT... portrait" />
+            <marker date="1508014702921" expanded="true" signature="255:447" ph="SELECT p.id,... portrait" />
+            <marker date="1508014702921" expanded="true" signature="1074:1139" ph="INSERT INTO portrait... " />
+            <marker date="1508014702921" expanded="true" signature="2627:2686" ph="INSERT INTO portrait_landmarks... " />
+            <marker date="1508014702921" expanded="true" signature="2968:3208" ph="INSERT INTO portrait_info... " />
+            <marker date="1508014702921" expanded="true" signature="4077:4552" ph="UPDATE portr... " />
+            <marker date="1508014702921" expanded="true" signature="6287:6352" ph="SELECT * FRO... portrait" />
+            <marker date="1508014702921" expanded="true" signature="10408:10519" ph="UPDATE portr... " />
+            <marker date="1508014702921" expanded="true" signature="10949:11000" ph="SELECT * FRO... portrait_info" />
+            <marker date="1508014702921" expanded="true" signature="12251:12272" ph="SELECT COUNT... ${$table}" />
+            <marker date="1508014702921" expanded="true" signature="12372:12433" ph="SELECT COUNT... portrait" />
           </folding>
         </state>
       </provider>
@@ -1047,14 +1056,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/connection.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/util/urlGeneratorUtil.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
@@ -1071,21 +1072,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/connection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/model/imageModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-189">
-          <caret line="12" column="39" lean-forward="true" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
+        <state relative-caret-position="252">
+          <caret line="12" column="38" lean-forward="false" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
           <folding>
-            <marker date="1508013998768" expanded="true" signature="255:448" ph="SELECT p.id,... portrait" />
-            <marker date="1508013998768" expanded="true" signature="1075:1140" ph="INSERT INTO portrait... " />
-            <marker date="1508013998768" expanded="true" signature="2628:2687" ph="INSERT INTO portrait_landmarks... " />
-            <marker date="1508013998768" expanded="true" signature="2969:3209" ph="INSERT INTO portrait_info... " />
-            <marker date="1508013998768" expanded="true" signature="4078:4553" ph="UPDATE portr... " />
-            <marker date="1508013998768" expanded="true" signature="6288:6353" ph="SELECT * FRO... portrait" />
-            <marker date="1508013998768" expanded="true" signature="10409:10520" ph="UPDATE portr... " />
-            <marker date="1508013998768" expanded="true" signature="10950:11001" ph="SELECT * FRO... portrait_info" />
-            <marker date="1508013998768" expanded="true" signature="12252:12273" ph="SELECT COUNT... ${$table}" />
-            <marker date="1508013998768" expanded="true" signature="12373:12434" ph="SELECT COUNT... portrait" />
+            <marker date="1508014702921" expanded="true" signature="255:447" ph="SELECT p.id,... portrait" />
+            <marker date="1508014702921" expanded="true" signature="1074:1139" ph="INSERT INTO portrait... " />
+            <marker date="1508014702921" expanded="true" signature="2627:2686" ph="INSERT INTO portrait_landmarks... " />
+            <marker date="1508014702921" expanded="true" signature="2968:3208" ph="INSERT INTO portrait_info... " />
+            <marker date="1508014702921" expanded="true" signature="4077:4552" ph="UPDATE portr... " />
+            <marker date="1508014702921" expanded="true" signature="6287:6352" ph="SELECT * FRO... portrait" />
+            <marker date="1508014702921" expanded="true" signature="10408:10519" ph="UPDATE portr... " />
+            <marker date="1508014702921" expanded="true" signature="10949:11000" ph="SELECT * FRO... portrait_info" />
+            <marker date="1508014702921" expanded="true" signature="12251:12272" ph="SELECT COUNT... ${$table}" />
+            <marker date="1508014702921" expanded="true" signature="12372:12433" ph="SELECT COUNT... portrait" />
           </folding>
         </state>
       </provider>

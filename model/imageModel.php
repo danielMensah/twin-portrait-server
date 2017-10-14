@@ -9,7 +9,11 @@ require '../util/urlGeneratorUtil.php';
     function getRandomPortrait(){
 
         $dbh = getConnection();
-        $sql = $dbh->prepare("SELECT p.id, p.image_url FROM portrait p, portrait_landmarks ps WHERE ps.features_completed = FALSE ORDER BY RAND()");
+        $sql = $dbh->prepare("SELECT p.id, p.image_url FROM portrait p 
+          INNER JOIN portrait_landmarks ps 
+            ON p.id = ps.portrait_id 
+          WHERE ps.features_completed = FALSE ORDER BY RAND() LIMIT 1");
+//        $sql = $dbh->prepare("SELECT id, image_url FROM portrait INNER JOIN portrait_landmarks.features_completed = TRUE ORDER BY RAND() LIMIT 1");
         $sql->execute();
         $sql->bindColumn(1, $id, PDO::PARAM_STR);
         $sql->bindColumn(2, $image_url, PDO::PARAM_STR);

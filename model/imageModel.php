@@ -10,13 +10,13 @@ require '../util/exceptionHandler.php';
 
         $dbh = getConnection();
         $sql = $dbh->prepare("SELECT p.id, p.image_url FROM portrait p 
-          INNER JOIN portrait_landmark ps 
+          INNER JOIN portrait_landmarks ps 
             ON p.id = ps.portrait_id 
           WHERE ps.features_completed = FALSE ORDER BY RAND() LIMIT 1");
 
         try {
             if (!$sql->execute()) {
-                throw new PDOException("Error while fetching portraits", 500);
+                throw new PDOException("Error while fetching portraits!", 500);
             }
         } catch (PDOException $exception) {
             throw $exception;

@@ -10,6 +10,7 @@
 require_once __DIR__ . "/../config/DbConnection.php";
 require_once __DIR__ . "/../managers/StatementManager.php";
 require_once __DIR__ . "/../Model/PortraitModel.php";
+require_once __DIR__ . "/../util/curlCall.php";
 
 class PortraitController {
 
@@ -57,25 +58,14 @@ class PortraitController {
         $sql = $this->dbh->getConnection()->prepare("INSERT INTO portrait ( id, image_url ) VALUES ( :id, :image_url )");
         $sql->bindParam('id', $id, PDO::PARAM_STR);
         $sql->bindParam('image_url', $portrait_url, PDO::PARAM_STR);
-        $this->sqlManager->handleStatementException($sql, "Error when adding image, might already exist");
-
-        return $this->addPortraitInfo($this->model->getId(), $this->model->getImageUrl());
+        $sql->execute();
+        return $this->addPortraitInfo($this->model->getId());
     }
 
-    public function addPortraitInfo($id, DbConnection $dbh) {
+    public function addPortraitInfo($id) {
         $url = self::INFO_URL . $id;
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);            // No header in the result
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return, do not echo result
-
-// Fetch and return content, save it.
-        $raw_data = curl_exec($ch);
-        curl_close($ch);
-
-// If the API is JSON, use json_decode.
-        $data = json_decode($raw_data, true);
+        $data = makeCall($url, true);
 
         $title = !empty($data['title']) ? $data['title'] : null;
         $creator = !empty($data['creators'][0]['title']) ? $data['creators'][0]['title'] : null;
@@ -84,7 +74,7 @@ class PortraitController {
         $externalLinkUrl = !empty($data['externalLinks'][0]['url']) ? $data['externalLinks'][0]['url'] : null;
         $externalLinkText = !empty($data['externalLinks'][0]['text']) ? $data['externalLinks'][0]['text'] : null;
 
-        $sql = $dbh->getConnection()->prepare("INSERT INTO portrait_info ( portrait_id, title, creator, date_created, physical_dimensions, external_link, external_link_text ) VALUES ( 
+        $sql = $this->dbh->getConnection()->prepare("INSERT INTO portrait_info ( portrait_id, title, creator, date_created, physical_dimensions, external_link, external_link_text ) VALUES ( 
         :id, :title, :creator, :dateCreated, :physicalDimensions, :externalLinkUrl, :externalLinkText)");
         $sql->bindParam('id', $id, PDO::PARAM_STR);
         $sql->bindParam('title', $title, PDO::PARAM_STR);
@@ -95,12 +85,12 @@ class PortraitController {
         $sql->bindParam('externalLinkText', $externalLinkText, PDO::PARAM_STR);
 
         $this->sqlManager->handleStatementException($sql, "Error while inserting portrait info!");
-        $this->initialiseLandmarks($dbh, $id);
+        $this->initialiseLandmarks($id);
         return 'updated';
     }
 
-    protected function initialiseLandmarks(DbConnection $dbh, $id) {
-        $sql = $dbh->getConnection()->prepare("INSERT INTO portrait_landmarks ( portrait_id ) VALUES (:id)");
+    protected function initialiseLandmarks($id) {
+        $sql = $this->dbh->getConnection()->prepare("INSERT INTO portrait_landmarks ( portrait_id ) VALUES (:id)");
         $sql->bindParam('id', $id, PDO::PARAM_STR);
 
         $this->sqlManager->handleStatementException($sql, "Error while initialising landmarks!");
@@ -263,22 +253,19 @@ class PortraitController {
         ));
     }
 
-    public function getStatistics($table) {
+    public function getStatistics() {
 
-        switch ($table) {
-            case 'users':
-                $sql = $this->dbh->getConnection()->prepare("SELECT COUNT(*) FROM users");
-                break;
-            case 'portrait':
-                $sql = $this->dbh->getConnection()->prepare("SELECT COUNT(*) FROM portrait_landmarks WHERE features_completed = TRUE");
-                break;
-            default:
-                throw new PDOException("Couldn't find $table", 404);
-        }
+        $registeredUsersStm = $this->dbh->getConnection()->prepare("SELECT * FROM users");
+        $completedLandmarksStm = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE features_completed = TRUE");
 
-        $this->sqlManager->handleStatementException($sql, "Error while getting statistics!");
+        $this->sqlManager->handleStatementException($registeredUsersStm, "Error while getting users statistics!");
+        $this->sqlManager->handleStatementException($completedLandmarksStm, "Error while getting landmarks statistics!");
 
-        return json_encode(array( $table => $sql->fetchColumn()));
+        return json_encode(array(
+           "registeredUsers" => $registeredUsersStm->fetchAll(PDO::FETCH_ASSOC),
+            "completedLandmarks" => $completedLandmarksStm->fetchAll(PDO::FETCH_ASSOC)
+        ));
+
     }
 
 }

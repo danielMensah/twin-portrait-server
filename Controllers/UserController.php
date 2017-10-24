@@ -8,10 +8,12 @@
  */
 require_once __DIR__ . "/../config/DbConnection.php";
 require_once __DIR__ . "/../Model/UserModel.php";
+require_once __DIR__ . "/../managers/StatementManager.php";
 
 class UserController {
 
-    protected $dbh;
+    private $dbh;
+    private $sqlManager;
     private $model;
 
     /**
@@ -21,23 +23,31 @@ class UserController {
      */
     public function __construct(UserModel $model = null) {
         $this->dbh = new DbConnection();
+        $this->sqlManager = new StatementManager();
         $this->model = $model;
     }
 
     public function registerUser() {
         $email = $this->model->getEmail();
         $feedback = $this->model->getFeedback();
+        $type = "consumer";
 
         if (!$this->checkIfUserExists()) {
-            $sql = $this->dbh->getConnection()->prepare("INSERT INTO users ( email, feedback ) VALUES ( :email, :feedback )");
+            $sql = $this->dbh->getConnection()->prepare("INSERT INTO users ( email, user_type ) VALUES ( :email, :type )");
             $sql->bindParam(':email', $email, PDO::PARAM_STR);
-            $sql->bindParam(':feedback', $feedback, PDO::PARAM_STR);
+            $sql->bindParam(':type', $type, PDO::PARAM_STR);
 
-            return $sql->execute() ? json_encode(array(
+            $this->sqlManager->handleStatementException($sql, "Error while inserting user!");
+
+            $sql = $this->dbh->getConnection()->prepare("INSERT INTO consumer ( user_id, feedback ) VALUES ( (SELECT id from users WHERE email = :email), :feedback )");
+            $sql->bindParam(':feedback', $feedback, PDO::PARAM_STR);
+            $sql->bindParam(':email', $email, PDO::PARAM_STR);
+
+            $this->sqlManager->handleStatementException($sql, "Error while inserting consumer!");
+
+            return json_encode(array(
                 'response' => 'updated',
                 'promoCode' => $this->addPromoCode()
-            )) : json_encode(array(
-                'response' => 'error'
             ));
         } else {
             return json_encode(array('response' => 'Email already exists'));
@@ -52,7 +62,7 @@ class UserController {
         $sql->bindParam(':email', $email, PDO::PARAM_STR);
         $sql->bindParam(':promo_code', $promo_code, PDO::PARAM_STR);
 
-        $sql->execute();
+        $this->sqlManager->handleStatementException($sql, "Error while creating a promo code!");
 
         return $promo_code;
     }
@@ -62,7 +72,8 @@ class UserController {
 
         $sql = $this->dbh->getConnection()->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
         $sql->bindParam(':email', $email, PDO::PARAM_STR);
-        $sql->execute();
+
+        $this->sqlManager->handleStatementException($sql, "Error while checking if user exists!");
 
         return $sql->fetchColumn();
     }

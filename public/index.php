@@ -10,6 +10,7 @@ require '../Model/PortraitModel.php';
 require '../Controllers/PortraitController.php';
 require '../Model/UserModel.php';
 require '../Controllers/UserController.php';
+require_once '../util/curlCall.php';
 
 $app = new \Slim\App([
     'settings' => [
@@ -59,26 +60,16 @@ $app->post('/uploadPortrait', function (Request $request, Response $response) {
             break;
     }
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);            // No header in the result
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return, do not echo result
+    $data = makeCall($url);
 
-// Fetch and return content, save it.
-        $raw_data = curl_exec($ch);
-        curl_close($ch);
+    foreach ($data as $item) {
+        $portraitModel = new PortraitModel();
+        $portraitModel->setId($item->id);
+        $portraitModel->setImageUrl($item->img);
 
-// If the API is JSON, use json_decode.
-        $data = json_decode($raw_data);
-
-        foreach ($data as $item) {
-            $portraitModel = new PortraitModel();
-            $portraitModel->setId($item->id);
-            $portraitModel->setImageUrl($item->img);
-
-            $portraitController = new PortraitController($portraitModel);
-            echo $portraitController->addPortrait();
-        }
+        $portraitController = new PortraitController($portraitModel);
+        echo $portraitController->addPortrait();
+    }
 //    echo addImage('PAEeCdN0S0qgNg', 'http://lh5.ggpht.com/jgpYFmLNAWJL3734TQOgoVZRUOOOuFskI_2XXSgahS_jjwRblaHKtyK_BH3U');
 });
 
@@ -128,10 +119,10 @@ $app->post('/registerUser', function (Request $request, Response $response) {
     echo $userController->registerUser();
 });
 
-$app->post('/statistics', function (Request $request, Response $response) {
+$app->get('/statistics', function (Request $request, Response $response) {
 
     $portraitController = new PortraitController();
-   echo $portraitController->getStatistics($request->getParsedBody()['type']);
+   echo $portraitController->getStatistics();
 });
 
 $app->run();

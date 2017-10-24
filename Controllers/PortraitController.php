@@ -235,7 +235,7 @@ class PortraitController {
         $sql->bindParam(':portrait_id', $id, PDO::PARAM_STR);
 
         $this->sqlManager->handleStatementException($sql, "Error while setting portrait as not applicable!");
-        return 'updated';
+        return json_encode(array( 'response' => 'updated '));
     }
 
     public function getPortraitInfo() {

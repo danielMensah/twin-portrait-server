@@ -5,7 +5,7 @@ class DbConnection {
     function getConnection() {
         //testing = 1
         //production = 2
-        $option = 1;
+        $option = 2;
 
         switch($option){
             case 1:

@@ -3,9 +3,13 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 header('Access-Control-Allow-Origin: *');
-require('../vendor/autoload.php');
-require('../config/connection.php');
+require '../vendor/autoload.php';
+require '../config/DbConnection.php';
 require '../util/console.php';
+require '../Model/PortraitModel.php';
+require '../Controllers/PortraitController.php';
+require '../Model/UserModel.php';
+require '../Controllers/UserController.php';
 
 $app = new \Slim\App([
     'settings' => [
@@ -16,37 +20,32 @@ $app = new \Slim\App([
 $container = $app->getContainer();
 $container['upload_directory'] = $_SERVER['DOCUMENT_ROOT'].'/../images';
 
-// test connection
-$app->get('/', function (Request $request, Response $response) {
-    require '../model/imageModel.php';
-
-    getConnection();
-});
-
 // display random portrait
 $app->get('/getPortrait', function (Request $request, Response $response) {
-    require '../model/imageModel.php';
 
-    return getRandomPortrait();
+    $portraitController = new PortraitController();
+    return $portraitController->getRandomPortrait();
 });
 
 // get portrait info
 $app->post('/getPortraitInfo', function (Request $request, Response $response) {
-    require '../model/imageModel.php';
     $portraitId = $request->getParsedBody()['id'];
 
-    echo getPortraitInfo($portraitId);
+    $portraitModel = new PortraitModel();
+    $portraitModel->setId($portraitId);
+
+    $portraitController = new PortraitController($portraitModel);
+    echo $portraitController->getPortraitInfo();
 });
 
 // upload form
 $app->get('/portrait', function (Request $request, Response $response) {
-    require '../model/formsModel.php';
+    require '../Model/formsModel.php';
     echo uploadPortraitForm();
 });
 
 //upload portrait
 $app->post('/uploadPortrait', function (Request $request, Response $response) {
-    require ('../model/imageModel.php');
 
     $num = $_POST["json"];
     $api = $_POST["api"];
@@ -73,14 +72,18 @@ $app->post('/uploadPortrait', function (Request $request, Response $response) {
         $data = json_decode($raw_data);
 
         foreach ($data as $item) {
-            echo addImage($item->id, $item->img);
+            $portraitModel = new PortraitModel();
+            $portraitModel->setId($item->id);
+            $portraitModel->setImageUrl($item->img);
+
+            $portraitController = new PortraitController($portraitModel);
+            echo $portraitController->addPortrait();
         }
 //    echo addImage('PAEeCdN0S0qgNg', 'http://lh5.ggpht.com/jgpYFmLNAWJL3734TQOgoVZRUOOOuFskI_2XXSgahS_jjwRblaHKtyK_BH3U');
 });
 
 //update portrait
 $app->post('/updatePortrait', function (Request $request, Response $response) {
-    require ('../model/imageModel.php');
 
     $arrayOfLandmarks = [];
     $reqDecoded = json_decode($request->getBody(), true);
@@ -93,9 +96,8 @@ $app->post('/updatePortrait', function (Request $request, Response $response) {
         }
     }
 
-
-    return updatePortrait(
-        $arrayOfLandmarks,
+    $portraitController = new PortraitController();
+    return $portraitController->updatePortrait($arrayOfLandmarks,
         $reqDecoded['portraitId'],
         $reqDecoded['gender'],
         $reqDecoded['mustache'],
@@ -104,24 +106,32 @@ $app->post('/updatePortrait', function (Request $request, Response $response) {
 
 //set not applicable portrait
 $app->post('/setNotApplicable', function (Request $request, Response $response) {
-    require ('../model/imageModel.php');
-
     $reqDecoded = json_decode($request->getBody(), true);
-    echo handleNotApplicationPortrait($reqDecoded['portraitId']);
+
+    $portraitModel = new PortraitModel();
+    $portraitModel->setId($reqDecoded['portraitId']);
+
+    $portraitController = new PortraitController($portraitModel);
+    echo $portraitController->handleNotApplicationPortrait();
 });
 
 //register user
 $app->post('/registerUser', function (Request $request, Response $response) {
-    require ('../model/userModel.php');
 
     $reqDecoded = json_decode($request->getBody(), true);
-     echo registerUser($reqDecoded);
+
+    $userModel = new UserModel();
+    $userModel->setEmail(strtolower($reqDecoded['email']));
+    $userModel->setFeedback($reqDecoded['feedback']);
+
+    $userController = new UserController($userModel);
+    echo $userController->registerUser();
 });
 
 $app->post('/statistics', function (Request $request, Response $response) {
-   require ('../model/imageModel.php');
 
-    echo getStatistics($request->getParsedBody()['type']);
+    $portraitController = new PortraitController();
+   echo $portraitController->getStatistics($request->getParsedBody()['type']);
 });
 
 $app->run();

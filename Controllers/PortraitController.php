@@ -1,26 +1,43 @@
 <?php
-require '../util/urlGeneratorUtil.php';
-require '../util/exceptionHandler.php';
 
-    function testConnection() {
-        $dbh = getConnection();
+/**
+ * Created by IntelliJ IDEA.
+ * User: MrDan
+ * Date: 24/10/2017
+ * Time: 14:15
+ */
+
+require_once __DIR__ . "/../config/DbConnection.php";
+require_once __DIR__ . "/../managers/StatementManager.php";
+require_once __DIR__ . "/../Model/PortraitModel.php";
+
+class PortraitController {
+
+    const INFO_URL = "https://artsexperiments.withgoogle.com/tags/api/og/search/";
+
+    private $model;
+    protected $dbh;
+    protected $sqlManager;
+    protected $portraitManger;
+
+    /**
+     * PortraitController constructor.
+     * @param PortraitModel $model
+     */
+    public function __construct(PortraitModel $model = null) {
+        $this->dbh = new DbConnection();
+        $this->sqlManager = new StatementManager();
+        $this->model = $model;
     }
 
-    function getRandomPortrait(){
+    public function getRandomPortrait(){
 
-        $dbh = getConnection();
-        $sql = $dbh->prepare("SELECT p.id, p.image_url FROM portrait p 
+        $sql = $this->dbh->getConnection()->prepare("SELECT p.id, p.image_url FROM portrait p 
           INNER JOIN portrait_landmarks ps 
             ON p.id = ps.portrait_id 
           WHERE ps.features_completed = FALSE ORDER BY RAND() LIMIT 1");
 
-        try {
-            if (!$sql->execute()) {
-                throw new PDOException("Error while fetching portraits!", 500);
-            }
-        } catch (PDOException $exception) {
-            throw $exception;
-        }
+        $this->sqlManager->handleStatementException($sql, "Error while fetching portraits!");
 
         $sql->bindColumn(1, $id, PDO::PARAM_STR);
         $sql->bindColumn(2, $image_url, PDO::PARAM_STR);
@@ -33,18 +50,20 @@ require '../util/exceptionHandler.php';
 
     }
 
-    function addImage($id, $image_url) {
-        $dbh = getConnection();
+    public function addPortrait() {
+        $id = $this->model->getId();
+        $portrait_url = $this->model->getImageUrl();
 
-            $sql = $dbh->prepare("INSERT INTO portrait ( id, image_url ) VALUES ( :id, :image_url )");
-            $sql->bindParam('id', $id, PDO::PARAM_STR);
-            $sql->bindParam('image_url', $image_url, PDO::PARAM_STR);
+        $sql = $this->dbh->getConnection()->prepare("INSERT INTO portrait ( id, image_url ) VALUES ( :id, :image_url )");
+        $sql->bindParam('id', $id, PDO::PARAM_STR);
+        $sql->bindParam('image_url', $portrait_url, PDO::PARAM_STR);
+        $this->sqlManager->handleStatementException($sql, "Error when adding image, might already exist");
 
-        return $sql->execute() ? prepareImageInfo($id) : 'Error when adding image, might already exist.';
+        return $this->addPortraitInfo($this->model->getId(), $this->model->getImageUrl());
     }
 
-    function prepareImageInfo($id) {
-        $url = "https://artsexperiments.withgoogle.com/tags/api/og/search/$id";
+    public function addPortraitInfo($id, DbConnection $dbh) {
+        $url = self::INFO_URL . $id;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -58,29 +77,14 @@ require '../util/exceptionHandler.php';
 // If the API is JSON, use json_decode.
         $data = json_decode($raw_data, true);
 
-        return addImageInfo(
-            $id,
-            !empty($data['title']) ? $data['title'] : null,
-            !empty($data['creators'][0]['title']) ? $data['creators'][0]['title'] : null,
-            !empty($data['datesCreated'][0]['text']) ? $data['datesCreated'][0]['text'] : null,
-            !empty($data['physicalDimensions'][0]) ? $data['physicalDimensions'][0] : null,
-            !empty($data['externalLinks'][0]['url']) ? $data['externalLinks'][0]['url'] : null,
-            !empty($data['externalLinks'][0]['text']) ? $data['externalLinks'][0]['text'] : null
-        );
-    }
+        $title = !empty($data['title']) ? $data['title'] : null;
+        $creator = !empty($data['creators'][0]['title']) ? $data['creators'][0]['title'] : null;
+        $dateCreated = !empty($data['datesCreated'][0]['text']) ? $data['datesCreated'][0]['text'] : null;
+        $physicalDimensions = !empty($data['physicalDimensions'][0]) ? $data['physicalDimensions'][0] : null;
+        $externalLinkUrl = !empty($data['externalLinks'][0]['url']) ? $data['externalLinks'][0]['url'] : null;
+        $externalLinkText = !empty($data['externalLinks'][0]['text']) ? $data['externalLinks'][0]['text'] : null;
 
-    function initialiseLandmarks($id) {
-        $dbh = getConnection();
-        $sql = $dbh->prepare("INSERT INTO portrait_landmarks ( portrait_id ) VALUES (:id)");
-        $sql->bindParam('id', $id, PDO::PARAM_STR);
-
-        return $sql->execute();
-    }
-
-    function addImageInfo($id, $title, $creator, $dateCreated, $physicalDimensions, $externalLinkUrl, $externalLinkText) {
-        $dbh = getConnection();
-
-        $sql = $dbh->prepare("INSERT INTO portrait_info ( portrait_id, title, creator, date_created, physical_dimensions, external_link, external_link_text ) VALUES ( 
+        $sql = $dbh->getConnection()->prepare("INSERT INTO portrait_info ( portrait_id, title, creator, date_created, physical_dimensions, external_link, external_link_text ) VALUES ( 
         :id, :title, :creator, :dateCreated, :physicalDimensions, :externalLinkUrl, :externalLinkText)");
         $sql->bindParam('id', $id, PDO::PARAM_STR);
         $sql->bindParam('title', $title, PDO::PARAM_STR);
@@ -90,15 +94,22 @@ require '../util/exceptionHandler.php';
         $sql->bindParam('externalLinkUrl', $externalLinkUrl, PDO::PARAM_STR);
         $sql->bindParam('externalLinkText', $externalLinkText, PDO::PARAM_STR);
 
-        return $sql->execute() && initialiseLandmarks($id) ? 'update' : "error adding image info for id: $id";
+        $this->sqlManager->handleStatementException($sql, "Error while inserting portrait info!");
+        $this->initialiseLandmarks($dbh, $id);
+        return 'updated';
     }
 
-    function updatePortrait($arrayOfLandmarks, $portraitId, $gender, $mustache, $beard) {
-        $dbh = getConnection();
+    protected function initialiseLandmarks(DbConnection $dbh, $id) {
+        $sql = $dbh->getConnection()->prepare("INSERT INTO portrait_landmarks ( portrait_id ) VALUES (:id)");
+        $sql->bindParam('id', $id, PDO::PARAM_STR);
 
-        $updatedLandmarks = portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard);
+        $this->sqlManager->handleStatementException($sql, "Error while initialising landmarks!");
+    }
 
-        $sql = $dbh->prepare("UPDATE portrait_landmarks SET EB_FLAT_SHAPED=:EB_FLAT_SHAPED, EB_ANGLED=:EB_ANGLED, 
+    public function updatePortrait($arrayOfLandmarks, $portraitId, $gender, $mustache, $beard) {
+        $updatedLandmarks = $this->portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard, $this->dbh);
+
+        $sql = $this->dbh->getConnection()->prepare("UPDATE portrait_landmarks SET EB_FLAT_SHAPED=:EB_FLAT_SHAPED, EB_ANGLED=:EB_ANGLED, 
         EB_ROUNDED=:EB_ROUNDED, EYE_MONOLID_ALMOND=:EYE_MONOLID_ALMOND, EYE_DEEP_SET=:EYE_DEEP_SET, EYE_DOWNTURNED=:EYE_DOWNTURNED,
         EYE_HOODED=:EYE_HOODED, NOSE_AQUILINE=:NOSE_AQUILINE, NOSE_FLAT=:NOSE_FLAT, NOSE_ROMAN_HOOKED=:NOSE_ROMAN_HOOKED,
         NOSE_SNUB=:NOSE_SNUB, mustache=:mustache, beard=:beard, gender=:gender, features_completed = TRUE WHERE portrait_id=:portrait_id");
@@ -118,23 +129,16 @@ require '../util/exceptionHandler.php';
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
         $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
 
-        try {
-            if (!$sql->execute()) {
-                throw new PDOException("Error while update landmarks!", 500);
-            }
-        } catch (PDOException $exception) {
-            throw $exception;
-        }
+        $this->sqlManager->handleStatementException($sql, "Error while update landmarks!");
 
         return json_encode(array( 'response' => 'updated '));
     }
 
-    function portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard) {
-        $dbh = getConnection();
+    public function portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard, DbConnection $dbh) {
 
-        $sql = $dbh->prepare("SELECT * FROM portrait_landmarks WHERE portrait_id = :portrait_id");
+        $sql = $dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE portrait_id = :portrait_id");
         $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
-        $sql->execute();
+        $this->sqlManager->handleStatementException($sql, "Error while selecting portraits for landmark calculation function");
         $sql->bindColumn('EB_FLAT_SHAPED', $eb_flat_shaped, PDO::PARAM_STR);
         $sql->bindColumn('EB_ANGLED', $eb_angled, PDO::PARAM_STR);
         $sql->bindColumn('EB_ROUNDED', $eb_rounded, PDO::PARAM_STR);
@@ -150,26 +154,26 @@ require '../util/exceptionHandler.php';
         $sql->bindColumn('beard', $fetchedBeard, PDO::PARAM_STR);
         $sql->fetch(PDO::FETCH_BOUND);
 
-         switch ($arrayOfLandmarks['eye']['landmarkKey']) {
-             case 'EYE_DEEP_SET':
-                 $eye_deep_set = $eye_deep_set + 1;
-                 $eye_downturned = $eye_downturned + 0.5;
-                 $eye_monolid_almond = $eye_monolid_almond + 0.3;
-                 break;
-             case 'EYE_MONOLID_ALMOND':
-                 $eye_monolid_almond = $eye_monolid_almond + 1;
-                 $eye_hooded = $eye_hooded + 0.5;
-                 $eye_deep_set = $eye_deep_set + 0.3;
-                 break;
-             case 'EYE_DOWNTURNED':
-                 $eye_downturned = $eye_downturned + 1;
-                 $eye_deep_set = $eye_deep_set + 0.5;
-                 break;
-             case 'EYE_HOODED':
-                 $eye_hooded = $eye_hooded + 1;
-                 $eye_monolid_almond = $eye_monolid_almond + 0.5;
-                 break;
-         };
+        switch ($arrayOfLandmarks['eye']['landmarkKey']) {
+            case 'EYE_DEEP_SET':
+                $eye_deep_set = $eye_deep_set + 1;
+                $eye_downturned = $eye_downturned + 0.5;
+                $eye_monolid_almond = $eye_monolid_almond + 0.3;
+                break;
+            case 'EYE_MONOLID_ALMOND':
+                $eye_monolid_almond = $eye_monolid_almond + 1;
+                $eye_hooded = $eye_hooded + 0.5;
+                $eye_deep_set = $eye_deep_set + 0.3;
+                break;
+            case 'EYE_DOWNTURNED':
+                $eye_downturned = $eye_downturned + 1;
+                $eye_deep_set = $eye_deep_set + 0.5;
+                break;
+            case 'EYE_HOODED':
+                $eye_hooded = $eye_hooded + 1;
+                $eye_monolid_almond = $eye_monolid_almond + 0.5;
+                break;
+        };
 
         switch ($arrayOfLandmarks['eyebrows']['landmarkKey']) {
             case 'EB_FLAT_SHAPED':
@@ -224,30 +228,23 @@ require '../util/exceptionHandler.php';
 
     }
 
-    function handleNotApplicationPortrait($portraitId) {
-        $dbh = getConnection();
+    public function handleNotApplicationPortrait() {
+        $id = $this->model->getId();
 
-        $sql = $dbh->prepare("UPDATE portrait_landmarks SET not_applicable = TRUE, features_completed = TRUE WHERE portrait_id = :portrait_id");
-        $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
+        $sql = $this->dbh->getConnection()->prepare("UPDATE portrait_landmarks SET not_applicable = TRUE, features_completed = TRUE WHERE portrait_id = :portrait_id");
+        $sql->bindParam(':portrait_id', $id, PDO::PARAM_STR);
 
-        return $sql->execute() ? json_encode(array(
-            'response' => 'updated'
-        )) : json_encode(array(
-            'response' => 'error'
-        ));
+        $this->sqlManager->handleStatementException($sql, "Error while setting portrait as not applicable!");
+        return 'updated';
     }
 
-    function showNotApplicationPortraits() {
-
-    }
-
-    function getPortraitInfo($id) {
+    public function getPortraitInfo() {
         $unknown = 'Unknown';
-        $dbh = getConnection();
+        $id = $this->model->getId();
 
-        $sql = $dbh->prepare("SELECT * FROM portrait_info WHERE portrait_id = :id");
+        $sql = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_info WHERE portrait_id = :id");
         $sql->bindParam(':id', $id, PDO::PARAM_STR);
-        $sql->execute();
+        $this->sqlManager->handleStatementException($sql, "Error while getting portrait information");
         $sql->bindColumn('title', $title, PDO::PARAM_STR);
         $sql->bindColumn('creator', $creator, PDO::PARAM_STR);
         $sql->bindColumn('date_created', $dateCreated, PDO::PARAM_STR);
@@ -257,30 +254,31 @@ require '../util/exceptionHandler.php';
         $sql->fetch(PDO::FETCH_BOUND);
 
         return json_encode(array(
-           'title' => !empty($title) ? $title : $unknown,
-           'creator' => !empty($creator) ? $creator : $unknown,
-           'date_created' => !empty($dateCreated) ? $dateCreated : $unknown,
-           'physical_dimensions' => !empty($physicalDimensions) ? $physicalDimensions : $unknown,
-           'external_link' => !empty($externalLinkUrl) ? $externalLinkUrl : $unknown,
-           'external_link_text' => !empty($externalLinkText) ? $externalLinkText : $unknown,
+            'title' => !empty($title) ? $title : $unknown,
+            'creator' => !empty($creator) ? $creator : $unknown,
+            'date_created' => !empty($dateCreated) ? $dateCreated : $unknown,
+            'physical_dimensions' => !empty($physicalDimensions) ? $physicalDimensions : $unknown,
+            'external_link' => !empty($externalLinkUrl) ? $externalLinkUrl : $unknown,
+            'external_link_text' => !empty($externalLinkText) ? $externalLinkText : $unknown,
         ));
     }
 
-    function getStatistics($table) {
-        $dbh = getConnection();
+    public function getStatistics($table) {
 
         switch ($table) {
             case 'users':
-                $sql = $dbh->prepare("SELECT COUNT(*) FROM $table");
+                $sql = $this->dbh->getConnection()->prepare("SELECT COUNT(*) FROM users");
                 break;
             case 'portrait':
-                $sql = $dbh->prepare("SELECT COUNT(*) FROM portrait WHERE features_completed = TRUE");
+                $sql = $this->dbh->getConnection()->prepare("SELECT COUNT(*) FROM portrait_landmarks WHERE features_completed = TRUE");
                 break;
             default:
-                return json_encode(array("error" => "Table does not exists."));
+                throw new PDOException("Couldn't find $table", 404);
         }
 
-        $sql->execute();
+        $this->sqlManager->handleStatementException($sql, "Error while getting statistics!");
 
         return json_encode(array( $table => $sql->fetchColumn()));
     }
+
+}

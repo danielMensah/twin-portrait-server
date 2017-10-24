@@ -8,5 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'Upload' => array($vendorDir . '/codeguy/upload/src'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
+    'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'Pimple' => array($vendorDir . '/pimple/pimple/src'),
 );

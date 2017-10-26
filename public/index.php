@@ -9,6 +9,7 @@ require '../util/console.php';
 require '../Model/PortraitModel.php';
 require '../Controllers/PortraitController.php';
 require '../Model/UserModel.php';
+require '../Model/ConsumerModel.php';
 require '../Controllers/UserController.php';
 require_once '../util/curlCall.php';
 
@@ -111,11 +112,12 @@ $app->post('/registerUser', function (Request $request, Response $response) {
 
     $reqDecoded = json_decode($request->getBody(), true);
 
-    $userModel = new UserModel();
-    $userModel->setEmail(strtolower($reqDecoded['email']));
-    $userModel->setFeedback($reqDecoded['feedback']);
+    $consumerModel = new ConsumerModel();
+    $consumerModel->setEmail(strtolower($reqDecoded['email']));
+    $consumerModel->setFeedback($reqDecoded['feedback']);
+    $consumerModel->setUserType("consumer");
 
-    $userController = new UserController($userModel);
+    $userController = new UserController($consumerModel);
     echo $userController->registerUser();
 });
 

@@ -7,7 +7,7 @@
  * Time: 21:30
  */
 require_once __DIR__ . "/../config/DbConnection.php";
-require_once __DIR__ . "/../Model/UserModel.php";
+require_once __DIR__ . "/../Model/ConsumerModel.php";
 require_once __DIR__ . "/../managers/StatementManager.php";
 
 class UserController {
@@ -18,10 +18,10 @@ class UserController {
 
     /**
      * UserController constructor.
-     * @param null|UserModel $model
+     * @param null|ConsumerModel $model
      * @internal param $dbh
      */
-    public function __construct(UserModel $model = null) {
+    public function __construct(ConsumerModel $model = null) {
         $this->dbh = new DbConnection();
         $this->sqlManager = new StatementManager();
         $this->model = $model;
@@ -30,7 +30,7 @@ class UserController {
     public function registerUser() {
         $email = $this->model->getEmail();
         $feedback = $this->model->getFeedback();
-        $type = "consumer";
+        $type = $this->model->getUserType();
 
         if (!$this->checkIfUserExists()) {
             $sql = $this->dbh->getConnection()->prepare("INSERT INTO users ( email, user_type ) VALUES ( :email, :type )");
@@ -39,7 +39,7 @@ class UserController {
 
             $this->sqlManager->handleStatementException($sql, "Error while inserting user!");
 
-            $sql = $this->dbh->getConnection()->prepare("INSERT INTO consumer ( user_id, feedback ) VALUES ( (SELECT id from users WHERE email = :email), :feedback )");
+            $sql = $this->dbh->getConnection()->prepare("INSERT INTO $type ( user_id, feedback ) VALUES ( (SELECT id from users WHERE email = :email), :feedback )");
             $sql->bindParam(':feedback', $feedback, PDO::PARAM_STR);
             $sql->bindParam(':email', $email, PDO::PARAM_STR);
 

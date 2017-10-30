@@ -123,7 +123,7 @@ $app->post('/registerUser', function (Request $request, Response $response) {
 
 $app->get('/statistics', function (Request $request, Response $response) {
 
-    $portraitController = new PortraitController(null, false);
+    $portraitController = new PortraitController();
    echo $portraitController->getStatistics();
 });
 

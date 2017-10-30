@@ -40,9 +40,7 @@ class PortraitController {
             ON p.id = ps.portrait_id 
           WHERE ps.features_completed = FALSE ORDER BY RAND() LIMIT 1");
 
-        $sql->execute();
-
-//        $this->utilManager->handleStatementException($sql, "Error while fetching portraits!");
+        $this->utilManager->handleStatementException($sql, "Error while fetching portraits!");
 
         $sql->bindColumn(1, $id, PDO::PARAM_STR);
         $sql->bindColumn(2, $image_url, PDO::PARAM_STR);

@@ -8,12 +8,12 @@
  */
 require_once __DIR__ . "/../config/DbConnection.php";
 require_once __DIR__ . "/../Model/ConsumerModel.php";
-require_once __DIR__ . "/../managers/StatementManager.php";
+require_once __DIR__ . "/../Managers/UtilManager.php";
 
 class UserController {
 
     private $dbh;
-    private $sqlManager;
+    private $utilManager;
     private $model;
 
     /**
@@ -23,7 +23,7 @@ class UserController {
      */
     public function __construct(ConsumerModel $model = null) {
         $this->dbh = new DbConnection();
-        $this->sqlManager = new StatementManager();
+        $this->utilManager = new UtilManager();
         $this->model = $model;
     }
 
@@ -37,13 +37,13 @@ class UserController {
             $sql->bindParam(':email', $email, PDO::PARAM_STR);
             $sql->bindParam(':type', $type, PDO::PARAM_STR);
 
-            $this->sqlManager->handleStatementException($sql, "Error while inserting user!");
+            $this->utilManager->handleStatementException($sql, "Error while inserting user!");
 
             $sql = $this->dbh->getConnection()->prepare("INSERT INTO $type ( user_id, feedback ) VALUES ( (SELECT id from users WHERE email = :email), :feedback )");
             $sql->bindParam(':feedback', $feedback, PDO::PARAM_STR);
             $sql->bindParam(':email', $email, PDO::PARAM_STR);
 
-            $this->sqlManager->handleStatementException($sql, "Error while inserting consumer!");
+            $this->utilManager->handleStatementException($sql, "Error while inserting consumer!");
 
             return json_encode(array(
                 'response' => 'updated',
@@ -62,7 +62,7 @@ class UserController {
         $sql->bindParam(':email', $email, PDO::PARAM_STR);
         $sql->bindParam(':promo_code', $promo_code, PDO::PARAM_STR);
 
-        $this->sqlManager->handleStatementException($sql, "Error while creating a promo code!");
+        $this->utilManager->handleStatementException($sql, "Error while creating a promo code!");
 
         return $promo_code;
     }
@@ -73,7 +73,7 @@ class UserController {
         $sql = $this->dbh->getConnection()->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
         $sql->bindParam(':email', $email, PDO::PARAM_STR);
 
-        $this->sqlManager->handleStatementException($sql, "Error while checking if user exists!");
+        $this->utilManager->handleStatementException($sql, "Error while checking if user exists!");
 
         return $sql->fetchColumn();
     }

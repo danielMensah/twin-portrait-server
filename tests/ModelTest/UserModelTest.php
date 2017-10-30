@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . "/../Model/UserModel.php";
+require_once __DIR__ . "/../../Model/UserModel.php";
 
 class UserModelTest extends \PHPUnit_Framework_TestCase {
     protected $user;
@@ -17,10 +17,10 @@ class UserModelTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testThatWeCanGetTheUserFeedback() {
-        $this->user->setFeedback("this is just a feedback");
+    public function testThatWeCanGetTheUserType() {
+        $this->user->setUserType("consumer");
 
-        $this->assertEquals($this->user->getFeedback(), "this is just a feedback");
+        $this->assertEquals($this->user->getUserType(), "consumer");
 
     }
 }

@@ -10,7 +10,7 @@
 class UserModel {
 
     private $email;
-    private $feedback;
+    private $userType;
 
     /**
      * @return mixed
@@ -29,15 +29,15 @@ class UserModel {
     /**
      * @return mixed
      */
-    public function getFeedback() {
-        return $this->feedback;
+    public function getUserType() {
+        return $this->userType;
     }
 
     /**
-     * @param mixed $feedback
+     * @param mixed $userType
      */
-    public function setFeedback($feedback) {
-        $this->feedback = $feedback;
+    public function setUserType($userType) {
+        $this->userType = $userType;
     }
 
 

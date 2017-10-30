@@ -5,12 +5,12 @@ use \Psr\Http\Message\ResponseInterface as Response;
 header('Access-Control-Allow-Origin: *');
 require '../vendor/autoload.php';
 require '../config/DbConnection.php';
-require '../util/console.php';
 require '../Model/PortraitModel.php';
 require '../Controllers/PortraitController.php';
 require '../Model/UserModel.php';
+require '../Model/ConsumerModel.php';
 require '../Controllers/UserController.php';
-require_once '../util/curlCall.php';
+require_once '../Managers/UtilManager.php';
 
 $app = new \Slim\App([
     'settings' => [
@@ -41,8 +41,8 @@ $app->post('/getPortraitInfo', function (Request $request, Response $response) {
 
 // upload form
 $app->get('/portrait', function (Request $request, Response $response) {
-    require '../Model/formsModel.php';
-    echo uploadPortraitForm();
+    $portraitController = new PortraitController();
+    echo $portraitController->uploadPortraitForm();
 });
 
 //upload portrait
@@ -60,7 +60,8 @@ $app->post('/uploadPortrait', function (Request $request, Response $response) {
             break;
     }
 
-    $data = makeCall($url);
+    $utilManger = new UtilManager();
+    $data = $utilManger->curlCall($url);
 
     foreach ($data as $item) {
         $portraitModel = new PortraitModel();
@@ -111,11 +112,12 @@ $app->post('/registerUser', function (Request $request, Response $response) {
 
     $reqDecoded = json_decode($request->getBody(), true);
 
-    $userModel = new UserModel();
-    $userModel->setEmail(strtolower($reqDecoded['email']));
-    $userModel->setFeedback($reqDecoded['feedback']);
+    $consumerModel = new ConsumerModel();
+    $consumerModel->setEmail(strtolower($reqDecoded['email']));
+    $consumerModel->setFeedback($reqDecoded['feedback']);
+    $consumerModel->setUserType("consumer");
 
-    $userController = new UserController($userModel);
+    $userController = new UserController($consumerModel);
     echo $userController->registerUser();
 });
 

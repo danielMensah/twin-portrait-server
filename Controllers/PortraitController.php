@@ -8,9 +8,8 @@
  */
 
 require_once __DIR__ . "/../config/DbConnection.php";
-require_once __DIR__ . "/../managers/StatementManager.php";
+require_once __DIR__ . "/../Managers/UtilManager.php";
 require_once __DIR__ . "/../Model/PortraitModel.php";
-require_once __DIR__ . "/../util/curlCall.php";
 
 class PortraitController {
 
@@ -18,17 +17,20 @@ class PortraitController {
 
     private $model;
     protected $dbh;
-    protected $sqlManager;
+    protected $utilManager;
     protected $portraitManger;
 
     /**
      * PortraitController constructor.
      * @param PortraitModel $model
+     * @param bool $initialisation
      */
-    public function __construct(PortraitModel $model = null) {
-        $this->dbh = new DbConnection();
-        $this->sqlManager = new StatementManager();
-        $this->model = $model;
+    public function __construct(PortraitModel $model = null, $initialisation = true) {
+        if ($initialisation) {
+            $this->dbh = new DbConnection();
+            $this->utilManager = new UtilManager();
+            $this->model = $model;
+        }
     }
 
     public function getRandomPortrait(){
@@ -38,7 +40,7 @@ class PortraitController {
             ON p.id = ps.portrait_id 
           WHERE ps.features_completed = FALSE ORDER BY RAND() LIMIT 1");
 
-        $this->sqlManager->handleStatementException($sql, "Error while fetching portraits!");
+        $this->utilManager->handleStatementException($sql, "Error while fetching portraits!");
 
         $sql->bindColumn(1, $id, PDO::PARAM_STR);
         $sql->bindColumn(2, $image_url, PDO::PARAM_STR);
@@ -65,7 +67,7 @@ class PortraitController {
     public function addPortraitInfo($id) {
         $url = self::INFO_URL . $id;
 
-        $data = makeCall($url, true);
+        $data = $this->utilManager->curlCall($url, true);
 
         $title = !empty($data['title']) ? $data['title'] : null;
         $creator = !empty($data['creators'][0]['title']) ? $data['creators'][0]['title'] : null;
@@ -84,7 +86,7 @@ class PortraitController {
         $sql->bindParam('externalLinkUrl', $externalLinkUrl, PDO::PARAM_STR);
         $sql->bindParam('externalLinkText', $externalLinkText, PDO::PARAM_STR);
 
-        $this->sqlManager->handleStatementException($sql, "Error while inserting portrait info!");
+        $this->utilManager->handleStatementException($sql, "Error while inserting portrait info!");
         $this->initialiseLandmarks($id);
         return 'updated';
     }
@@ -93,7 +95,7 @@ class PortraitController {
         $sql = $this->dbh->getConnection()->prepare("INSERT INTO portrait_landmarks ( portrait_id ) VALUES (:id)");
         $sql->bindParam('id', $id, PDO::PARAM_STR);
 
-        $this->sqlManager->handleStatementException($sql, "Error while initialising landmarks!");
+        $this->utilManager->handleStatementException($sql, "Error while initialising landmarks!");
     }
 
     public function updatePortrait($arrayOfLandmarks, $portraitId, $gender, $mustache, $beard) {
@@ -119,7 +121,7 @@ class PortraitController {
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
         $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
 
-        $this->sqlManager->handleStatementException($sql, "Error while update landmarks!");
+        $this->utilManager->handleStatementException($sql, "Error while update landmarks!");
 
         return json_encode(array( 'response' => 'updated '));
     }
@@ -128,7 +130,7 @@ class PortraitController {
 
         $sql = $dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE portrait_id = :portrait_id");
         $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
-        $this->sqlManager->handleStatementException($sql, "Error while selecting portraits for landmark calculation function");
+        $this->utilManager->handleStatementException($sql, "Error while selecting portraits for landmark calculation function");
         $sql->bindColumn('EB_FLAT_SHAPED', $eb_flat_shaped, PDO::PARAM_STR);
         $sql->bindColumn('EB_ANGLED', $eb_angled, PDO::PARAM_STR);
         $sql->bindColumn('EB_ROUNDED', $eb_rounded, PDO::PARAM_STR);
@@ -224,7 +226,7 @@ class PortraitController {
         $sql = $this->dbh->getConnection()->prepare("UPDATE portrait_landmarks SET not_applicable = TRUE, features_completed = TRUE WHERE portrait_id = :portrait_id");
         $sql->bindParam(':portrait_id', $id, PDO::PARAM_STR);
 
-        $this->sqlManager->handleStatementException($sql, "Error while setting portrait as not applicable!");
+        $this->utilManager->handleStatementException($sql, "Error while setting portrait as not applicable!");
         return json_encode(array( 'response' => 'updated '));
     }
 
@@ -234,7 +236,7 @@ class PortraitController {
 
         $sql = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_info WHERE portrait_id = :id");
         $sql->bindParam(':id', $id, PDO::PARAM_STR);
-        $this->sqlManager->handleStatementException($sql, "Error while getting portrait information");
+        $this->utilManager->handleStatementException($sql, "Error while getting portrait information");
         $sql->bindColumn('title', $title, PDO::PARAM_STR);
         $sql->bindColumn('creator', $creator, PDO::PARAM_STR);
         $sql->bindColumn('date_created', $dateCreated, PDO::PARAM_STR);
@@ -256,16 +258,28 @@ class PortraitController {
     public function getStatistics() {
 
         $registeredUsersStm = $this->dbh->getConnection()->prepare("SELECT * FROM users");
-        $completedLandmarksStm = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE features_completed = TRUE");
+        $this->utilManager->handleStatementException($registeredUsersStm, "Error while fetching users statistics!");
 
-        $this->sqlManager->handleStatementException($registeredUsersStm, "Error while getting users statistics!");
-        $this->sqlManager->handleStatementException($completedLandmarksStm, "Error while getting landmarks statistics!");
+        $completedLandmarksStm = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE features_completed = TRUE");
+        $this->utilManager->handleStatementException($completedLandmarksStm, "Error while fetching landmarks statistics!");
 
         return json_encode(array(
            "registeredUsers" => $registeredUsersStm->fetchAll(PDO::FETCH_ASSOC),
             "completedLandmarks" => $completedLandmarksStm->fetchAll(PDO::FETCH_ASSOC)
         ));
 
+    }
+
+    public function uploadPortraitForm() {
+        $form  = '
+            <form method="POST" action="/uploadPortrait" enctype="multipart/form-data">
+                <input type="number" name="json" value="0" />
+                <button name="api" value="1">API 1</button>
+                <button name="api" value="2">API 2</button>
+            </form>
+        ';
+
+        return $form;
     }
 
 }

@@ -7,7 +7,7 @@
  * Time: 14:15
  */
 
-require "../config/DbConnection.php";
+require_once "../config/DbConnection.php";
 require "../Managers/UtilManager.php";
 require "../Model/PortraitModel.php";
 

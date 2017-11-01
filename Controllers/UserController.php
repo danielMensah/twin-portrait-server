@@ -7,8 +7,8 @@
  * Time: 21:30
  */
 require_once "../config/DbConnection.php";
-require "../Model/ConsumerModel.php";
-require "../Managers/UtilManager.php";
+require_once "../Model/ConsumerModel.php";
+require_once "../Managers/UtilManager.php";
 
 class UserController {
 

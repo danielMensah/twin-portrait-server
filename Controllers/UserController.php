@@ -6,7 +6,7 @@
  * Date: 24/10/2017
  * Time: 21:30
  */
-require "../config/DbConnection.php";
+require_once "../config/DbConnection.php";
 require "../Model/ConsumerModel.php";
 require "../Managers/UtilManager.php";
 

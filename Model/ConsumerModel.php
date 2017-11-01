@@ -6,7 +6,7 @@
  * Date: 26/10/2017
  * Time: 11:29
  */
-require_once "./UserModel.php";
+require_once "UserModel.php";
 
 class ConsumerModel extends UserModel {
 

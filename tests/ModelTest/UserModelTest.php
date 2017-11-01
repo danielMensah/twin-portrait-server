@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../Model/UserModel.php";
+require "../../Model/UserModel.php";
 
 class UserModelTest extends \PHPUnit_Framework_TestCase {
     protected $user;

@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../Model/PortraitModel.php";
+require "../../Model/PortraitModel.php";
 
 class PortraitModelTest extends \PHPUnit_Framework_TestCase {
     protected $portrait;

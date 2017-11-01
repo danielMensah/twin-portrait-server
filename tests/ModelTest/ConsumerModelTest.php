@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../Model/ConsumerModel.php";
+require "../../Model/ConsumerModel.php";
 
 class ConsumerModelTest extends \PHPUnit_Framework_TestCase {
     protected $consumer;

@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../Model/AdminModel.php";
+require "../../Model/AdminModel.php";
 
 class AdminModelTest extends \PHPUnit_Framework_TestCase {
     protected $admin;

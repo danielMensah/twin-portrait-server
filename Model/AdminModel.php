@@ -7,7 +7,7 @@
  * Time: 11:26
  */
 
-require "./UserModel.php";
+require_once "./UserModel.php";
 
 class AdminModel extends UserModel {
 

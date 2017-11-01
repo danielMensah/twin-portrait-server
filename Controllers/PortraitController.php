@@ -8,8 +8,8 @@
  */
 
 require_once "../config/DbConnection.php";
-require "../Managers/UtilManager.php";
-require "../Model/PortraitModel.php";
+require_once "../Managers/UtilManager.php";
+require_once "../Model/PortraitModel.php";
 
 class PortraitController {
 

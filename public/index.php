@@ -4,12 +4,12 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 header('Access-Control-Allow-Origin: *');
 require '../vendor/autoload.php';
-require '../config/DbConnection.php';
-require '../Model/PortraitModel.php';
-require '../Controllers/PortraitController.php';
-require '../Model/UserModel.php';
-require '../Model/ConsumerModel.php';
-require '../Controllers/UserController.php';
+require_once '../config/DbConnection.php';
+require_once '../Model/PortraitModel.php';
+require_once '../Controllers/PortraitController.php';
+require_once '../Model/UserModel.php';
+require_once '../Model/ConsumerModel.php';
+require_once '../Controllers/UserController.php';
 require_once '../Managers/UtilManager.php';
 
 $app = new \Slim\App([

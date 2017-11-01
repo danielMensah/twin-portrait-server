@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../../Model/PortraitModel.php";
+require_once "../../Model/PortraitModel.php";
 
 class PortraitModelTest extends \PHPUnit_Framework_TestCase {
     protected $portrait;

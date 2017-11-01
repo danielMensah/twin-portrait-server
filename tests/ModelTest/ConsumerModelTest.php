@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../../Model/ConsumerModel.php";
+require_once "../../Model/ConsumerModel.php";
 
 class ConsumerModelTest extends \PHPUnit_Framework_TestCase {
     protected $consumer;

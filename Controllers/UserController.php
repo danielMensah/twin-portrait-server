@@ -6,9 +6,9 @@
  * Date: 24/10/2017
  * Time: 21:30
  */
-require_once __DIR__ . "/../config/DbConnection.php";
-require_once __DIR__ . "/../Model/ConsumerModel.php";
-require_once __DIR__ . "/../Managers/UtilManager.php";
+require_once "../config/DbConnection.php";
+require_once "../Model/ConsumerModel.php";
+require_once "../Managers/UtilManager.php";
 
 class UserController {
 
@@ -47,14 +47,14 @@ class UserController {
 
             return json_encode(array(
                 'response' => 'updated',
-                'promoCode' => $this->addPromoCode()
+                'promoCode' => $type === 'consumer' ? $this->addPromoCode() : null
             ));
         } else {
             return json_encode(array('response' => 'Email already exists'));
         }
     }
 
-    public function addPromoCode() {
+    private function addPromoCode() {
         $promo_code = $this->generatePromoCode();
         $email = $this->model->getEmail();
 
@@ -67,7 +67,7 @@ class UserController {
         return $promo_code;
     }
 
-    public function checkIfUserExists() {
+    private function checkIfUserExists() {
         $email = $this->model->getEmail();
 
         $sql = $this->dbh->getConnection()->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
@@ -78,7 +78,7 @@ class UserController {
         return $sql->fetchColumn();
     }
 
-    protected function generatePromoCode() {
+    private function generatePromoCode() {
         $length = 20;
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);

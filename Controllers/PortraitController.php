@@ -7,7 +7,7 @@
  * Time: 14:15
  */
 
-require "../config/DbConnection.php";
+require_once "../config/DbConnection.php";
 require_once "../Managers/UtilManager.php";
 require_once "../Model/PortraitModel.php";
 
@@ -35,7 +35,7 @@ class PortraitController {
 
     public function getRandomPortrait(){
 
-        $sql = $this->dbh->getConnection()->prepare("SELECT p.id, p.image_url FROM portrait p 
+        $sql = $this->dbh->getConnection()->prepare("SELECT p.id, p.image_url FROM portraits p 
           INNER JOIN portrait_landmarks ps 
             ON p.id = ps.portrait_id 
           WHERE ps.features_completed = FALSE ORDER BY RAND() LIMIT 1");

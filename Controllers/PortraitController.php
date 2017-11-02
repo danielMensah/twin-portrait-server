@@ -257,14 +257,18 @@ class PortraitController {
 
     public function getStatistics() {
 
-        $registeredUsersStm = $this->dbh->getConnection()->prepare("SELECT * FROM users");
+        $registeredUsersStm = $this->dbh->getConnection()->prepare("SELECT u.email, c.user_id, c.feedback, c.registered_at FROM users u 
+          INNER JOIN consumer c 
+            ON u.id = c.user_id WHERE u.user_type = 'consumer'");
         $this->utilManager->handleStatementException($registeredUsersStm, "Error while fetching users statistics!");
 
         $completedLandmarksStm = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE features_completed = TRUE");
         $this->utilManager->handleStatementException($completedLandmarksStm, "Error while fetching landmarks statistics!");
 
         return json_encode(array(
-           "registeredUsers" => $registeredUsersStm->fetchAll(PDO::FETCH_ASSOC),
+            "registeredUsersCount" => $registeredUsersStm->rowCount(),
+            "registeredUsers" => $registeredUsersStm->fetchAll(PDO::FETCH_ASSOC),
+            "completedLandmarksCount" => $completedLandmarksStm->rowCount(),
             "completedLandmarks" => $completedLandmarksStm->fetchAll(PDO::FETCH_ASSOC)
         ));
 

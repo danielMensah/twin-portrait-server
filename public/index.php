@@ -127,4 +127,10 @@ $app->get('/statistics', function (Request $request, Response $response) {
    echo $portraitController->getStatistics();
 });
 
+$app->get('/getUser', function (Request $request, Response $response) {
+
+    $userController = new UserController();
+   echo $userController->getUser();
+});
+
 $app->run();

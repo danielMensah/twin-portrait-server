@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54f348b9-8a1b-4dc9-bab2-5930646074cf" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/php.xml" afterPath="$PROJECT_DIR$/.idea/php.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Controllers/UserController.php" afterPath="$PROJECT_DIR$/Controllers/UserController.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -86,15 +84,15 @@
       <file leaf-file-name="UserController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Controllers/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <state relative-caret-position="84">
+              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding>
-                <marker date="1511291763354" expanded="true" signature="798:861" ph="INSERT INTO users... " />
-                <marker date="1511291763354" expanded="true" signature="1143:1248" ph="INSERT INTO ${$type}... " />
-                <marker date="1511291763354" expanded="true" signature="1193:1234" ph="SELECT id fr... users" />
-                <marker date="1511291763354" expanded="true" signature="1959:2072" ph="INSERT INTO promo_codes... " />
-                <marker date="1511291763354" expanded="true" signature="2016:2057" ph="select id fr... users" />
-                <marker date="1511291763354" expanded="true" signature="2479:2526" ph="SELECT COUNT... users" />
+                <marker date="1511292252180" expanded="true" signature="1073:1136" ph="INSERT INTO users... " />
+                <marker date="1511292252180" expanded="true" signature="1418:1523" ph="INSERT INTO ${$type}... " />
+                <marker date="1511292252180" expanded="true" signature="1468:1509" ph="SELECT id fr... users" />
+                <marker date="1511292252180" expanded="true" signature="2234:2347" ph="INSERT INTO promo_codes... " />
+                <marker date="1511292252180" expanded="true" signature="2291:2332" ph="select id fr... users" />
+                <marker date="1511292252180" expanded="true" signature="2754:2801" ph="SELECT COUNT... users" />
               </folding>
             </state>
           </provider>
@@ -819,7 +817,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="225721000" />
+    <option name="totallyTimeSpent" value="226198000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -1109,15 +1107,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        <state relative-caret-position="84">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
-            <marker date="1511291763354" expanded="true" signature="798:861" ph="INSERT INTO users... " />
-            <marker date="1511291763354" expanded="true" signature="1143:1248" ph="INSERT INTO ${$type}... " />
-            <marker date="1511291763354" expanded="true" signature="1193:1234" ph="SELECT id fr... users" />
-            <marker date="1511291763354" expanded="true" signature="1959:2072" ph="INSERT INTO promo_codes... " />
-            <marker date="1511291763354" expanded="true" signature="2016:2057" ph="select id fr... users" />
-            <marker date="1511291763354" expanded="true" signature="2479:2526" ph="SELECT COUNT... users" />
+            <marker date="1511292252180" expanded="true" signature="1073:1136" ph="INSERT INTO users... " />
+            <marker date="1511292252180" expanded="true" signature="1418:1523" ph="INSERT INTO ${$type}... " />
+            <marker date="1511292252180" expanded="true" signature="1468:1509" ph="SELECT id fr... users" />
+            <marker date="1511292252180" expanded="true" signature="2234:2347" ph="INSERT INTO promo_codes... " />
+            <marker date="1511292252180" expanded="true" signature="2291:2332" ph="select id fr... users" />
+            <marker date="1511292252180" expanded="true" signature="2754:2801" ph="SELECT COUNT... users" />
           </folding>
         </state>
       </provider>

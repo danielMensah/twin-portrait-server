@@ -1,12 +1,6 @@
 <?php
 
-/**
- * Created by IntelliJ IDEA.
- * User: MrDan
- * Date: 24/10/2017
- * Time: 21:30
- */
-require_once "../config/DbConnection.php";
+require_once getenv('DBCon');
 require_once "../Model/ConsumerModel.php";
 require_once "../Managers/UtilManager.php";
 
@@ -78,7 +72,7 @@ class UserController {
         return $sql->fetchColumn();
     }
 
-    private function generatePromoCode() {
+    public function generatePromoCode() {
         $length = 20;
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
@@ -87,6 +81,10 @@ class UserController {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    public function getUser() {
+        return 'Daniel';
     }
 
 }

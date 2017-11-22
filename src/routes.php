@@ -3,6 +3,8 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 
+header('Access-Control-Allow-Origin: *');
+
 require_once '../config/DbConnection.php';
 require_once '../Model/PortraitModel.php';
 require_once '../Controllers/PortraitController.php';

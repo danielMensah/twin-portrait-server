@@ -1,169 +1,33 @@
 <?php
-//
-//header('Access-Control-Allow-Origin: *');
-//
-//if (PHP_SAPI == 'cli-server') {
-//    // To help the built-in PHP dev server, check if the request was actually for
-//    // something which should probably be served as a static file
-//    $url  = parse_url($_SERVER['REQUEST_URI']);
-//    $file = __DIR__ . $url['path'];
-//    if (is_file($file)) {
-//        return false;
-//    }
-//}
-//
-//require_once '../vendor/autoload.php';
-//
-//session_start();
-//
-//// Instantiate the app
-//$settings = require '../src/settings.php';
-//$app = new \Slim\App($settings);
-//
-//// Set up dependencies
-//require_once '../src/dependencies.php';
-//
-//// Register middleware
-//require_once '../src/middleware.php';
-//
-//// Register routes
-//require_once '../src/routes.php';
-//
-//// Run app
-//$app->run();
-
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
 
 header('Access-Control-Allow-Origin: *');
-require '../vendor/autoload.php';
-require_once '../config/DbConnection.php';
-require_once '../Model/PortraitModel.php';
-require_once '../Controllers/PortraitController.php';
-require_once '../Model/UserModel.php';
-require_once '../Model/ConsumerModel.php';
-require_once '../Controllers/UserController.php';
-require_once '../Managers/UtilManager.php';
 
-$app = new \Slim\App([
-    'settings' => [
-        'displayErrorDetails' => true
-    ]
-]);
-
-$container = $app->getContainer();
-$container['upload_directory'] = $_SERVER['DOCUMENT_ROOT'].'/../images';
-
-// display random portrait
-$app->get('/getPortrait', function (Request $request, Response $response) {
-
-    $portraitController = new PortraitController();
-    return $portraitController->getRandomPortrait();
-});
-
-// get portrait info
-$app->post('/getPortraitInfo', function (Request $request, Response $response) {
-    $portraitId = $request->getParsedBody()['id'];
-
-    $portraitModel = new PortraitModel();
-    $portraitModel->setId($portraitId);
-
-    $portraitController = new PortraitController($portraitModel);
-    echo $portraitController->getPortraitInfo();
-});
-
-// upload form
-$app->get('/portrait', function (Request $request, Response $response) {
-    $portraitController = new PortraitController();
-    echo $portraitController->uploadPortraitForm();
-});
-
-//upload portrait
-$app->post('/uploadPortrait', function (Request $request, Response $response) {
-
-    $num = $_POST["json"];
-    $api = $_POST["api"];
-
-    switch ($api) {
-        case 1:
-            $url = "https://storage.googleapis.com/tags_data/new_labels_assets/Self_portrait/$num.json";
-            break;
-        case 2:
-            $url = "https://storage.googleapis.com/tags_data/new_labels_assets/Portrait/$num.json";
-            break;
+if (PHP_SAPI == 'cli-server') {
+    // To help the built-in PHP dev server, check if the request was actually for
+    // something which should probably be served as a static file
+    $url  = parse_url($_SERVER['REQUEST_URI']);
+    $file = __DIR__ . $url['path'];
+    if (is_file($file)) {
+        return false;
     }
+}
 
-    $utilManger = new UtilManager();
-    $data = $utilManger->curlCall($url);
+require_once '../vendor/autoload.php';
 
-    foreach ($data as $item) {
-        $portraitModel = new PortraitModel();
-        $portraitModel->setId($item->id);
-        $portraitModel->setImageUrl($item->img);
+session_start();
 
-        $portraitController = new PortraitController($portraitModel);
-        echo $portraitController->addPortrait();
-    }
-//    echo addImage('PAEeCdN0S0qgNg', 'http://lh5.ggpht.com/jgpYFmLNAWJL3734TQOgoVZRUOOOuFskI_2XXSgahS_jjwRblaHKtyK_BH3U');
-});
+// Instantiate the app
+$settings = require '../src/settings.php';
+$app = new \Slim\App($settings);
 
-//update portrait
-$app->post('/updatePortrait', function (Request $request, Response $response) {
+// Set up dependencies
+require_once '../src/dependencies.php';
 
-    $arrayOfLandmarks = [];
-    $reqDecoded = json_decode($request->getBody(), true);
-    foreach ($reqDecoded as $feature) {
-        if (!empty($feature['landmark'])) {
-            $arrayOfLandmarks[$feature['landmark']] = array(
-                'landmark' => $feature['landmark'],
-                'landmarkKey' => $feature['landmarkKey']
-            );
-        }
-    }
+// Register middleware
+require_once '../src/middleware.php';
 
-    $portraitController = new PortraitController();
-    return $portraitController->updatePortrait($arrayOfLandmarks,
-        $reqDecoded['portraitId'],
-        $reqDecoded['gender'],
-        $reqDecoded['mustache'],
-        $reqDecoded['beard']);
-});
+// Register routes
+require_once '../src/routes.php';
 
-//set not applicable portrait
-$app->post('/setNotApplicable', function (Request $request, Response $response) {
-    $reqDecoded = json_decode($request->getBody(), true);
-
-    $portraitModel = new PortraitModel();
-    $portraitModel->setId($reqDecoded['portraitId']);
-
-    $portraitController = new PortraitController($portraitModel);
-    echo $portraitController->handleNotApplicationPortrait();
-});
-
-//register user
-$app->post('/registerUser', function (Request $request, Response $response) {
-
-    $reqDecoded = json_decode($request->getBody(), true);
-
-    $consumerModel = new ConsumerModel();
-    $consumerModel->setEmail(strtolower($reqDecoded['email']));
-    $consumerModel->setFeedback($reqDecoded['feedback']);
-    $consumerModel->setUserType("consumer");
-
-    $userController = new UserController($consumerModel);
-    echo $userController->registerUser();
-});
-
-$app->get('/statistics', function (Request $request, Response $response) {
-
-    $portraitController = new PortraitController();
-    echo $portraitController->getStatistics();
-});
-
-$app->get('/getUser', function (Request $request, Response $response) {
-
-    $userController = new UserController();
-    echo $userController->getUser();
-});
-
+// Run app
 $app->run();

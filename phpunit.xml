@@ -1,4 +1,7 @@
-<phpunit bootstrap="vendor/autoload.php">
+<phpunit bootstrap="vendor/autoload.php"
+         colors="true"
+         verbose="true"
+         stopOnFailure="false">
     <testsuites>
         <testsuite name="SlimSkeleton">
             <directory>tests</directory>

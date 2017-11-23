@@ -12,22 +12,22 @@ if (PHP_SAPI == 'cli-server') {
     }
 }
 
-require_once '../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
 // Instantiate the app
-$settings = require '../src/settings.php';
+$settings = require_once __DIR__ . '/../src/settings.php';
 $app = new \Slim\App($settings);
 
 // Set up dependencies
-require_once '../src/dependencies.php';
+require_once __DIR__ . '/../src/dependencies.php';
 
 // Register middleware
-require_once '../src/middleware.php';
+require_once __DIR__ . '/../src/middleware.php';
 
 // Register routes
-require_once '../src/routes.php';
+require_once __DIR__ . '/../src/routes.php';
 
 // Run app
 $app->run();

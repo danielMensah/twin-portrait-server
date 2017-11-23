@@ -7,9 +7,9 @@
  * Time: 14:15
  */
 
-require_once "../config/DbConnection.php";
-require_once "../Managers/UtilManager.php";
-require_once "../Model/PortraitModel.php";
+require_once __DIR__ . "/../config/DbConnection.php";
+require_once __DIR__ . "/../Managers/UtilManager.php";
+require_once __DIR__ . "/../Model/PortraitModel.php";
 
 class PortraitController {
 
@@ -88,7 +88,10 @@ class PortraitController {
 
         $this->utilManager->handleStatementException($sql, "Error while inserting portrait info!");
         $this->initialiseLandmarks($id);
-        return 'updated';
+
+        return json_encode(array(
+            'response' => 'Added portrait'
+        ));
     }
 
     protected function initialiseLandmarks($id) {

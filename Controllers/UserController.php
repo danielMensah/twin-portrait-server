@@ -1,11 +1,8 @@
 <?php
-$DBConnection = getenv('DBCon') ? getenv('DBCon') : __DIR__ . "/../config/DbConnection.php";
-$ConsumerModel = getenv('ConsumerModel') ? getenv('ConsumerModel') : __DIR__ . "/../Model/ConsumerModel.php";
-$UtilManager = getenv('UtilManager') ? getenv('UtilManager') : __DIR__ . "/../Managers/UtilManager.php";
 
-require_once $DBConnection;
-require_once $ConsumerModel;
-require_once $UtilManager;
+require_once __DIR__ . "/../config/DbConnection.php";
+require_once __DIR__ . "/../Model/ConsumerModel.php";
+require_once __DIR__ . "/../Managers/UtilManager.php";
 
 class UserController {
 

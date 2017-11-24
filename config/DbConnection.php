@@ -11,7 +11,7 @@ class DbConnection {
      * production = 2
      */
 
-    function getConnection($option = 1) {
+    function getConnection($option = 2) {
 
         switch($option){
             case 1:

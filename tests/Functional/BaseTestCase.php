@@ -68,15 +68,6 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         // Register routes
         require __DIR__ . '/../../src/routes.php';
 
-        //Controllers and Models
-//        require __DIR__ . '/../../config/DbConnection.php';
-//        require __DIR__ . '/../../Model/PortraitModel.php';
-//        require __DIR__ . '/../../Controllers/PortraitController.php';
-//        require __DIR__ . '/../../Model/UserModel.php';
-//        require __DIR__ . '/../../Model/ConsumerModel.php';
-//        require __DIR__ . '/../../Controllers/UserController.php';
-//        require __DIR__ . '/../../Managers/UtilManager.php';
-
         // Process the application
         $response = $app->process($request, $response);
 

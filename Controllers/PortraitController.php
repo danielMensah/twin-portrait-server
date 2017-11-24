@@ -15,24 +15,24 @@ class PortraitController {
 
     const INFO_URL = "https://artsexperiments.withgoogle.com/tags/api/og/search/";
 
+    /** @var PortraitModel */
     private $model;
+    /** @var DbConnection */
     protected $dbh;
+    /** @var UtilManager */
     protected $utilManager;
-    protected $portraitManger;
 
     /**
      * PortraitController constructor.
-     * @param PortraitModel $model
-     * @param bool $initialisation
      */
-    public function __construct(PortraitModel $model = null, $initialisation = true) {
-        if ($initialisation) {
-            $this->dbh = new DbConnection();
-            $this->utilManager = new UtilManager();
-            $this->model = $model;
-        }
+    public function __construct() {
+        $this->dbh = new DbConnection();
+        $this->utilManager = new UtilManager();
     }
 
+    /**
+     * @return string
+     */
     public function getRandomPortrait(){
 
         $sql = $this->dbh->getConnection()->prepare("SELECT p.id, p.image_url FROM portrait p 
@@ -53,7 +53,13 @@ class PortraitController {
 
     }
 
-    public function addPortrait() {
+    /**
+     * @param $model
+     * @return string
+     */
+    public function addPortrait($model) {
+        $this->model = $model;
+
         $id = $this->model->getId();
         $portrait_url = $this->model->getImageUrl();
 
@@ -64,6 +70,10 @@ class PortraitController {
         return $this->addPortraitInfo($this->model->getId());
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function addPortraitInfo($id) {
         $url = self::INFO_URL . $id;
 
@@ -94,6 +104,9 @@ class PortraitController {
         ));
     }
 
+    /**
+     * @param $id
+     */
     protected function initialiseLandmarks($id) {
         $sql = $this->dbh->getConnection()->prepare("INSERT INTO portrait_landmarks ( portrait_id ) VALUES (:id)");
         $sql->bindParam('id', $id, PDO::PARAM_STR);
@@ -101,6 +114,14 @@ class PortraitController {
         $this->utilManager->handleStatementException($sql, "Error while initialising landmarks!");
     }
 
+    /**
+     * @param $arrayOfLandmarks
+     * @param $portraitId
+     * @param $gender
+     * @param $mustache
+     * @param $beard
+     * @return string
+     */
     public function updatePortrait($arrayOfLandmarks, $portraitId, $gender, $mustache, $beard) {
         $updatedLandmarks = $this->portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard, $this->dbh);
 
@@ -129,7 +150,15 @@ class PortraitController {
         return json_encode(array( 'response' => 'updated '));
     }
 
-    public function portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard, DbConnection $dbh) {
+    /**
+     * @param $arrayOfLandmarks
+     * @param $portraitId
+     * @param $mustache
+     * @param $beard
+     * @param DbConnection $dbh
+     * @return array
+     */
+    private function portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard, DbConnection $dbh) {
 
         $sql = $dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE portrait_id = :portrait_id");
         $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
@@ -223,7 +252,13 @@ class PortraitController {
 
     }
 
-    public function handleNotApplicationPortrait() {
+    /**
+     * @param $model
+     * @return string
+     */
+    public function handleNotApplicationPortrait($model) {
+        $this->model = $model;
+
         $id = $this->model->getId();
 
         $sql = $this->dbh->getConnection()->prepare("UPDATE portrait_landmarks SET not_applicable = TRUE, features_completed = TRUE WHERE portrait_id = :portrait_id");
@@ -233,7 +268,13 @@ class PortraitController {
         return json_encode(array( 'response' => 'updated '));
     }
 
-    public function getPortraitInfo() {
+    /**
+     * @param $model
+     * @return string
+     */
+    public function getPortraitInfo($model) {
+        $this->model = $model;
+
         $unknown = 'Unknown';
         $id = $this->model->getId();
 
@@ -258,6 +299,9 @@ class PortraitController {
         ));
     }
 
+    /**
+     * @return string
+     */
     public function getStatistics() {
 
         $registeredUsersStm = $this->dbh->getConnection()->prepare("SELECT u.email, c.user_id, c.feedback, c.registered_at FROM users u 
@@ -277,6 +321,9 @@ class PortraitController {
 
     }
 
+    /**
+     * @return string
+     */
     public function uploadPortraitForm() {
         $form  = '
             <form method="POST" action="/uploadPortrait" enctype="multipart/form-data">

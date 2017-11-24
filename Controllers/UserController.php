@@ -21,7 +21,13 @@ class UserController {
         $this->model = $model;
     }
 
-    public function registerUser() {
+    /**
+     * @param $model
+     * @return string
+     */
+    public function registerUser($model) {
+        $this->model = $model;
+
         $email = $this->model->getEmail();
         $feedback = $this->model->getFeedback();
         $type = $this->model->getUserType();
@@ -48,6 +54,9 @@ class UserController {
         }
     }
 
+    /**
+     * @return string
+     */
     private function addPromoCode() {
         $promo_code = $this->generatePromoCode();
         $email = $this->model->getEmail();
@@ -61,6 +70,9 @@ class UserController {
         return $promo_code;
     }
 
+    /**
+     * @return mixed
+     */
     private function checkIfUserExists() {
         $email = $this->model->getEmail();
 
@@ -72,6 +84,9 @@ class UserController {
         return $sql->fetchColumn();
     }
 
+    /**
+     * @return string
+     */
     public function generatePromoCode() {
         $length = 20;
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -81,6 +96,21 @@ class UserController {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    /**
+     * @param $email
+     * @return string
+     */
+    public function removeUser($email) {
+        $sql = $this->dbh->getConnection()->prepare("DELETE FROM users WHERE email = :email");
+        $sql->bindParam(':email', $email, PDO::PARAM_STR);
+
+        $this->utilManager->handleStatementException($sql, "Error while removing user from database!");
+
+        return json_encode(array(
+            'response' => "User with $email has been removed."
+        ));
     }
 
     public function getUser() {

@@ -5,14 +5,15 @@ require_once __DIR__ . "/../../Model/PortraitModel.php";
 require_once __DIR__ . "/../Helpers/PortraitHelper.php";
 
 class PortraitControllerTest extends PHPUnit_Framework_TestCase {
+
+    /** @var PortraitController */
     private $controller;
+
+    /** @var PortraitHelper */
     private $helper;
 
     protected function setUp() {
-        $model = new PortraitModel();
-        $model->setId('-AEaOcNiNdy-Bg');
-
-        $this->controller = new PortraitController($model);
+        $this->controller = new PortraitController();
         $this->helper = new PortraitHelper();
     }
 
@@ -24,12 +25,18 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
     }
 
 //    public function testThatWeCanAddPortrait() {
+//        $model = new PortraitModel();
+//        $model->setId('testId');
+//        $model->setImageUrl('http://test.com');
 //
 //    }
 
     public function testThatWeCanGetPortraitInfo() {
-        $expectedResult = $this->helper->infoHelper();
-        $actualResult = $this->controller->getPortraitInfo();
+        $model = new PortraitModel();
+        $model->setId('-AEaOcNiNdy-Bg');
+
+        $expectedResult = $this->helper->getPortraitInfoHelper();
+        $actualResult = $this->controller->getPortraitInfo($model);
 
         $this->assertEquals($expectedResult, $actualResult);
     }

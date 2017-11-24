@@ -15,11 +15,14 @@ require_once __DIR__ . '/../Managers/UtilManager.php';
 
 /* ROUTES */
 
+
  //display random portrait
 $app->get('/getPortrait', function (Request $request, Response $response) {
 
     $portraitController = new PortraitController();
-    return $portraitController->getRandomPortrait();
+    $response->getBody()->write($portraitController->getRandomPortrait());
+
+    return $response;
 });
 
 // get portrait info
@@ -29,8 +32,10 @@ $app->post('/getPortraitInfo', function (Request $request, Response $response) {
     $portraitModel = new PortraitModel();
     $portraitModel->setId($portraitId);
 
-    $portraitController = new PortraitController($portraitModel);
-    echo $portraitController->getPortraitInfo();
+    $portraitController = new PortraitController();
+    $response->getBody()->write($portraitController->getPortraitInfo($portraitModel));
+
+    return $response;
 });
 
 // upload form
@@ -62,8 +67,8 @@ $app->post('/uploadPortrait', function (Request $request, Response $response) {
         $portraitModel->setId($item->id);
         $portraitModel->setImageUrl($item->img);
 
-        $portraitController = new PortraitController($portraitModel);
-        echo $portraitController->addPortrait();
+        $portraitController = new PortraitController();
+        echo $portraitController->addPortrait($portraitModel);
     }
 //    echo addImage('PAEeCdN0S0qgNg', 'http://lh5.ggpht.com/jgpYFmLNAWJL3734TQOgoVZRUOOOuFskI_2XXSgahS_jjwRblaHKtyK_BH3U');
 });
@@ -83,11 +88,15 @@ $app->post('/updatePortrait', function (Request $request, Response $response) {
     }
 
     $portraitController = new PortraitController();
-    return $portraitController->updatePortrait($arrayOfLandmarks,
-        $reqDecoded['portraitId'],
-        $reqDecoded['gender'],
-        $reqDecoded['mustache'],
-        $reqDecoded['beard']);
+    $response->getBody()->write(
+        $portraitController->updatePortrait($arrayOfLandmarks,
+            $reqDecoded['portraitId'],
+            $reqDecoded['gender'],
+            $reqDecoded['mustache'],
+            $reqDecoded['beard'])
+    );
+
+    return $response;
 });
 
 //set not applicable portrait
@@ -97,8 +106,10 @@ $app->post('/setNotApplicable', function (Request $request, Response $response) 
     $portraitModel = new PortraitModel();
     $portraitModel->setId($reqDecoded['portraitId']);
 
-    $portraitController = new PortraitController($portraitModel);
-    echo $portraitController->handleNotApplicationPortrait();
+    $portraitController = new PortraitController();
+    $response->getBody()->write($portraitController->handleNotApplicationPortrait($portraitModel));
+
+    return $response;
 });
 
 //register user
@@ -111,18 +122,16 @@ $app->post('/registerUser', function (Request $request, Response $response) {
     $consumerModel->setFeedback($reqDecoded['feedback']);
     $consumerModel->setUserType("consumer");
 
-    $userController = new UserController($consumerModel);
-    echo $userController->registerUser();
+    $userController = new UserController();
+    $response->getBody()->write($userController->registerUser($consumerModel));
+
+    return $response;
 });
 
 $app->get('/statistics', function (Request $request, Response $response) {
 
     $portraitController = new PortraitController();
-    echo $portraitController->getStatistics();
-});
+    $response->getBody()->write($portraitController->getStatistics());
 
-$app->get('/getUser', function (Request $request, Response $response) {
-
-    $userController = new UserController();
-    echo $userController->getUser();
+    return $response;
 });

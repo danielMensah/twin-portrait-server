@@ -1,8 +1,12 @@
 <?php
 
 class PortraitHelper {
-    public function infoHelper() {
-        $info = json_encode(array(
+
+    /**
+     * @return string
+     */
+    public function getPortraitInfoHelper() {
+        return json_encode(array(
             'title' => 'Passy (Ministre des Finances)',
             'creator' => 'Honoré Daumier',
             'date_created' => 'Unknown',
@@ -10,6 +14,17 @@ class PortraitHelper {
             'external_link' => 'Unknown',
             'external_link_text' => 'Unknown',
         ));
-        return $info;
+    }
+
+    /**
+     * @param PortraitModel $model
+     * @return string
+     */
+    public function addPortraitHelper(PortraitModel $model) {
+        $portraitId = $model->getId();
+
+        return json_encode(array(
+           'response' => "$portraitId has been added to the database"
+        ));
     }
 }

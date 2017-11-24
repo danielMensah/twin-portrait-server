@@ -8,6 +8,11 @@
  */
 class UtilManager {
 
+    /**
+     * @param PDOStatement $sql
+     * @param $msg
+     * @return bool
+     */
     public function handleStatementException(PDOStatement $sql, $msg) {
         try {
             if (!$sql->execute()) {
@@ -20,6 +25,11 @@ class UtilManager {
         return true;
     }
 
+    /**
+     * @param $url
+     * @param bool $assoc
+     * @return mixed
+     */
     public function curlCall($url, $assoc = false) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

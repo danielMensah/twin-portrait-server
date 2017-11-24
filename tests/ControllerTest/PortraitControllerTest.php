@@ -24,12 +24,16 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
         $this->assertArrayHasKey('portraitURL', json_decode($actualResult, true));
     }
 
-//    public function testThatWeCanAddPortrait() {
-//        $model = new PortraitModel();
-//        $model->setId('testId');
-//        $model->setImageUrl('http://test.com');
-//
-//    }
+    public function testThatWeCanAddPortrait() {
+        $model = new PortraitModel();
+        $model->setId('testID');
+        $model->setImageUrl('http://test.com');
+
+        $expectedResult = $this->helper->addPortraitHelper($model);
+        $actualResult = $this->controller->addPortrait($model);
+
+        $this->assertEquals($expectedResult, $actualResult);
+    }
 
     public function testThatWeCanGetPortraitInfo() {
         $model = new PortraitModel();
@@ -37,6 +41,16 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
 
         $expectedResult = $this->helper->getPortraitInfoHelper();
         $actualResult = $this->controller->getPortraitInfo($model);
+
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    public function testThatWeCanDeletePortrait() {
+        $model = new PortraitModel();
+        $model->setId('testId');
+
+        $expectedResult = $this->helper->deletePortraitHelper($model);
+        $actualResult = $this->controller->deletePortrait($model);
 
         $this->assertEquals($expectedResult, $actualResult);
     }

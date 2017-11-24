@@ -23,8 +23,12 @@ class PortraitHelper {
     public function addPortraitHelper(PortraitModel $model) {
         $portraitId = $model->getId();
 
-        return json_encode(array(
-           'response' => "$portraitId has been added to the database"
-        ));
+        return "Portrait: $portraitId added from the database!";
+    }
+
+    public function deletePortraitHelper(PortraitModel $model) {
+        $portraitId = $model->getId();
+
+        return "Portrait: $portraitId deleted from the database!";
     }
 }

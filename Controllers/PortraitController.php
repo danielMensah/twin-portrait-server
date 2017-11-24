@@ -66,8 +66,11 @@ class PortraitController {
         $sql = $this->dbh->getConnection()->prepare("INSERT INTO portrait ( id, image_url ) VALUES ( :id, :image_url )");
         $sql->bindParam('id', $id, PDO::PARAM_STR);
         $sql->bindParam('image_url', $portrait_url, PDO::PARAM_STR);
-        $sql->execute();
-        return $this->addPortraitInfo($this->model->getId());
+        $this->utilManager->handleStatementException($sql, "Couldn't added $id. Might be a supplicate");
+
+        $this->addPortraitInfo($id);
+
+        return "Portrait: $id added from the database!";
     }
 
     /**
@@ -319,6 +322,17 @@ class PortraitController {
             "completedLandmarks" => $completedLandmarksStm->fetchAll(PDO::FETCH_ASSOC)
         ));
 
+    }
+
+    public function deletePortrait(PortraitModel $model) {
+        $portraitId = $model->getId();
+
+        $sql = $this->dbh->getConnection()->prepare("DELETE FROM portrait WHERE id = :id");
+        $sql->bindParam(':id', $portraitId, PDO::PARAM_STR);
+
+        $this->utilManager->handleStatementException($sql, "Error while deleting portrait!");
+
+        return "Portrait: $portraitId deleted from the database!";
     }
 
     /**

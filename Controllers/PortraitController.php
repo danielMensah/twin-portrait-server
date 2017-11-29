@@ -121,28 +121,26 @@ class PortraitController {
      * @param $arrayOfLandmarks
      * @param $portraitId
      * @param $gender
-     * @param $mustache
-     * @param $beard
      * @return string
      */
-    public function updatePortrait($arrayOfLandmarks, $portraitId, $gender, $mustache, $beard) {
-        $updatedLandmarks = $this->portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard, $this->dbh);
+    public function updatePortrait($arrayOfLandmarks, $portraitId, $gender) {
+        $updatedLandmarks = $this->portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $this->dbh);
 
         $sql = $this->dbh->getConnection()->prepare("UPDATE portrait_landmarks SET EB_FLAT_SHAPED=:EB_FLAT_SHAPED, EB_ANGLED=:EB_ANGLED, 
         EB_ROUNDED=:EB_ROUNDED, EYE_MONOLID_ALMOND=:EYE_MONOLID_ALMOND, EYE_DEEP_SET=:EYE_DEEP_SET, EYE_DOWNTURNED=:EYE_DOWNTURNED,
         EYE_HOODED=:EYE_HOODED, NOSE_AQUILINE=:NOSE_AQUILINE, NOSE_FLAT=:NOSE_FLAT, NOSE_ROMAN_HOOKED=:NOSE_ROMAN_HOOKED,
         NOSE_SNUB=:NOSE_SNUB, mustache=:mustache, beard=:beard, gender=:gender, features_completed = TRUE WHERE portrait_id=:portrait_id");
-        $sql->bindParam('EB_FLAT_SHAPED', $updatedLandmarks['EB_FLAT_SHAPED'], PDO::PARAM_STR);
-        $sql->bindParam('EB_ANGLED', $updatedLandmarks['EB_ANGLED'], PDO::PARAM_STR);
-        $sql->bindParam('EB_ROUNDED', $updatedLandmarks['EB_ROUNDED'], PDO::PARAM_STR);
-        $sql->bindParam('EYE_MONOLID_ALMOND', $updatedLandmarks['EYE_MONOLID_ALMOND'], PDO::PARAM_STR);
-        $sql->bindParam('EYE_DEEP_SET', $updatedLandmarks['EYE_DEEP_SET'], PDO::PARAM_STR);
-        $sql->bindParam('EYE_DOWNTURNED', $updatedLandmarks['EYE_DOWNTURNED'], PDO::PARAM_STR);
-        $sql->bindParam('EYE_HOODED', $updatedLandmarks['EYE_HOODED'], PDO::PARAM_STR);
-        $sql->bindParam('NOSE_AQUILINE', $updatedLandmarks['NOSE_AQUILINE'], PDO::PARAM_STR);
-        $sql->bindParam('NOSE_FLAT', $updatedLandmarks['NOSE_FLAT'], PDO::PARAM_STR);
-        $sql->bindParam('NOSE_ROMAN_HOOKED', $updatedLandmarks['NOSE_ROMAN_HOOKED'], PDO::PARAM_STR);
-        $sql->bindParam('NOSE_SNUB', $updatedLandmarks['NOSE_SNUB'], PDO::PARAM_STR);
+        $sql->bindParam('EB_FLAT_SHAPED', $updatedLandmarks['eyebrows']['flat_shaped'], PDO::PARAM_STR);
+        $sql->bindParam('EB_ANGLED', $updatedLandmarks['eyebrows']['angled'], PDO::PARAM_STR);
+        $sql->bindParam('EB_ROUNDED', $updatedLandmarks['eyebrows']['rounded'], PDO::PARAM_STR);
+        $sql->bindParam('EYE_MONOLID_ALMOND', $updatedLandmarks['eye']['monolid_almond'], PDO::PARAM_STR);
+        $sql->bindParam('EYE_DEEP_SET', $updatedLandmarks['eye']['deep_set'], PDO::PARAM_STR);
+        $sql->bindParam('EYE_DOWNTURNED', $updatedLandmarks['eye']['downturned'], PDO::PARAM_STR);
+        $sql->bindParam('EYE_HOODED', $updatedLandmarks['eye']['hooded'], PDO::PARAM_STR);
+        $sql->bindParam('NOSE_AQUILINE', $updatedLandmarks['nose']['aquiline'], PDO::PARAM_STR);
+        $sql->bindParam('NOSE_FLAT', $updatedLandmarks['nose']['flat'], PDO::PARAM_STR);
+        $sql->bindParam('NOSE_ROMAN_HOOKED', $updatedLandmarks['nose']['roman_hooked'], PDO::PARAM_STR);
+        $sql->bindParam('NOSE_SNUB', $updatedLandmarks['nose']['snub'], PDO::PARAM_STR);
         $sql->bindParam(':mustache', $updatedLandmarks['mustache'], PDO::PARAM_STR);
         $sql->bindParam(':beard', $updatedLandmarks['beard'], PDO::PARAM_STR);
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
@@ -150,18 +148,16 @@ class PortraitController {
 
         $this->utilManager->handleStatementException($sql, "Error while update landmarks!");
 
-        return json_encode(array( 'response' => 'updated '));
+        return "Portrait : $portraitId updated";
     }
 
     /**
-     * @param $arrayOfLandmarks
+     * @param $newData
      * @param $portraitId
-     * @param $mustache
-     * @param $beard
      * @param DbConnection $dbh
      * @return array
      */
-    private function portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $mustache, $beard, DbConnection $dbh) {
+    private function portraitLandmarkCalculation($newData, $portraitId, DbConnection $dbh) {
 
         $sql = $dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE portrait_id = :portrait_id");
         $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
@@ -179,79 +175,99 @@ class PortraitController {
         $sql->bindColumn('NOSE_SNUB', $nose_snub, PDO::PARAM_STR);
         $sql->bindColumn('mustache', $fetchedMustache, PDO::PARAM_STR);
         $sql->bindColumn('beard', $fetchedBeard, PDO::PARAM_STR);
+        $sql->bindColumn('features_completed', $completed, PDO::PARAM_INT);
         $sql->fetch(PDO::FETCH_BOUND);
 
-        switch ($arrayOfLandmarks['eye']['landmarkKey']) {
-            case 'EYE_DEEP_SET':
-                $eye_deep_set = $eye_deep_set + 1;
-                $eye_downturned = $eye_downturned + 0.5;
-                $eye_monolid_almond = $eye_monolid_almond + 0.3;
-                break;
-            case 'EYE_MONOLID_ALMOND':
-                $eye_monolid_almond = $eye_monolid_almond + 1;
-                $eye_hooded = $eye_hooded + 0.5;
-                $eye_deep_set = $eye_deep_set + 0.3;
-                break;
-            case 'EYE_DOWNTURNED':
-                $eye_downturned = $eye_downturned + 1;
-                $eye_deep_set = $eye_deep_set + 0.5;
-                break;
-            case 'EYE_HOODED':
-                $eye_hooded = $eye_hooded + 1;
-                $eye_monolid_almond = $eye_monolid_almond + 0.5;
-                break;
-        };
-
-        switch ($arrayOfLandmarks['eyebrows']['landmarkKey']) {
-            case 'EB_FLAT_SHAPED':
-                $eb_flat_shaped = $eb_flat_shaped + 1;
-                break;
-            case 'EB_ANGLED':
-                $eb_angled = $eb_angled + 1;
-                $eb_rounded = $eb_rounded + 0.5;
-                break;
-            case 'EB_ROUNDED':
-                $eb_rounded = $eb_rounded + 1;
-                $eb_angled = $eb_angled + 0.5;
-                break;
-        };
-
-        switch ($arrayOfLandmarks['nose']['landmarkKey']) {
-            case 'NOSE_AQUILINE':
-                $nose_aquiline = $nose_aquiline + 1;
-                $nose_roman_hooked = $nose_roman_hooked + 0.8;
-                break;
-            case 'NOSE_FLAT':
-                $nose_flat = $nose_flat + 1;
-                $nose_snub = $nose_snub + 0.3;
-                break;
-            case 'NOSE_ROMAN_HOOKED':
-                $nose_roman_hooked = $nose_roman_hooked + 1;
-                $nose_aquiline = $nose_aquiline + 0.8;
-                break;
-            case 'NOSE_SNUB':
-                $nose_snub = $nose_snub + 1;
-                $nose_flat = $nose_flat + 0.4;
-                break;
-        };
-
-        $fetchedLandmarksValues = array(
-            'EB_FLAT_SHAPED' => $eb_flat_shaped,
-            'EB_ANGLED' => $eb_angled,
-            'EB_ROUNDED' => $eb_rounded,
-            'EYE_MONOLID_ALMOND' => $eye_monolid_almond,
-            'EYE_DEEP_SET' => $eye_deep_set,
-            'EYE_DOWNTURNED' => $eye_downturned,
-            'EYE_HOODED' => $eye_hooded,
-            'NOSE_AQUILINE' => $nose_aquiline,
-            'NOSE_FLAT' => $nose_flat,
-            'NOSE_ROMAN_HOOKED' => $nose_roman_hooked,
-            'NOSE_SNUB' => $nose_snub,
-            'mustache' => ($mustache == 'true') ? $fetchedMustache + 0.5 : $fetchedMustache,
-            'beard' => ($beard == 'true') ? $fetchedBeard + 0.5 : $fetchedBeard
+        $oldData = array(
+            "mustache" => $fetchedMustache,
+            "beard" => $fetchedBeard,
+            "eyebrows" => array(
+                "flat_shaped" => $eb_flat_shaped,
+                "rounded" => $eb_rounded,
+                "angled" => $eb_angled),
+            "eye" => array(
+                "deep_set" => $eye_deep_set,
+                "monolid_almond" => $eye_monolid_almond,
+                "downturned" => $eye_downturned,
+                "hooded" => $eye_hooded),
+            "nose" => array(
+                "aquiline" => $nose_aquiline,
+                "flat" => $nose_flat,
+                "roman_hooked" => $nose_roman_hooked,
+                "snub" => $nose_snub)
         );
 
-        return $fetchedLandmarksValues;
+//        switch ($arrayOfLandmarks['eye']['landmarkKey']) {
+//            case 'EYE_DEEP_SET':
+//                $eye_deep_set = $eye_deep_set + 1;
+//                $eye_downturned = $eye_downturned + 0.5;
+//                $eye_monolid_almond = $eye_monolid_almond + 0.3;
+//                break;
+//            case 'EYE_MONOLID_ALMOND':
+//                $eye_monolid_almond = $eye_monolid_almond + 1;
+//                $eye_hooded = $eye_hooded + 0.5;
+//                $eye_deep_set = $eye_deep_set + 0.3;
+//                break;
+//            case 'EYE_DOWNTURNED':
+//                $eye_downturned = $eye_downturned + 1;
+//                $eye_deep_set = $eye_deep_set + 0.5;
+//                break;
+//            case 'EYE_HOODED':
+//                $eye_hooded = $eye_hooded + 1;
+//                $eye_monolid_almond = $eye_monolid_almond + 0.5;
+//                break;
+//        };
+//
+//        switch ($arrayOfLandmarks['eyebrows']['landmarkKey']) {
+//            case 'EB_FLAT_SHAPED':
+//                $eb_flat_shaped = $eb_flat_shaped + 1;
+//                break;
+//            case 'EB_ANGLED':
+//                $eb_angled = $eb_angled + 1;
+//                $eb_rounded = $eb_rounded + 0.5;
+//                break;
+//            case 'EB_ROUNDED':
+//                $eb_rounded = $eb_rounded + 1;
+//                $eb_angled = $eb_angled + 0.5;
+//                break;
+//        };
+//
+//        switch ($arrayOfLandmarks['nose']['landmarkKey']) {
+//            case 'NOSE_AQUILINE':
+//                $nose_aquiline = $nose_aquiline + 1;
+//                $nose_roman_hooked = $nose_roman_hooked + 0.8;
+//                break;
+//            case 'NOSE_FLAT':
+//                $nose_flat = $nose_flat + 1;
+//                $nose_snub = $nose_snub + 0.3;
+//                break;
+//            case 'NOSE_ROMAN_HOOKED':
+//                $nose_roman_hooked = $nose_roman_hooked + 1;
+//                $nose_aquiline = $nose_aquiline + 0.8;
+//                break;
+//            case 'NOSE_SNUB':
+//                $nose_snub = $nose_snub + 1;
+//                $nose_flat = $nose_flat + 0.4;
+//                break;
+//        };
+//
+//        $fetchedLandmarksValues = array(
+//            'EB_FLAT_SHAPED' => $eb_flat_shaped,
+//            'EB_ANGLED' => $eb_angled,
+//            'EB_ROUNDED' => $eb_rounded,
+//            'EYE_MONOLID_ALMOND' => $eye_monolid_almond,
+//            'EYE_DEEP_SET' => $eye_deep_set,
+//            'EYE_DOWNTURNED' => $eye_downturned,
+//            'EYE_HOODED' => $eye_hooded,
+//            'NOSE_AQUILINE' => $nose_aquiline,
+//            'NOSE_FLAT' => $nose_flat,
+//            'NOSE_ROMAN_HOOKED' => $nose_roman_hooked,
+//            'NOSE_SNUB' => $nose_snub,
+//            'mustache' => ($mustache == 'true') ? $fetchedMustache + 0.5 : $fetchedMustache,
+//            'beard' => ($beard == 'true') ? $fetchedBeard + 0.5 : $fetchedBeard
+//        );
+
+        return $this->generateUpdatedLandmarkValues($oldData, $newData, $completed);
 
     }
 
@@ -333,6 +349,52 @@ class PortraitController {
         $this->utilManager->handleStatementException($sql, "Error while deleting portrait!");
 
         return "Portrait: $portraitId deleted from the database!";
+    }
+
+    public function generateUpdatedLandmarkValues($oldValues, $newValues, $completed) {
+        $updateValues = array();
+
+        $finalNewValues = array(
+            "mustache" => $newValues['mustache'] ? 1 : 0,
+            "beard" => $newValues['beard'] ? 1 : 0,
+            "eyebrows" => $this->convertLandmarkValue($newValues['eyebrows']),
+            "eye" => $this->convertLandmarkValue($newValues['eye']),
+            "nose" => $this->convertLandmarkValue($newValues['nose'])
+        );
+
+        if (!$completed) {
+            return $finalNewValues;
+        }
+
+        foreach ($finalNewValues as $key => $value) {
+            if ($key == 'mustache' || $key == 'beard') {
+                $updateValues[$key] = $this->average($oldValues[$key], $value);
+            } else  {
+                $calculatedLandmarks = array();
+                foreach ($value as $lKey => $lValue) {
+                    $calculatedLandmarks[$lKey] = $this->average($oldValues[$key][$lKey], $lValue);
+                }
+                $updateValues[$key] = $calculatedLandmarks;
+            }
+        }
+
+        return $updateValues;
+    }
+
+    public function average($a, $b) {
+        return number_format(($a+$b) / 2, 2);
+    }
+
+    public function convertLandmarkValue($arrayLandmarks) {
+        $value = count($arrayLandmarks);
+        $convertedLandmarks = array();
+
+        foreach ($arrayLandmarks as $landmark) {
+            $convertedLandmarks[$landmark] = $value;
+            $value--;
+        }
+
+        return $convertedLandmarks;
     }
 
     /**

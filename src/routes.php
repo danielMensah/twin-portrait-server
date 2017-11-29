@@ -75,28 +75,16 @@ $app->post('/uploadPortrait', function (Request $request, Response $response) {
 
 //update portrait
 $app->post('/updatePortrait', function (Request $request, Response $response) {
-
-    $arrayOfLandmarks = [];
     $reqDecoded = json_decode($request->getBody(), true);
-    foreach ($reqDecoded as $feature) {
-        if (!empty($feature['landmark'])) {
-            $arrayOfLandmarks[$feature['landmark']] = array(
-                'landmark' => $feature['landmark'],
-                'landmarkKey' => $feature['landmarkKey']
-            );
-        }
-    }
 
     $portraitController = new PortraitController();
     $response->getBody()->write(
-        $portraitController->updatePortrait($arrayOfLandmarks,
+        $portraitController->updatePortrait($reqDecoded['landmarks'],
             $reqDecoded['portraitId'],
-            $reqDecoded['gender'],
-            $reqDecoded['mustache'],
-            $reqDecoded['beard'])
+            $reqDecoded['gender'])
     );
 
-    return $response;
+    return $reqDecoded;
 });
 
 //set not applicable portrait
@@ -134,4 +122,12 @@ $app->get('/statistics', function (Request $request, Response $response) {
     $response->getBody()->write($portraitController->getStatistics());
 
     return $response;
+});
+
+/**
+ * V2 API ROUTES
+ */
+
+$app->get('api//v2/updatePortrait', function (Request $request, Response $response) {
+
 });

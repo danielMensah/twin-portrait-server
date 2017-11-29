@@ -26,9 +26,78 @@ class PortraitHelper {
         return "Portrait: $portraitId added from the database!";
     }
 
+    /**
+     * @param PortraitModel $model
+     * @return string
+     */
     public function deletePortraitHelper(PortraitModel $model) {
         $portraitId = $model->getId();
 
         return "Portrait: $portraitId deleted from the database!";
+    }
+
+    public function convertLandmarkValueHelper() {
+        return array(
+                "deep-set" => 4,
+                "monolid/almond" => 3,
+                "downturned" => 2,
+                "hooked" => 1
+                );
+    }
+
+    public function generateUpdatedLandmarkValuesHelper() {
+        return array(
+            "mustache" => 0,
+            "beard" => 0.5,
+            "eyebrows" => array(
+                "flat_shaped" => 3,
+                "rounded" => 1.5,
+                "angled" => 1.5),
+            "eye" => array(
+                "deep_set" => 4,
+                "monolid_almond" => 2,
+                "downturned" => 2,
+                "hooded" => 2),
+            "nose" => array(
+                "aquiline" => 3,
+                "flat" => 3,
+                "roman_hooked" => 3,
+                "snub" => 1)
+        );
+    }
+
+    public function generateOldValuesDummyData() {
+        return array(
+            "mustache" => 0,
+            "beard" => 1,
+            "eyebrows" => array(
+                "flat_shaped" => 3,
+                "rounded" => 1,
+                "angled" => 2),
+            "eye" => array(
+                "deep_set" => 4,
+                "monolid_almond" => 1,
+                "downturned" => 2,
+                "hooded" => 3),
+            "nose" => array(
+                "aquiline" => 2,
+                "flat" => 3,
+                "roman_hooked" => 4,
+                "snub" => 1)
+        );
+    }
+
+    public function generateNewValuesDummyData() {
+        return array(
+            "mustache" => false,
+            "beard" => false,
+            "eyebrows" => array("flat_shaped", "rounded", "angled"),
+            "eye" => array("deep_set", "monolid_almond", "downturned", "hooded"),
+            "nose" => array("aquiline", "flat", "roman_hooked", "snub")
+        );
+    }
+
+    public function updatePortraitHelper($portraitId) {
+        return "Portrait : $portraitId updated";
     }
 }

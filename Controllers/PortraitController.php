@@ -124,7 +124,7 @@ class PortraitController {
      * @return string
      */
     public function updatePortrait($arrayOfLandmarks, $portraitId, $gender) {
-        $updatedLandmarks = $this->portraitLandmarkCalculation($arrayOfLandmarks, $portraitId, $this->dbh);
+        $updatedLandmarks = $this->generateUpdatedLandmarkValues($arrayOfLandmarks, $portraitId);
 
         $sql = $this->dbh->getConnection()->prepare("UPDATE portrait_landmarks SET EB_FLAT_SHAPED=:EB_FLAT_SHAPED, EB_ANGLED=:EB_ANGLED, 
         EB_ROUNDED=:EB_ROUNDED, EYE_MONOLID_ALMOND=:EYE_MONOLID_ALMOND, EYE_DEEP_SET=:EYE_DEEP_SET, EYE_DOWNTURNED=:EYE_DOWNTURNED,
@@ -148,20 +148,58 @@ class PortraitController {
 
         $this->utilManager->handleStatementException($sql, "Error while update landmarks!");
 
-        return "Portrait : $portraitId updated";
+        return json_encode(array(
+            "response" => "Portrait : $portraitId was updated"
+        ));
     }
 
     /**
-     * @param $newData
+     * @param $newValues
      * @param $portraitId
-     * @param DbConnection $dbh
+     * @param null $oldValues
      * @return array
      */
-    private function portraitLandmarkCalculation($newData, $portraitId, DbConnection $dbh) {
+    public function generateUpdatedLandmarkValues($newValues, $portraitId, $oldValues = null) {
+        $updateValues = array();
+        $oldValues = $oldValues ? $oldValues : $this->getCurrentLandmarkValues($portraitId);
 
-        $sql = $dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE portrait_id = :portrait_id");
+        $finalNewValues = array(
+            "mustache" => $newValues['mustache'] ? 1 : 0,
+            "beard" => $newValues['beard'] ? 1 : 0,
+            "eyebrows" => $this->convertLandmarkValue($newValues['eyebrows']),
+            "eye" => $this->convertLandmarkValue($newValues['eye']),
+            "nose" => $this->convertLandmarkValue($newValues['nose'])
+        );
+
+        if (!$oldValues['completed']) {
+            return $finalNewValues;
+        }
+
+        foreach ($finalNewValues as $key => $value) {
+            if ($key == 'mustache' || $key == 'beard') {
+                $updateValues[$key] = $this->average($oldValues[$key], $value);
+            } else {
+                $calculatedLandmarks = array();
+                foreach ($value as $lKey => $lValue) {
+                    $calculatedLandmarks[$lKey] = $this->average($oldValues[$key][$lKey], $lValue);
+                }
+                $updateValues[$key] = $calculatedLandmarks;
+            }
+        }
+
+        return $updateValues;
+    }
+
+    /**
+     * @param $portraitId
+     * @return array
+     */
+    private function getCurrentLandmarkValues($portraitId) {
+        $sql = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE portrait_id = :portrait_id");
         $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
-        $this->utilManager->handleStatementException($sql, "Error while selecting portraits for landmark calculation function");
+
+        $this->utilManager->handleStatementException($sql, "Error while selecting portraits for landmark calculation function!");
+
         $sql->bindColumn('EB_FLAT_SHAPED', $eb_flat_shaped, PDO::PARAM_STR);
         $sql->bindColumn('EB_ANGLED', $eb_angled, PDO::PARAM_STR);
         $sql->bindColumn('EB_ROUNDED', $eb_rounded, PDO::PARAM_STR);
@@ -178,7 +216,7 @@ class PortraitController {
         $sql->bindColumn('features_completed', $completed, PDO::PARAM_INT);
         $sql->fetch(PDO::FETCH_BOUND);
 
-        $oldData = array(
+        return array(
             "mustache" => $fetchedMustache,
             "beard" => $fetchedBeard,
             "eyebrows" => array(
@@ -194,81 +232,34 @@ class PortraitController {
                 "aquiline" => $nose_aquiline,
                 "flat" => $nose_flat,
                 "roman_hooked" => $nose_roman_hooked,
-                "snub" => $nose_snub)
+                "snub" => $nose_snub),
+            "completed" => $completed
         );
+    }
 
-//        switch ($arrayOfLandmarks['eye']['landmarkKey']) {
-//            case 'EYE_DEEP_SET':
-//                $eye_deep_set = $eye_deep_set + 1;
-//                $eye_downturned = $eye_downturned + 0.5;
-//                $eye_monolid_almond = $eye_monolid_almond + 0.3;
-//                break;
-//            case 'EYE_MONOLID_ALMOND':
-//                $eye_monolid_almond = $eye_monolid_almond + 1;
-//                $eye_hooded = $eye_hooded + 0.5;
-//                $eye_deep_set = $eye_deep_set + 0.3;
-//                break;
-//            case 'EYE_DOWNTURNED':
-//                $eye_downturned = $eye_downturned + 1;
-//                $eye_deep_set = $eye_deep_set + 0.5;
-//                break;
-//            case 'EYE_HOODED':
-//                $eye_hooded = $eye_hooded + 1;
-//                $eye_monolid_almond = $eye_monolid_almond + 0.5;
-//                break;
-//        };
-//
-//        switch ($arrayOfLandmarks['eyebrows']['landmarkKey']) {
-//            case 'EB_FLAT_SHAPED':
-//                $eb_flat_shaped = $eb_flat_shaped + 1;
-//                break;
-//            case 'EB_ANGLED':
-//                $eb_angled = $eb_angled + 1;
-//                $eb_rounded = $eb_rounded + 0.5;
-//                break;
-//            case 'EB_ROUNDED':
-//                $eb_rounded = $eb_rounded + 1;
-//                $eb_angled = $eb_angled + 0.5;
-//                break;
-//        };
-//
-//        switch ($arrayOfLandmarks['nose']['landmarkKey']) {
-//            case 'NOSE_AQUILINE':
-//                $nose_aquiline = $nose_aquiline + 1;
-//                $nose_roman_hooked = $nose_roman_hooked + 0.8;
-//                break;
-//            case 'NOSE_FLAT':
-//                $nose_flat = $nose_flat + 1;
-//                $nose_snub = $nose_snub + 0.3;
-//                break;
-//            case 'NOSE_ROMAN_HOOKED':
-//                $nose_roman_hooked = $nose_roman_hooked + 1;
-//                $nose_aquiline = $nose_aquiline + 0.8;
-//                break;
-//            case 'NOSE_SNUB':
-//                $nose_snub = $nose_snub + 1;
-//                $nose_flat = $nose_flat + 0.4;
-//                break;
-//        };
-//
-//        $fetchedLandmarksValues = array(
-//            'EB_FLAT_SHAPED' => $eb_flat_shaped,
-//            'EB_ANGLED' => $eb_angled,
-//            'EB_ROUNDED' => $eb_rounded,
-//            'EYE_MONOLID_ALMOND' => $eye_monolid_almond,
-//            'EYE_DEEP_SET' => $eye_deep_set,
-//            'EYE_DOWNTURNED' => $eye_downturned,
-//            'EYE_HOODED' => $eye_hooded,
-//            'NOSE_AQUILINE' => $nose_aquiline,
-//            'NOSE_FLAT' => $nose_flat,
-//            'NOSE_ROMAN_HOOKED' => $nose_roman_hooked,
-//            'NOSE_SNUB' => $nose_snub,
-//            'mustache' => ($mustache == 'true') ? $fetchedMustache + 0.5 : $fetchedMustache,
-//            'beard' => ($beard == 'true') ? $fetchedBeard + 0.5 : $fetchedBeard
-//        );
+    /**
+     * @param $a
+     * @param $b
+     * @return string
+     */
+    public function average($a, $b) {
+        return number_format(($a+$b) / 2, 1);
+    }
 
-        return $this->generateUpdatedLandmarkValues($oldData, $newData, $completed);
+    /**
+     * @param $arrayLandmarks
+     * @return array
+     */
+    public function convertLandmarkValue($arrayLandmarks) {
+        $value = count($arrayLandmarks);
+        $convertedLandmarks = array();
 
+        foreach ($arrayLandmarks as $landmark) {
+            $convertedLandmarks[$landmark] = $value;
+            $value--;
+        }
+
+        return $convertedLandmarks;
     }
 
     /**
@@ -340,6 +331,10 @@ class PortraitController {
 
     }
 
+    /**
+     * @param PortraitModel $model
+     * @return string
+     */
     public function deletePortrait(PortraitModel $model) {
         $portraitId = $model->getId();
 
@@ -351,65 +346,204 @@ class PortraitController {
         return "Portrait: $portraitId deleted from the database!";
     }
 
-    public function generateUpdatedLandmarkValues($oldValues, $newValues, $completed) {
-        $updateValues = array();
+    /**
+     * @param $arrayOfLandmarks
+     * @param $gender
+     * @return string
+     */
+    public function generatePossibleDoppelganger($arrayOfLandmarks, $gender, $beard, $mustache) {
+        $criteria = $this->generateCriteria($arrayOfLandmarks, $beard, $mustache);
 
-        $finalNewValues = array(
-            "mustache" => $newValues['mustache'] ? 1 : 0,
-            "beard" => $newValues['beard'] ? 1 : 0,
-            "eyebrows" => $this->convertLandmarkValue($newValues['eyebrows']),
-            "eye" => $this->convertLandmarkValue($newValues['eye']),
-            "nose" => $this->convertLandmarkValue($newValues['nose'])
-        );
+        $sql = $this->dbh->getConnection()->prepare("SELECT DISTINCT p.id, p.image_url FROM portrait p
+          INNER JOIN portrait_landmarks pl
+            ON p.id = pl.portrait_id WHERE pl.gender = :gender ORDER BY $criteria LIMIT 5");
+        $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
 
-        if (!$completed) {
-            return $finalNewValues;
-        }
+        $this->utilManager->handleStatementException($sql, "Error while fetching match!");
 
-        foreach ($finalNewValues as $key => $value) {
-            if ($key == 'mustache' || $key == 'beard') {
-                $updateValues[$key] = $this->average($oldValues[$key], $value);
-            } else  {
-                $calculatedLandmarks = array();
-                foreach ($value as $lKey => $lValue) {
-                    $calculatedLandmarks[$lKey] = $this->average($oldValues[$key][$lKey], $lValue);
-                }
-                $updateValues[$key] = $calculatedLandmarks;
-            }
-        }
-
-        return $updateValues;
-    }
-
-    public function average($a, $b) {
-        return number_format(($a+$b) / 2, 2);
-    }
-
-    public function convertLandmarkValue($arrayLandmarks) {
-        $value = count($arrayLandmarks);
-        $convertedLandmarks = array();
-
-        foreach ($arrayLandmarks as $landmark) {
-            $convertedLandmarks[$landmark] = $value;
-            $value--;
-        }
-
-        return $convertedLandmarks;
+        return json_encode($sql->fetchAll(PDO::FETCH_ASSOC));
     }
 
     /**
+     * @param $arrayOfLandmarks
+     * @param $beard
+     * @param $mustache
      * @return string
      */
-    public function uploadPortraitForm() {
-        $form  = '
-            <form method="POST" action="/uploadPortrait" enctype="multipart/form-data">
-                <input type="number" name="json" value="0" />
-                <button name="api" value="1">API 1</button>
-                <button name="api" value="2">API 2</button>
-            </form>
-        ';
+    public function generateCriteria($arrayOfLandmarks, $beard, $mustache) {
+        $key = $arrayOfLandmarks['primary']['key'];
+        $criteria = $arrayOfLandmarks['primary'][$key][0] . " DESC, ";
 
-        return $form;
+        foreach ($arrayOfLandmarks['secondary'] as $landmark) {
+            $keyL = key($landmark);
+            $criteria = $criteria . $landmark[$keyL][0] . " DESC, ";
+        }
+
+        if ($beard)
+            $criteria = $criteria . "beard DESC, ";
+
+        if ($mustache)
+            $criteria = $criteria . "mustache DESC, ";
+
+        return rtrim($criteria, ", ");
+    }
+
+    /**
+     * @param $arrayOfLandmarks
+     * @param $relevance
+     * @param $gender
+     * @param $beard
+     * @param $mustache
+     * @return string
+     */
+    public function generatePossibleDoppelgangerv2($arrayOfLandmarks, $relevance, $gender, $beard, $mustache) {
+        $criteria = $this->generateCriteriav2($arrayOfLandmarks, $relevance, $beard, $mustache);
+
+        $sql = $this->dbh->getConnection()->prepare("SELECT DISTINCT p.id, p.image_url FROM portrait p
+          INNER JOIN portrait_landmarks pl
+            ON p.id = pl.portrait_id WHERE pl.gender = :gender ORDER BY $criteria LIMIT 5");
+        $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
+
+        $this->utilManager->handleStatementException($sql, "Error while fetching match!");
+
+        return json_encode($sql->fetchAll(PDO::FETCH_ASSOC));
+    }
+
+    /**
+     * @param $arrayOfLandmarks
+     * @param $relevance
+     * @param $beard
+     * @param $mustache
+     * @return string
+     */
+    public function generateCriteriav2($arrayOfLandmarks, $relevance, $beard, $mustache) {
+        $criteria = "";
+
+        foreach ($relevance as $key) {
+            $criteria = $criteria . $arrayOfLandmarks[$key][0] . " DESC, ";
+        }
+
+        if ($beard)
+            $criteria = $criteria . "beard DESC, ";
+
+        if ($mustache)
+            $criteria = $criteria . "mustache DESC, ";
+
+        return rtrim($criteria, ", ");
+    }
+
+    /**
+     * @param $arrayOfLandmarks
+     * @param $gender
+     * @param $beard
+     * @param $mustache
+     * @return string
+     */
+    public function generatePossibleDoppelgangerWithSimilarTest($arrayOfLandmarks, $gender, $beard, $mustache) {
+
+        $sql = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE gender = :gender");
+        $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
+
+        $this->utilManager->handleStatementException($sql, "Error while selecting portraits for landmark calculation function!");
+        $data = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        $items = array();
+        foreach ($data as $item) {
+            array_push($items, self::getData($item, $arrayOfLandmarks));
+        }
+
+        usort($items, function($a, $b) {
+            return $b['similarity'] > $a['similarity'];
+        });
+
+        return json_encode($items);
+    }
+
+    public function getData($item, $arrayOfLandmarks) {
+        $data = array("eyebrows" => array(
+            "flat_shaped" => $item['EB_FLAT_SHAPED'],
+            "rounded" => $item['EB_ROUNDED'],
+            "angled" => $item['EB_ANGLED']),
+            "eye" => array(
+                "deep_set" => $item['EYE_DEEP_SET'],
+                "monolid_almond" => $item['EYE_MONOLID_ALMOND'],
+                "downturned" => $item['EYE_DOWNTURNED'],
+                "hooded" => $item['EYE_HOODED']),
+            "nose" => array(
+                "aquiline" => $item['NOSE_AQUILINE'],
+                "flat" => $item['NOSE_FLAT'],
+                "roman_hooked" => $item['NOSE_ROMAN_HOOKED'],
+                "snub" => $item['NOSE_SNUB']));
+
+        $eyebrows = $this->utilManager->groupLandmarks($data['eyebrows']);
+        $eyes = $this->utilManager->groupLandmarks($data['eye']);
+        $nose = $this->utilManager->groupLandmarks($data['nose']);
+
+        $percentageEB = self::similarityGenerator($arrayOfLandmarks['eyebrows'], $eyebrows);
+        $percentageEYE = self::similarityGenerator($arrayOfLandmarks['eye'], $eyes);
+        $percentageNOSE = self::similarityGenerator($arrayOfLandmarks['nose'], $nose);
+
+        $similarityPercentage = number_format(($percentageEB + $percentageEYE + $percentageNOSE) / 3, 2);
+
+        return array(
+            "portrait_url" => self::getPortraitWithId($item['portrait_id']),
+            "similarity" => $similarityPercentage
+        );
+    }
+
+
+    /**
+     * @param $userDataArray
+     * @param $dbDataArray
+     * @param bool $priority
+     * @return int
+     */
+    public function similarityGenerator($userDataArray, $dbDataArray, $priority = false) {
+        $length = sizeof($userDataArray);
+        $multiArray = [ $userDataArray, $dbDataArray ];
+
+        $similarity = 0;
+        $max = $length;
+
+        for ($i = 0; $i < $length; $i++) {
+            if ($multiArray[0][$i] == $multiArray[1][$i]) {
+                $similarity = $similarity + $max;
+            } else {
+                $userPos = $this->utilManager->convertArrayPosition($length, $i); // e.g. if $i = 0 && length = 4, return 4
+                $dbPos = $this->utilManager->convertArrayPosition($length, array_search($multiArray[1][$i], $multiArray[0]));
+
+                //performing matrix
+                if ($priority && $userPos == 4 || $priority && $userPos == 3) {
+                    $matrixResult = $userPos - (abs(($userPos - $dbPos) * 2)); // using abs because it might return a negative number which will cause userPos - (-n) = positive
+                    $similarity = $similarity + $matrixResult;
+                } else {
+                    $matrixResult = $userPos - (abs($dbPos - $userPos));
+                    $similarity = $similarity + $matrixResult;
+                }
+            }
+
+            $max--;
+        }
+
+        $maxScore = $this->utilManager->getMaxScore($length);
+        $similarity = abs(($similarity /  $maxScore) * 100);
+        return (int) number_format($similarity);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getPortraitWithId($id) {
+        $sql = $this->dbh->getConnection()->prepare("SELECT image_url FROM portrait WHERE id = :id");
+        $sql->bindParam(':id', $id, PDO::PARAM_STR);
+
+        $this->utilManager->handleStatementException($sql, "Error while selecting portraits for landmark calculation function!");
+
+        $sql->bindColumn('image_url', $portrait_url, PDO::PARAM_STR);
+        $sql->fetch(PDO::FETCH_BOUND);
+
+        return $portrait_url;
     }
 
 }

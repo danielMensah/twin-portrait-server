@@ -40,8 +40,8 @@ $app->post('/getPortraitInfo', function (Request $request, Response $response) {
 
 // upload form
 $app->get('/portrait', function (Request $request, Response $response) {
-    $portraitController = new PortraitController();
-    echo $portraitController->uploadPortraitForm();
+    $manager = new UtilManager();
+    echo $manager->uploadPortraitForm();
 });
 
 //upload portrait
@@ -124,10 +124,48 @@ $app->get('/statistics', function (Request $request, Response $response) {
     return $response;
 });
 
-/**
- * V2 API ROUTES
- */
+$app->post('/match', function (Request $request, Response $response) {
+    $reqDecoded = json_decode($request->getBody(), true);
 
-$app->get('api//v2/updatePortrait', function (Request $request, Response $response) {
+    $portraitController = new PortraitController();
+    $response->getBody()->write(
+        $portraitController->generatePossibleDoppelganger(
+            $reqDecoded['landmarks'],
+            $reqDecoded['gender'],
+            ($reqDecoded['beard'] === 'true'),
+            ($reqDecoded['mustache'] === 'true'))
+    );
 
+    return $response;
+});
+
+$app->post('/matchv2', function (Request $request, Response $response) {
+    $reqDecoded = json_decode($request->getBody(), true);
+
+    $portraitController = new PortraitController();
+    $response->getBody()->write(
+        $portraitController->generatePossibleDoppelgangerv2(
+            $reqDecoded['landmarks'],
+            $reqDecoded['relevance'],
+            $reqDecoded['gender'],
+            ($reqDecoded['beard'] === 'true'),
+            ($reqDecoded['mustache'] === 'true'))
+    );
+
+    return $response;
+});
+
+$app->post('/api/matchWithSimilarText', function (Request $request, Response $response) {
+    $reqDecoded = json_decode($request->getBody(), true);
+
+    $portraitController = new PortraitController();
+    $response->getBody()->write(
+        $portraitController->generatePossibleDoppelgangerWithSimilarTest(
+            $reqDecoded['landmarks'],
+            $reqDecoded['gender'],
+            ($reqDecoded['beard'] === 'true'),
+            ($reqDecoded['mustache'] === 'true'))
+    );
+
+    return $response;
 });

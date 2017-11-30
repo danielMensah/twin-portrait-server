@@ -83,7 +83,8 @@ class PortraitHelper {
                 "aquiline" => 2,
                 "flat" => 3,
                 "roman_hooked" => 4,
-                "snub" => 1)
+                "snub" => 1),
+            "completed" => 1
         );
     }
 
@@ -98,6 +99,14 @@ class PortraitHelper {
     }
 
     public function updatePortraitHelper($portraitId) {
-        return "Portrait : $portraitId updated";
+        return json_encode(array(
+           "response" => "Portrait : $portraitId was updated"
+        ));
+    }
+
+    public function generatePossibleDoppelgangerHelper() {
+        return json_encode(array(
+
+        ));
     }
 }

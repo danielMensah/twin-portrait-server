@@ -14,13 +14,13 @@ class DbConnection {
         switch($option){
             case 1:
                 $host_name = '127.0.0.1';
-                $database = 'twinportrait-server-test';
+                $database = 'twinportrait-server-test-new';
                 $user_name = 'root';
                 $password = '';
                 break;
             case 2:
                 $host_name = 'twinportrait.ca0ainbas4d3.us-west-2.rds.amazonaws.com';
-                $database = 'twinportrait_server';
+                $database = 'twinportrait_server_new';
                 $user_name = getenv('DB_USER');
                 $password = getenv('DB_PASSWORD');
                 break;

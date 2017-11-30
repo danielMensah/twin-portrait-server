@@ -30,4 +30,22 @@ class UtilManagerTest extends PHPUnit_Framework_TestCase {
 
         $this->addToAssertionCount(1); //This gets executed if no exception is thrown
     }
+
+    public function testThatWeCanGetMaxScore() {
+        $len = 3;
+
+        $expectedResult = 6;
+        $actualResult = $this->manager->getMaxScore($len);
+
+        self::assertEquals($expectedResult, $actualResult);
+    }
+
+    public function testThatWeCanGetArrayPosition() {
+        $len = 3;
+
+        $expectedResult = 2;
+        $actualResult = $this->manager->convertArrayPosition($len, 1);
+
+        self::assertEquals($expectedResult, $actualResult);
+    }
 }

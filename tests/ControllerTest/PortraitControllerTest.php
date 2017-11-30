@@ -46,8 +46,8 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testThatWeCanUpdatePortrait() {
-        $expectedResult = $this->helper->updatePortraitHelper("-gFX5XvHGqjx1w");
-        $actualResult = $this->controller->updatePortrait($this->helper->generateNewValuesDummyData(), "-gFX5XvHGqjx1w", "female");
+        $expectedResult = $this->helper->updatePortraitHelper("testID");
+        $actualResult = $this->controller->updatePortrait($this->helper->generateNewValuesDummyData(), "testID", "female");
 
         self::assertEquals($expectedResult, $actualResult);
     }
@@ -56,7 +56,7 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
         $array = array("deep-set", "monolid/almond", "downturned", "hooked");
 
         $expectedResult = $this->helper->convertLandmarkValueHelper();
-        $actualResult = $this->controller->convertLandmarkValue($array, 'eye');
+        $actualResult = $this->controller->convertLandmarkValue($array);
 
         self::assertEquals($expectedResult, $actualResult);
     }
@@ -66,7 +66,7 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
         $oldVal = $this->helper->generateOldValuesDummyData();
 
         $expectedResult = $this->helper->generateUpdatedLandmarkValuesHelper();
-        $actualResult = $this->controller->generateUpdatedLandmarkValues($oldVal, $newVal, "1");
+        $actualResult = $this->controller->generateUpdatedLandmarkValues($newVal, null, $oldVal);
 
         self::assertEquals($expectedResult, $actualResult);
     }

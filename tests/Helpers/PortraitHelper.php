@@ -83,7 +83,8 @@ class PortraitHelper {
                 "aquiline" => 2,
                 "flat" => 3,
                 "roman_hooked" => 4,
-                "snub" => 1)
+                "snub" => 1),
+            "completed" => 1
         );
     }
 

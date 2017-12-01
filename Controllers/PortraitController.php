@@ -148,9 +148,52 @@ class PortraitController {
 
         $this->utilManager->handleStatementException($sql, "Error while update landmarks!");
 
-        return "Portrait : $portraitId updated";
+        return json_encode(array(
+            "response" => "Portrait : $portraitId was updated"
+        ));
     }
 
+    /**
+     * @param $newValues
+     * @param $portraitId
+     * @param null $oldValues
+     * @return array
+     */
+    public function generateUpdatedLandmarkValues($newValues, $portraitId, $oldValues = null) {
+        $updateValues = array();
+        $oldValues = $oldValues ? $oldValues : $this->getCurrentLandmarkValues($portraitId);
+
+        $finalNewValues = array(
+            "mustache" => $newValues['mustache'] ? 1 : 0,
+            "beard" => $newValues['beard'] ? 1 : 0,
+            "eyebrows" => $this->convertLandmarkValue($newValues['eyebrows']),
+            "eye" => $this->convertLandmarkValue($newValues['eye']),
+            "nose" => $this->convertLandmarkValue($newValues['nose'])
+        );
+
+        if (!$oldValues['completed']) {
+            return $finalNewValues;
+        }
+
+        foreach ($finalNewValues as $key => $value) {
+            if ($key == 'mustache' || $key == 'beard') {
+                $updateValues[$key] = $this->average($oldValues[$key], $value);
+            } else {
+                $calculatedLandmarks = array();
+                foreach ($value as $lKey => $lValue) {
+                    $calculatedLandmarks[$lKey] = $this->average($oldValues[$key][$lKey], $lValue);
+                }
+                $updateValues[$key] = $calculatedLandmarks;
+            }
+        }
+
+        return $updateValues;
+    }
+
+    /**
+     * @param $portraitId
+     * @return array
+     */
     private function getCurrentLandmarkValues($portraitId) {
         $sql = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE portrait_id = :portrait_id");
         $sql->bindParam(':portrait_id', $portraitId, PDO::PARAM_STR);
@@ -192,7 +235,26 @@ class PortraitController {
                 "snub" => $nose_snub),
             "completed" => $completed
         );
+    }
 
+    public function average($a, $b) {
+        return number_format(($a+$b) / 2, 1);
+    }
+
+    /**
+     * @param $arrayLandmarks
+     * @return array
+     */
+    public function convertLandmarkValue($arrayLandmarks) {
+        $value = count($arrayLandmarks);
+        $convertedLandmarks = array();
+
+        foreach ($arrayLandmarks as $landmark) {
+            $convertedLandmarks[$landmark] = $value;
+            $value--;
+        }
+
+        return $convertedLandmarks;
     }
 
     /**
@@ -264,6 +326,10 @@ class PortraitController {
 
     }
 
+    /**
+     * @param PortraitModel $model
+     * @return string
+     */
     public function deletePortrait(PortraitModel $model) {
         $portraitId = $model->getId();
 
@@ -275,51 +341,8 @@ class PortraitController {
         return "Portrait: $portraitId deleted from the database!";
     }
 
-    public function generateUpdatedLandmarkValues($newValues, $portraitId, $oldValues = null) {
-        $updateValues = array();
-        $oldValues = $oldValues ? $oldValues : $this->getCurrentLandmarkValues($portraitId);
-
-        $finalNewValues = array(
-            "mustache" => $newValues['mustache'] ? 1 : 0,
-            "beard" => $newValues['beard'] ? 1 : 0,
-            "eyebrows" => $this->convertLandmarkValue($newValues['eyebrows']),
-            "eye" => $this->convertLandmarkValue($newValues['eye']),
-            "nose" => $this->convertLandmarkValue($newValues['nose'])
-        );
-
-        if (!$oldValues['completed']) {
-            return $finalNewValues;
-        }
-
-        foreach ($finalNewValues as $key => $value) {
-            if ($key == 'mustache' || $key == 'beard') {
-                $updateValues[$key] = $this->average($oldValues[$key], $value);
-            } else {
-                $calculatedLandmarks = array();
-                foreach ($value as $lKey => $lValue) {
-                    $calculatedLandmarks[$lKey] = $this->average($oldValues[$key][$lKey], $lValue);
-                }
-                $updateValues[$key] = $calculatedLandmarks;
-            }
-        }
-
-        return $updateValues;
-    }
-
-    public function average($a, $b) {
-        return number_format(($a+$b) / 2, 1);
-    }
-
-    public function convertLandmarkValue($arrayLandmarks) {
-        $value = count($arrayLandmarks);
-        $convertedLandmarks = array();
-
-        foreach ($arrayLandmarks as $landmark) {
-            $convertedLandmarks[$landmark] = $value;
-            $value--;
-        }
-
-        return $convertedLandmarks;
+    public function generatePossibleDoppelganger() {
+        return json_encode(array());
     }
 
     /**

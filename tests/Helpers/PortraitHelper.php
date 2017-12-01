@@ -99,6 +99,14 @@ class PortraitHelper {
     }
 
     public function updatePortraitHelper($portraitId) {
-        return "Portrait : $portraitId updated";
+        return json_encode(array(
+           "response" => "Portrait : $portraitId was updated"
+        ));
+    }
+
+    public function generatePossibleDoppelgangerHelper() {
+        return json_encode(array(
+
+        ));
     }
 }

@@ -341,8 +341,40 @@ class PortraitController {
         return "Portrait: $portraitId deleted from the database!";
     }
 
-    public function generatePossibleDoppelganger() {
-        return json_encode(array());
+    /**
+     * @param $arrayOfLandmarks
+     * @param $gender
+     * @return string
+     */
+    public function generatePossibleDoppelganger($arrayOfLandmarks, $gender, $beard, $mustache) {
+        $criteria = $this->generateCriteria($arrayOfLandmarks, $beard, $mustache);
+
+        $sql = $this->dbh->getConnection()->prepare("SELECT DISTINCT p.id, p.image_url FROM portrait p
+          INNER JOIN portrait_landmarks pl
+            ON p.id = pl.portrait_id WHERE pl.gender = :gender ORDER BY $criteria LIMIT 5");
+        $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
+
+        $this->utilManager->handleStatementException($sql, "Error while fetching match!");
+
+        return json_encode($sql->fetchAll(PDO::FETCH_ASSOC));
+    }
+
+    public function generateCriteria($arrayOfLandmarks, $beard, $mustache) {
+        $key = $arrayOfLandmarks['primary']['key'];
+        $criteria = $arrayOfLandmarks['primary'][$key][0] . " DESC, ";
+
+        if ($beard)
+            $criteria = $criteria . "beard DESC, ";
+
+        if ($mustache)
+            $criteria = $criteria . "mustache DESC, ";
+
+        foreach ($arrayOfLandmarks['secondary'] as $landmark) {
+            $keyL = key($landmark);
+            $criteria = $criteria . $landmark[$keyL][0] . " DESC, ";
+        }
+
+        return rtrim($criteria, ", ");
     }
 
     /**

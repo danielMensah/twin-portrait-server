@@ -124,10 +124,17 @@ $app->get('/statistics', function (Request $request, Response $response) {
     return $response;
 });
 
-/**
- * V2 API ROUTES
- */
+$app->post('/match', function (Request $request, Response $response) {
+    $reqDecoded = json_decode($request->getBody(), true);
 
-$app->get('api//v2/updatePortrait', function (Request $request, Response $response) {
+    $portraitController = new PortraitController();
+    $response->getBody()->write(
+        $portraitController->generatePossibleDoppelganger(
+            $reqDecoded['landmarks'],
+            $reqDecoded['gender'],
+            ($reqDecoded['beard'] === 'true'),
+            ($reqDecoded['mustache'] === 'true'))
+    );
 
+    return $reqDecoded;
 });

@@ -71,19 +71,22 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
         self::assertEquals($expectedResult, $actualResult);
     }
 
-//    public function testThatWeCanGeneratePossibleDoppelganger() {
-//        $expectedResult = $this->helper->generateUpdatedLandmarkValuesHelper();
-//        $actualResult = $this->controller->generateUpdatedLandmarkValues($newVal, null, $oldVal);
-//
-//        self::assertEquals($expectedResult, $actualResult);
-//    }
-
     public function testThatWeCanDeletePortrait() {
         $model = new PortraitModel();
         $model->setId('testId');
 
         $expectedResult = $this->helper->deletePortraitHelper($model);
         $actualResult = $this->controller->deletePortrait($model);
+
+        self::assertEquals($expectedResult, $actualResult);
+    }
+
+    public function testThatWeCanGetSimilarity() {
+        $arr1 = ["A", "C", "B"];
+        $arr2 = ["C", "A", "B"];
+
+        $expectedResult = 50;
+        $actualResult = $this->controller->similarityGenerator($arr1, $arr2);
 
         self::assertEquals($expectedResult, $actualResult);
     }

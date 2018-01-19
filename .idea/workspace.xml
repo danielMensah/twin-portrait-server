@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc0298d9-f059-48c6-96be-5a15421688b9" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Controllers/PortraitController.php" afterPath="$PROJECT_DIR$/Controllers/PortraitController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Managers/UtilManager.php" afterPath="$PROJECT_DIR$/Managers/UtilManager.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes.php" afterPath="$PROJECT_DIR$/src/routes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/ControllerTest/PortraitControllerTest.php" afterPath="$PROJECT_DIR$/tests/ControllerTest/PortraitControllerTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/ManagerTest/UtilManagerTest.php" afterPath="$PROJECT_DIR$/tests/ManagerTest/UtilManagerTest.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,61 +32,41 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="routes.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/routes.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="533">
-              <caret line="130" column="32" lean-forward="false" selection-start-line="130" selection-start-column="32" selection-end-line="130" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PortraitController.php" pinned="false" current-in-tab="false">
+    <leaf>
+      <file leaf-file-name="PortraitController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Controllers/PortraitController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="806">
-              <caret line="371" column="39" lean-forward="false" selection-start-line="371" selection-start-column="39" selection-end-line="371" selection-end-column="39" />
+            <state relative-caret-position="-4200">
+              <caret line="105" column="42" lean-forward="true" selection-start-line="105" selection-start-column="42" selection-end-line="105" selection-end-column="42" />
               <folding>
-                <marker date="1512734949515" expanded="true" signature="847:1040" ph="SELECT p.id,... portrait" />
-                <marker date="1512734949515" expanded="true" signature="1685:1750" ph="INSERT INTO portrait... " />
-                <marker date="1512734949515" expanded="true" signature="2937:3177" ph="INSERT INTO portrait_info... " />
-                <marker date="1512734949515" expanded="true" signature="4041:4100" ph="INSERT INTO portrait_landmarks... " />
-                <marker date="1512734949515" expanded="true" signature="4611:5086" ph="UPDATE portr... " />
-                <marker date="1512734949515" expanded="true" signature="8198:8263" ph="SELECT * FRO... portrait_landmarks" />
-                <marker date="1512734949515" expanded="true" signature="11003:11114" ph="UPDATE portr... " />
-                <marker date="1512734949515" expanded="true" signature="11619:11670" ph="SELECT * FRO... portrait_info" />
-                <marker date="1512734949515" expanded="true" signature="12991:13155" ph="SELECT u.ema... users" />
-                <marker date="1512734949515" expanded="true" signature="13348:13412" ph="SELECT * FRO... portrait_landmarks" />
-                <marker date="1512734949515" expanded="true" signature="14137:14172" ph="DELETE FROM " />
-                <marker date="1512734949515" expanded="true" signature="14734:14781" ph="SELECT * FRO... portrait" />
-                <marker date="1512734949515" expanded="true" signature="14734:14898" ph="SELECT p.id,... portrait" />
-                <marker date="1512734949515" expanded="true" signature="14734:14899" ph="SELECT p.id,... portrait" />
-                <marker date="1512734949515" expanded="true" signature="14734:14915" ph="SELECT DISTI... portrait" />
-                <marker date="1512734949515" expanded="true" signature="14734:14916" ph="SELECT DISTI... portrait" />
-                <marker date="1512734949515" expanded="true" signature="15908:16110" ph="..." />
+                <marker date="1516399097775" expanded="true" signature="847:1040" ph="SELECT p.id,... portrait" />
+                <marker date="1516399097775" expanded="true" signature="1685:1750" ph="INSERT INTO portrait... " />
+                <marker date="1516399097775" expanded="true" signature="2937:3177" ph="INSERT INTO portrait_info... " />
+                <marker date="1516399097775" expanded="true" signature="4041:4100" ph="INSERT INTO portrait_landmarks... " />
+                <marker date="1516399097775" expanded="true" signature="4611:5086" ph="UPDATE portr... " />
+                <marker date="1516399097775" expanded="true" signature="8198:8263" ph="SELECT * FRO... portrait_landmarks" />
+                <marker date="1516399097775" expanded="true" signature="11075:11186" ph="UPDATE portr... " />
+                <marker date="1516399097775" expanded="true" signature="11691:11742" ph="SELECT * FRO... portrait_info" />
+                <marker date="1516399097775" expanded="true" signature="13063:13227" ph="SELECT u.ema... users" />
+                <marker date="1516399097775" expanded="true" signature="13420:13484" ph="SELECT * FRO... portrait_landmarks" />
+                <marker date="1516399097775" expanded="true" signature="14209:14244" ph="DELETE FROM " />
+                <marker date="1516399097775" expanded="true" signature="14806:14988" ph="SELECT DISTI... portrait" />
+                <marker date="1516399097775" expanded="true" signature="16334:16516" ph="SELECT DISTI... portrait" />
+                <marker date="1516399097775" expanded="true" signature="17627:17682" ph="SELECT * FRO... portrait_landmarks" />
+                <marker date="1516399097775" expanded="true" signature="21412:21457" ph="SELECT image... portrait" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="composer.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/composer.json">
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DbConnection.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/DbConnection.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="315">
+              <caret line="36" column="0" lean-forward="true" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+              <folding>
+                <element signature="e#7#29#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -101,9 +85,18 @@
       <find>$portraitManger</find>
       <find>desc</find>
       <find>foreach</find>
+      <find>const</find>
+      <find>getport</find>
+      <find>sort</find>
+      <find>leve</find>
+      <find>decima</find>
+      <find>getMaxScore</find>
+      <find>groupland</find>
+      <find>self::groupLandmarks</find>
     </findStrings>
     <replaceStrings>
       <replace>$model</replace>
+      <replace>$this-&gt;utilManager-&gt;groupLandmarks</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\Users\MrDan\Documents\code\twin-portrait-server</dir>
@@ -133,19 +126,19 @@
         <option value="$PROJECT_DIR$/phpunit.xml" />
         <option value="$PROJECT_DIR$/tests/Functional/BaseTestCase.php" />
         <option value="$PROJECT_DIR$/tests/Functional/ApiTest.php" />
-        <option value="$PROJECT_DIR$/tests/ControllerTest/UserControllerTest.php" />
         <option value="$PROJECT_DIR$/Controllers/UserController.php" />
-        <option value="$PROJECT_DIR$/Managers/UtilManager.php" />
         <option value="$PROJECT_DIR$/tests/Helpers/UserHelper.php" />
         <option value="$PROJECT_DIR$/public/index.php" />
         <option value="$PROJECT_DIR$/src/settings.php" />
         <option value="$PROJECT_DIR$/tests/Helpers/UtilManagerHelper.php" />
+        <option value="$PROJECT_DIR$/tests/Helpers/PortraitHelper.php" />
+        <option value="$PROJECT_DIR$/config/DbConnection.php" />
+        <option value="$PROJECT_DIR$/tests/ControllerTest/UserControllerTest.php" />
         <option value="$PROJECT_DIR$/tests/ManagerTest/UtilManagerTest.php" />
         <option value="$PROJECT_DIR$/tests/ControllerTest/PortraitControllerTest.php" />
-        <option value="$PROJECT_DIR$/tests/Helpers/PortraitHelper.php" />
+        <option value="$PROJECT_DIR$/Managers/UtilManager.php" />
         <option value="$PROJECT_DIR$/src/routes.php" />
         <option value="$PROJECT_DIR$/Controllers/PortraitController.php" />
-        <option value="$PROJECT_DIR$/config/DbConnection.php" />
       </list>
     </option>
   </component>
@@ -155,9 +148,18 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="MessDetectorBlackList">
+    <option name="filePaths">
+      <list>
+        <option value="$PROJECT_DIR$/Controllers/PortraitController.php" />
+        <option value="$PROJECT_DIR$/tests/ControllerTest/PortraitControllerTest.php" />
+        <option value="$PROJECT_DIR$/Managers/UtilManager.php" />
+      </list>
+    </option>
+  </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
+    <option name="x" value="952" />
     <option name="width" value="976" />
     <option name="height" value="1038" />
   </component>
@@ -169,12 +171,15 @@
             <id />
           </State>
           <State>
+            <id>PHP</id>
+          </State>
+          <State>
             <id>SQL</id>
           </State>
         </expanded-state>
         <selected-state>
           <State>
-            <id>SqlAmbiguousColumnInspection</id>
+            <id>PhpCSValidationInspection</id>
           </State>
         </selected-state>
       </profile-state>
@@ -198,17 +203,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="twin-portrait-server" type="b2602c69:ProjectViewProjectNode" />
               <item name="twin-portrait-server" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="twin-portrait-server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="twin-portrait-server" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="config" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="twin-portrait-server" type="b2602c69:ProjectViewProjectNode" />
@@ -223,34 +224,18 @@
             <path>
               <item name="twin-portrait-server" type="b2602c69:ProjectViewProjectNode" />
               <item name="twin-portrait-server" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Model" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="twin-portrait-server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="twin-portrait-server" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="public" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="twin-portrait-server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="twin-portrait-server" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="twin-portrait-server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="twin-portrait-server" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="tests" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="twin-portrait-server" type="b2602c69:ProjectViewProjectNode" />
               <item name="twin-portrait-server" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="tests" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="ControllerTest" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="ManagerTest" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="AndroidView" />
@@ -264,7 +249,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="Errors" />
-    <property name="SearchEverywhereHistoryKey" value="index&#9;FILE&#9;file://C:/Users/MrDan/Documents/code/twin-portrait-server/public/index.php" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/MrDan/Documents/code/twin-portrait-server/config/DbConnection.php&#10;index&#9;FILE&#9;file://C:/Users/MrDan/Documents/code/twin-portrait-server/public/index.php" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
   </component>
@@ -418,24 +403,53 @@
       <workItem from="1512648338829" duration="854000" />
       <workItem from="1512657137440" duration="2731000" />
       <workItem from="1512732321452" duration="4045000" />
-      <workItem from="1512761088246" duration="16000" />
+      <workItem from="1512761088246" duration="76000" />
+      <workItem from="1512767890554" duration="20000" />
+      <workItem from="1512772407862" duration="11000" />
+      <workItem from="1512837845765" duration="626000" />
+      <workItem from="1513003130156" duration="117000" />
+      <workItem from="1513003332252" duration="10000" />
+      <workItem from="1513003387547" duration="1887000" />
+      <workItem from="1513016386265" duration="1243000" />
+      <workItem from="1513157958080" duration="2227000" />
+      <workItem from="1513175703459" duration="127000" />
+      <workItem from="1513256503913" duration="2578000" />
+      <workItem from="1513417705613" duration="132000" />
+      <workItem from="1513430391710" duration="5114000" />
+      <workItem from="1513783870421" duration="1442000" />
+      <workItem from="1513872263515" duration="4000" />
+      <workItem from="1514731285434" duration="103000" />
+      <workItem from="1515671828904" duration="2809000" />
+      <workItem from="1516009460526" duration="10017000" />
+      <workItem from="1516095750073" duration="2169000" />
+      <workItem from="1516098689280" duration="50000" />
+      <workItem from="1516104552098" duration="1113000" />
+      <workItem from="1516269819566" duration="12000" />
+      <workItem from="1516277359697" duration="2084000" />
+      <workItem from="1516286164496" duration="847000" />
+      <workItem from="1516297811767" duration="10000" />
+      <workItem from="1516297969703" duration="16000" />
+      <workItem from="1516298249672" duration="3000" />
+      <workItem from="1516310470716" duration="54000" />
+      <workItem from="1516360668072" duration="9376000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="86031000" />
+    <option name="totallyTimeSpent" value="130292000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18072917" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19322917" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289183" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -468,20 +482,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/settings.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="693">
-          <caret line="33" column="0" lean-forward="true" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/Controllers/dbData.xml" />
     <entry file="file://$PROJECT_DIR$/tests/Functional/ApiTest.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -561,13 +561,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
           <caret line="9" column="10" lean-forward="true" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Model/AdminModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="11" column="6" lean-forward="false" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -678,31 +671,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Managers/DBManager.php" />
     <entry file="file://$PROJECT_DIR$/tests/DbConnectionTest.php" />
-    <entry file="file://$PROJECT_DIR$/tests/Functional/ApiTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="25" column="28" lean-forward="true" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/ModelTest/ConsumerModelTest.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
           <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/ManagerTest/UtilManagerTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="10" column="21" lean-forward="false" selection-start-line="10" selection-start-column="21" selection-end-line="10" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="29" column="35" lean-forward="false" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -727,83 +699,130 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/ControllerTest/UserControllerTest.php">
+    <entry file="file://$PROJECT_DIR$/composer.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-202">
-          <caret line="4" column="43" lean-forward="false" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
+        <state relative-caret-position="189">
+          <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Managers/UtilManager.php">
+    <entry file="file://$PROJECT_DIR$/Model/AdminModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="15" column="20" lean-forward="false" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+        <state relative-caret-position="126">
+          <caret line="11" column="6" lean-forward="false" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2268">
+          <caret line="108" column="38" lean-forward="false" selection-start-line="108" selection-start-column="38" selection-end-line="108" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_8.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8555">
+          <caret line="493" column="7" lean-forward="true" selection-start-line="493" selection-start-column="7" selection-end-line="493" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/Functional/ApiTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="25" column="28" lean-forward="false" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/DbConnection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_1.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="941" column="25" lean-forward="true" selection-start-line="941" selection-start-column="25" selection-end-line="941" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="29" column="35" lean-forward="false" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/ControllerTest/UserControllerTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/ControllerTest/PortraitControllerTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1218">
-          <caret line="58" column="72" lean-forward="false" selection-start-line="58" selection-start-column="72" selection-end-line="58" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="819">
-          <caret line="39" column="92" lean-forward="false" selection-start-line="39" selection-start-column="63" selection-end-line="39" selection-end-column="92" />
+        <state relative-caret-position="575">
+          <caret line="86" column="0" lean-forward="true" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/DbConnection.php">
+    <entry file="file://$PROJECT_DIR$/tests/ManagerTest/UtilManagerTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        <state relative-caret-position="777">
+          <caret line="49" column="5" lean-forward="false" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="5" />
+          <folding>
+            <marker date="1516397706965" expanded="true" signature="531:557" ph="SELECT * fro... unknow_table" />
+            <marker date="1516397706965" expanded="true" signature="822:845" ph="SELECT id fr... portrait" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="36" column="0" lean-forward="true" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding>
+            <element signature="e#7#29#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Managers/UtilManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="84" column="5" lean-forward="true" selection-start-line="84" selection-start-column="5" selection-end-line="84" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Controllers/PortraitController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="806">
-          <caret line="371" column="39" lean-forward="false" selection-start-line="371" selection-start-column="39" selection-end-line="371" selection-end-column="39" />
+        <state relative-caret-position="-4200">
+          <caret line="105" column="42" lean-forward="true" selection-start-line="105" selection-start-column="42" selection-end-line="105" selection-end-column="42" />
           <folding>
-            <marker date="1512734949515" expanded="true" signature="847:1040" ph="SELECT p.id,... portrait" />
-            <marker date="1512734949515" expanded="true" signature="1685:1750" ph="INSERT INTO portrait... " />
-            <marker date="1512734949515" expanded="true" signature="2937:3177" ph="INSERT INTO portrait_info... " />
-            <marker date="1512734949515" expanded="true" signature="4041:4100" ph="INSERT INTO portrait_landmarks... " />
-            <marker date="1512734949515" expanded="true" signature="4611:5086" ph="UPDATE portr... " />
-            <marker date="1512734949515" expanded="true" signature="8198:8263" ph="SELECT * FRO... portrait_landmarks" />
-            <marker date="1512734949515" expanded="true" signature="11003:11114" ph="UPDATE portr... " />
-            <marker date="1512734949515" expanded="true" signature="11619:11670" ph="SELECT * FRO... portrait_info" />
-            <marker date="1512734949515" expanded="true" signature="12991:13155" ph="SELECT u.ema... users" />
-            <marker date="1512734949515" expanded="true" signature="13348:13412" ph="SELECT * FRO... portrait_landmarks" />
-            <marker date="1512734949515" expanded="true" signature="14137:14172" ph="DELETE FROM " />
-            <marker date="1512734949515" expanded="true" signature="14734:14781" ph="SELECT * FRO... portrait" />
-            <marker date="1512734949515" expanded="true" signature="14734:14898" ph="SELECT p.id,... portrait" />
-            <marker date="1512734949515" expanded="true" signature="14734:14899" ph="SELECT p.id,... portrait" />
-            <marker date="1512734949515" expanded="true" signature="14734:14915" ph="SELECT DISTI... portrait" />
-            <marker date="1512734949515" expanded="true" signature="14734:14916" ph="SELECT DISTI... portrait" />
-            <marker date="1512734949515" expanded="true" signature="15908:16110" ph="..." />
+            <marker date="1516399097775" expanded="true" signature="847:1040" ph="SELECT p.id,... portrait" />
+            <marker date="1516399097775" expanded="true" signature="1685:1750" ph="INSERT INTO portrait... " />
+            <marker date="1516399097775" expanded="true" signature="2937:3177" ph="INSERT INTO portrait_info... " />
+            <marker date="1516399097775" expanded="true" signature="4041:4100" ph="INSERT INTO portrait_landmarks... " />
+            <marker date="1516399097775" expanded="true" signature="4611:5086" ph="UPDATE portr... " />
+            <marker date="1516399097775" expanded="true" signature="8198:8263" ph="SELECT * FRO... portrait_landmarks" />
+            <marker date="1516399097775" expanded="true" signature="11075:11186" ph="UPDATE portr... " />
+            <marker date="1516399097775" expanded="true" signature="11691:11742" ph="SELECT * FRO... portrait_info" />
+            <marker date="1516399097775" expanded="true" signature="13063:13227" ph="SELECT u.ema... users" />
+            <marker date="1516399097775" expanded="true" signature="13420:13484" ph="SELECT * FRO... portrait_landmarks" />
+            <marker date="1516399097775" expanded="true" signature="14209:14244" ph="DELETE FROM " />
+            <marker date="1516399097775" expanded="true" signature="14806:14988" ph="SELECT DISTI... portrait" />
+            <marker date="1516399097775" expanded="true" signature="16334:16516" ph="SELECT DISTI... portrait" />
+            <marker date="1516399097775" expanded="true" signature="17627:17682" ph="SELECT * FRO... portrait_landmarks" />
+            <marker date="1516399097775" expanded="true" signature="21412:21457" ph="SELECT image... portrait" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="130" column="32" lean-forward="false" selection-start-line="130" selection-start-column="32" selection-end-line="130" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>

@@ -139,12 +139,12 @@ $app->post('/match', function (Request $request, Response $response) {
     return $response;
 });
 
-$app->post('/matchv2', function (Request $request, Response $response) {
+$app->post('/api/basicSearch', function (Request $request, Response $response) {
     $reqDecoded = json_decode($request->getBody(), true);
 
     $portraitController = new PortraitController();
     $response->getBody()->write(
-        $portraitController->generatePossibleDoppelgangerv2(
+        $portraitController->generatePossibleDoppelgangerWithBasicSearch(
             $reqDecoded['landmarks'],
             $reqDecoded['relevance'],
             $reqDecoded['gender'],
@@ -155,12 +155,12 @@ $app->post('/matchv2', function (Request $request, Response $response) {
     return $response;
 });
 
-$app->post('/api/matchWithSimilarText', function (Request $request, Response $response) {
+$app->post('/api/advancedSearch', function (Request $request, Response $response) {
     $reqDecoded = json_decode($request->getBody(), true);
 
     $portraitController = new PortraitController();
     $response->getBody()->write(
-        $portraitController->generatePossibleDoppelgangerWithSimilarTest(
+        $portraitController->generatePossibleDoppelgangerWithAdvancedSearch(
             $reqDecoded['landmarks'],
             $reqDecoded['gender'],
             ($reqDecoded['beard'] === 'true'),

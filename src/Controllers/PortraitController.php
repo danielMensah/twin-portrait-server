@@ -10,6 +10,7 @@
 require_once __DIR__ . "/../../config/DbConnection.php";
 require_once __DIR__ . "/../Managers/UtilManager.php";
 require_once __DIR__ . "/../Model/PortraitModel.php";
+require_once __DIR__ . "/SimilarityController.php";
 
 class PortraitController {
 
@@ -349,6 +350,8 @@ class PortraitController {
     /**
      * @param $arrayOfLandmarks
      * @param $gender
+     * @param $beard
+     * @param $mustache
      * @return string
      */
     public function generatePossibleDoppelganger($arrayOfLandmarks, $gender, $beard, $mustache) {
@@ -396,8 +399,9 @@ class PortraitController {
      * @param $mustache
      * @return string
      */
-    public function generatePossibleDoppelgangerv2($arrayOfLandmarks, $relevance, $gender, $beard, $mustache) {
-        $criteria = $this->generateCriteriav2($arrayOfLandmarks, $relevance, $beard, $mustache);
+    public function generatePossibleDoppelgangerWithBasicSearch($arrayOfLandmarks, $relevance, $gender, $beard, $mustache) {
+        $similarityController = new SimilarityController();
+        $criteria = $similarityController->generateSimilarityCriteria($arrayOfLandmarks, $relevance, $beard, $mustache);
 
         $sql = $this->dbh->getConnection()->prepare("SELECT DISTINCT p.id, p.image_url FROM portrait p
           INNER JOIN portrait_landmarks pl
@@ -409,28 +413,28 @@ class PortraitController {
         return json_encode($sql->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    /**
-     * @param $arrayOfLandmarks
-     * @param $relevance
-     * @param $beard
-     * @param $mustache
-     * @return string
-     */
-    public function generateCriteriav2($arrayOfLandmarks, $relevance, $beard, $mustache) {
-        $criteria = "";
-
-        foreach ($relevance as $key) {
-            $criteria = $criteria . $arrayOfLandmarks[$key][0] . " DESC, ";
-        }
-
-        if ($beard)
-            $criteria = $criteria . "beard DESC, ";
-
-        if ($mustache)
-            $criteria = $criteria . "mustache DESC, ";
-
-        return rtrim($criteria, ", ");
-    }
+//    /**
+//     * @param $arrayOfLandmarks
+//     * @param $relevance
+//     * @param $beard
+//     * @param $mustache
+//     * @return string
+//     */
+//    public function generateCriteriaV2($arrayOfLandmarks, $relevance, $beard, $mustache) {
+//        $criteria = "";
+//
+//        foreach ($relevance as $key) {
+//            $criteria = $criteria . $arrayOfLandmarks[$key][0] . " DESC, ";
+//        }
+//
+//        if ($beard)
+//            $criteria = $criteria . "beard DESC, ";
+//
+//        if ($mustache)
+//            $criteria = $criteria . "mustache DESC, ";
+//
+//        return rtrim($criteria, ", ");
+//    }
 
     /**
      * @param $arrayOfLandmarks
@@ -439,7 +443,8 @@ class PortraitController {
      * @param $mustache
      * @return string
      */
-    public function generatePossibleDoppelgangerWithSimilarTest($arrayOfLandmarks, $gender, $beard, $mustache) {
+    public function generatePossibleDoppelgangerWithAdvancedSearch($arrayOfLandmarks, $gender, $beard, $mustache) {
+        $similarityController = new SimilarityController();
 
         $sql = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE gender = :gender");
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
@@ -449,7 +454,7 @@ class PortraitController {
 
         $items = array();
         foreach ($data as $item) {
-            array_push($items, self::getData($item, $arrayOfLandmarks));
+            array_push($items, $similarityController->advancedSimilaritySearch($item, $arrayOfLandmarks));
         }
 
         usort($items, function($a, $b) {
@@ -457,93 +462,6 @@ class PortraitController {
         });
 
         return json_encode($items);
-    }
-
-    public function getData($item, $arrayOfLandmarks) {
-        $data = array("eyebrows" => array(
-            "flat_shaped" => $item['EB_FLAT_SHAPED'],
-            "rounded" => $item['EB_ROUNDED'],
-            "angled" => $item['EB_ANGLED']),
-            "eye" => array(
-                "deep_set" => $item['EYE_DEEP_SET'],
-                "monolid_almond" => $item['EYE_MONOLID_ALMOND'],
-                "downturned" => $item['EYE_DOWNTURNED'],
-                "hooded" => $item['EYE_HOODED']),
-            "nose" => array(
-                "aquiline" => $item['NOSE_AQUILINE'],
-                "flat" => $item['NOSE_FLAT'],
-                "roman_hooked" => $item['NOSE_ROMAN_HOOKED'],
-                "snub" => $item['NOSE_SNUB']));
-
-        $eyebrows = $this->utilManager->groupLandmarks($data['eyebrows']);
-        $eyes = $this->utilManager->groupLandmarks($data['eye']);
-        $nose = $this->utilManager->groupLandmarks($data['nose']);
-
-        $percentageEB = self::similarityGenerator($arrayOfLandmarks['eyebrows'], $eyebrows);
-        $percentageEYE = self::similarityGenerator($arrayOfLandmarks['eye'], $eyes);
-        $percentageNOSE = self::similarityGenerator($arrayOfLandmarks['nose'], $nose);
-
-        $similarityPercentage = number_format(($percentageEB + $percentageEYE + $percentageNOSE) / 3, 2);
-
-        return array(
-            "portrait_url" => self::getPortraitWithId($item['portrait_id']),
-            "similarity" => $similarityPercentage
-        );
-    }
-
-
-    /**
-     * @param $userDataArray
-     * @param $dbDataArray
-     * @param bool $priority
-     * @return int
-     */
-    public function similarityGenerator($userDataArray, $dbDataArray, $priority = false) {
-        $length = sizeof($userDataArray);
-        $multiArray = [ $userDataArray, $dbDataArray ];
-
-        $similarity = 0;
-        $max = $length;
-
-        for ($i = 0; $i < $length; $i++) {
-            if ($multiArray[0][$i] == $multiArray[1][$i]) {
-                $similarity = $similarity + $max;
-            } else {
-                $userPos = $this->utilManager->convertArrayPosition($length, $i); // e.g. if $i = 0 && length = 4, return 4
-                $dbPos = $this->utilManager->convertArrayPosition($length, array_search($multiArray[1][$i], $multiArray[0]));
-
-                //performing matrix
-                if ($priority && $userPos == 4 || $priority && $userPos == 3) {
-                    $matrixResult = $userPos - (abs(($userPos - $dbPos) * 2)); // using abs because it might return a negative number which will cause userPos - (-n) = positive
-                    $similarity = $similarity + $matrixResult;
-                } else {
-                    $matrixResult = $userPos - (abs($dbPos - $userPos));
-                    $similarity = $similarity + $matrixResult;
-                }
-            }
-
-            $max--;
-        }
-
-        $maxScore = $this->utilManager->getMaxScore($length);
-        $similarity = abs(($similarity /  $maxScore) * 100);
-        return (int) number_format($similarity);
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function getPortraitWithId($id) {
-        $sql = $this->dbh->getConnection()->prepare("SELECT image_url FROM portrait WHERE id = :id");
-        $sql->bindParam(':id', $id, PDO::PARAM_STR);
-
-        $this->utilManager->handleStatementException($sql, "Error while selecting portraits for landmark calculation function!");
-
-        $sql->bindColumn('image_url', $portrait_url, PDO::PARAM_STR);
-        $sql->fetch(PDO::FETCH_BOUND);
-
-        return $portrait_url;
     }
 
 }

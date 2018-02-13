@@ -8,7 +8,6 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
 
     /** @var PortraitController */
     private $controller;
-
     /** @var PortraitHelper */
     private $helper;
 
@@ -77,16 +76,6 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
 
         $expectedResult = $this->helper->deletePortraitHelper($model);
         $actualResult = $this->controller->deletePortrait($model);
-
-        self::assertEquals($expectedResult, $actualResult);
-    }
-
-    public function testThatWeCanGetSimilarity() {
-        $arr1 = ["A", "C", "B"];
-        $arr2 = ["C", "A", "B"];
-
-        $expectedResult = 67;
-        $actualResult = $this->controller->similarityGenerator($arr1, $arr2);
 
         self::assertEquals($expectedResult, $actualResult);
     }

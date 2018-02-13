@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . "/../../config/DbConnection.php";
-require_once __DIR__ . "/../../Managers/UtilManager.php";
+require_once __DIR__ . "/../../src/Managers/UtilManager.php";
 
 class UtilManagerTest extends PHPUnit_Framework_TestCase {
     /** @var DbConnection */

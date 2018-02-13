@@ -7,7 +7,7 @@
  * Time: 14:15
  */
 
-require_once __DIR__ . "/../config/DbConnection.php";
+require_once __DIR__ . "/../../config/DbConnection.php";
 require_once __DIR__ . "/../Managers/UtilManager.php";
 require_once __DIR__ . "/../Model/PortraitModel.php";
 

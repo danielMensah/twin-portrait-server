@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . "/../../Controllers/PortraitController.php";
-require_once __DIR__ . "/../../Model/PortraitModel.php";
+require_once __DIR__ . "/../../src/Controllers/PortraitController.php";
+require_once __DIR__ . "/../../src/Model/PortraitModel.php";
 require_once __DIR__ . "/../Helpers/PortraitHelper.php";
 
 class PortraitControllerTest extends PHPUnit_Framework_TestCase {

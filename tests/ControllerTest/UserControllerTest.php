@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . "/../../Controllers/UserController.php";
-require_once __DIR__ . "/../../Model/UserModel.php";
+require_once __DIR__ . "/../../src/Controllers/UserController.php";
+require_once __DIR__ . "/../../src/Model/UserModel.php";
 require_once __DIR__ . "/../Helpers/UserHelper.php";
 
 class UserControllerTest extends PHPUnit_Framework_TestCase {

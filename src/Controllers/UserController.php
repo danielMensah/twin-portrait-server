@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../config/DbConnection.php";
+require_once __DIR__ . "/../../config/DbConnection.php";
 require_once __DIR__ . "/../Model/ConsumerModel.php";
 require_once __DIR__ . "/../Managers/UtilManager.php";
 
@@ -111,10 +111,6 @@ class UserController {
         return json_encode(array(
             'response' => "User with $email has been removed."
         ));
-    }
-
-    public function getUser() {
-        return 'Daniel';
     }
 
 }

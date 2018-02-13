@@ -7,4 +7,23 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src</directory>
+            <directory suffix=".php">./util</directory>
+            <exclude>
+                <directory suffix=".php">./src/Model</directory>
+                <file>./src/dependencies.php</file>
+                <file>./src/middleware.php</file>
+                <file>./src/settings.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>
+        <log type="coverage-html" target="./coverage/"/>
+    </logging>
+
 </phpunit>

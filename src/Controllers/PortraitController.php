@@ -71,7 +71,7 @@ class PortraitController {
 
         $this->addPortraitInfo($id);
 
-        return "Portrait: $id added from the database!";
+        return "Portrait: $id added to the database!";
     }
 
     /**
@@ -125,7 +125,7 @@ class PortraitController {
      * @return string
      */
     public function updatePortrait($arrayOfLandmarks, $portraitId, $gender) {
-        $updatedLandmarks = $this->generateUpdatedLandmarkValues($arrayOfLandmarks, $portraitId);
+        $updatedLandmarks = self::generateUpdatedLandmarkValues($arrayOfLandmarks, $portraitId);
 
         $sql = $this->dbh->getConnection()->prepare("UPDATE portrait_landmarks SET EB_FLAT_SHAPED=:EB_FLAT_SHAPED, EB_ANGLED=:EB_ANGLED, 
         EB_ROUNDED=:EB_ROUNDED, EYE_MONOLID_ALMOND=:EYE_MONOLID_ALMOND, EYE_DEEP_SET=:EYE_DEEP_SET, EYE_DOWNTURNED=:EYE_DOWNTURNED,
@@ -162,7 +162,7 @@ class PortraitController {
      */
     public function generateUpdatedLandmarkValues($newValues, $portraitId, $oldValues = null) {
         $updateValues = array();
-        $oldValues = $oldValues ? $oldValues : $this->getCurrentLandmarkValues($portraitId);
+        $oldValues = $oldValues ? $oldValues : self::getCurrentLandmarkValues($portraitId);
 
         $finalNewValues = array(
             "mustache" => $newValues['mustache'] ? 1 : 0,
@@ -172,9 +172,7 @@ class PortraitController {
             "nose" => $this->convertLandmarkValue($newValues['nose'])
         );
 
-        if (!$oldValues['completed']) {
-            return $finalNewValues;
-        }
+        if (!$oldValues['completed']) return $finalNewValues;
 
         foreach ($finalNewValues as $key => $value) {
             if ($key == 'mustache' || $key == 'beard') {
@@ -393,19 +391,18 @@ class PortraitController {
 
     /**
      * @param $arrayOfLandmarks
-     * @param $relevance
      * @param $gender
      * @param $beard
      * @param $mustache
      * @return string
      */
-    public function generatePossibleDoppelgangerWithBasicSearch($arrayOfLandmarks, $relevance, $gender, $beard, $mustache) {
+    public function generatePossibleDoppelgangerWithBasicSearch($arrayOfLandmarks, $gender, $beard, $mustache) {
         $similarityController = new SimilarityController();
-        $criteria = $similarityController->generateSimilarityCriteria($arrayOfLandmarks, $relevance, $beard, $mustache);
+        $criteria = $similarityController->generateSimilarityCriteria($arrayOfLandmarks, $beard, $mustache);
 
         $sql = $this->dbh->getConnection()->prepare("SELECT DISTINCT p.id, p.image_url FROM portrait p
           INNER JOIN portrait_landmarks pl
-            ON p.id = pl.portrait_id WHERE pl.gender = :gender ORDER BY $criteria LIMIT 5");
+            ON p.id = pl.portrait_id WHERE pl.gender = :gender ORDER BY $criteria LIMIT 1");
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
 
         $this->utilManager->handleStatementException($sql, "Error while fetching match!");
@@ -413,48 +410,43 @@ class PortraitController {
         return json_encode($sql->fetchAll(PDO::FETCH_ASSOC));
     }
 
-//    /**
-//     * @param $arrayOfLandmarks
-//     * @param $relevance
-//     * @param $beard
-//     * @param $mustache
-//     * @return string
-//     */
-//    public function generateCriteriaV2($arrayOfLandmarks, $relevance, $beard, $mustache) {
-//        $criteria = "";
-//
-//        foreach ($relevance as $key) {
-//            $criteria = $criteria . $arrayOfLandmarks[$key][0] . " DESC, ";
-//        }
-//
-//        if ($beard)
-//            $criteria = $criteria . "beard DESC, ";
-//
-//        if ($mustache)
-//            $criteria = $criteria . "mustache DESC, ";
-//
-//        return rtrim($criteria, ", ");
-//    }
-
     /**
      * @param $arrayOfLandmarks
      * @param $gender
      * @param $beard
      * @param $mustache
+     * @param $facialHairImportance
+     * @param $priority
      * @return string
      */
-    public function generatePossibleDoppelgangerWithAdvancedSearch($arrayOfLandmarks, $gender, $beard, $mustache) {
+    public function generatePossibleDoppelgangerWithAdvancedSearch($arrayOfLandmarks, $gender, $beard, $mustache, $facialHairImportance, $priority) {
         $similarityController = new SimilarityController();
 
-        $sql = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE gender = :gender");
+        $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender";
+
+        if ($facialHairImportance === 'true') {
+            $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender AND beard = :beard AND mustache = :mustache";
+        }
+
+        $sql = $this->dbh->getConnection()->prepare($stm);
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
+
+        if ($facialHairImportance === 'true') {
+            $sql->bindParam(':beard', $beard, PDO::PARAM_STR);
+            $sql->bindParam(':mustache', $mustache, PDO::PARAM_STR);
+        }
 
         $this->utilManager->handleStatementException($sql, "Error while selecting portraits for landmark calculation function!");
         $data = $sql->fetchAll(PDO::FETCH_ASSOC);
 
         $items = array();
+        $counter = 0;
         foreach ($data as $item) {
-            array_push($items, $similarityController->advancedSimilaritySearch($item, $arrayOfLandmarks));
+            if ($counter < 60) {
+                array_push($items, $similarityController->advancedSimilaritySearch($item, $arrayOfLandmarks, $beard, $mustache, $priority));
+            }
+
+            $counter++;
         }
 
         usort($items, function($a, $b) {

@@ -23,7 +23,7 @@ class PortraitHelper {
     public function addPortraitHelper(PortraitModel $model) {
         $portraitId = $model->getId();
 
-        return "Portrait: $portraitId added from the database!";
+        return "Portrait: $portraitId added to the database!";
     }
 
     /**

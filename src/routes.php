@@ -70,7 +70,6 @@ $app->post('/uploadPortrait', function (Request $request, Response $response) {
         $portraitController = new PortraitController();
         echo $portraitController->addPortrait($portraitModel);
     }
-//    echo addImage('PAEeCdN0S0qgNg', 'http://lh5.ggpht.com/jgpYFmLNAWJL3734TQOgoVZRUOOOuFskI_2XXSgahS_jjwRblaHKtyK_BH3U');
 });
 
 //update portrait
@@ -146,7 +145,6 @@ $app->post('/api/basicSearch', function (Request $request, Response $response) {
     $response->getBody()->write(
         $portraitController->generatePossibleDoppelgangerWithBasicSearch(
             $reqDecoded['landmarks'],
-            $reqDecoded['relevance'],
             $reqDecoded['gender'],
             ($reqDecoded['beard'] === 'true'),
             ($reqDecoded['mustache'] === 'true'))
@@ -163,9 +161,11 @@ $app->post('/api/advancedSearch', function (Request $request, Response $response
         $portraitController->generatePossibleDoppelgangerWithAdvancedSearch(
             $reqDecoded['landmarks'],
             $reqDecoded['gender'],
-            ($reqDecoded['beard'] === 'true'),
-            ($reqDecoded['mustache'] === 'true'))
-    );
+            $reqDecoded['beard'],
+            $reqDecoded['mustache'],
+            $reqDecoded['facialHairImportance'],
+            $reqDecoded['priority']
+        ));
 
     return $response;
 });

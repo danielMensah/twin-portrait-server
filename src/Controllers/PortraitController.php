@@ -353,7 +353,6 @@ class PortraitController {
      * @return string
      */
     public function generatePossibleDoppelgangerWithBasicSearch($arrayOfLandmarks, $gender, $beard, $mustache) {
-        $time_start = microtime(true);
         $similarityController = new SimilarityController();
         $criteria = $similarityController->generateSimilarityCriteria($arrayOfLandmarks, $beard, $mustache);
 
@@ -365,11 +364,6 @@ class PortraitController {
         $this->utilManager->handleStatementException($sql, "Error while fetching match!");
 
         $data = $sql->fetchAll(PDO::FETCH_ASSOC);
-
-        $time_end = microtime(true);
-        $execution_time = ($time_end - $time_start)/60;
-
-        echo "\n Execution : $execution_time \n";
 
         return json_encode($data);
     }
@@ -403,11 +397,6 @@ class PortraitController {
         $this->utilManager->handleStatementException($sql, "Error while selecting portraits for landmark calculation function!");
         $data = $sql->fetchAll(PDO::FETCH_ASSOC);
 
-        $time_end = microtime(true);
-        $execution_time = ($time_end - $time_start)/60;
-
-        echo "\n Execution : $execution_time \n";
-
         $items = array();
         $counter = 0;
         foreach ($data as $item) {
@@ -421,6 +410,11 @@ class PortraitController {
         usort($items, function($a, $b) {
             return $b['similarity'] > $a['similarity'];
         });
+
+        $time_end = microtime(true);
+        $execution_time = ($time_end - $time_start)/60;
+
+        echo "\n Execution : $execution_time \n";
 
         return json_encode($items);
     }

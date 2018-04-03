@@ -376,6 +376,7 @@ class PortraitController {
      * @return string
      */
     public function generatePossibleDoppelgangerWithAdvancedSearch($arrayOfLandmarks, $gender, $beard, $mustache, $facialHairImportance, $priority) {
+        $time_start = microtime(true);
         $similarityController = new SimilarityController();
 
         $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender AND features_completed = TRUE";
@@ -393,6 +394,11 @@ class PortraitController {
 
         $this->utilManager->handleStatementException($sql, "Error while selecting portraits for landmark calculation function!");
         $data = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        $time_end = microtime(true);
+        $execution_time = ($time_end - $time_start)/60;
+
+        echo "\n Execution : $execution_time \n";
 
         $items = array();
         $counter = 0;

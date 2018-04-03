@@ -378,7 +378,6 @@ class PortraitController {
      * @return string
      */
     public function generatePossibleDoppelgangerWithAdvancedSearch($arrayOfLandmarks, $gender, $beard, $mustache, $facialHairImportance, $priority) {
-        $time_start = microtime(true);
         $similarityController = new SimilarityController();
 
         $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender AND features_completed = TRUE";
@@ -410,11 +409,6 @@ class PortraitController {
         usort($items, function($a, $b) {
             return $b['similarity'] > $a['similarity'];
         });
-
-        $time_end = microtime(true);
-        $execution_time = ($time_end - $time_start)/60;
-
-        echo "\n Execution : $execution_time \n";
 
         return json_encode($items);
     }

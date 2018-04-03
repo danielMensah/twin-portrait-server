@@ -11,6 +11,7 @@ class ConsumerModel extends UserModel {
 
     private $feedback;
     private $registered_at;
+    private $satisfaction;
 
     /**
      * @return mixed
@@ -40,5 +41,18 @@ class ConsumerModel extends UserModel {
         $this->registered_at = $registered_at;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSatisfaction() {
+        return $this->satisfaction;
+    }
+
+    /**
+     * @param mixed $satisfaction
+     */
+    public function setSatisfaction($satisfaction) {
+        $this->satisfaction = $satisfaction;
+    }
 
 }

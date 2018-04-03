@@ -108,9 +108,10 @@ $app->post('/registerUser', function (Request $request, Response $response) {
     $consumerModel->setEmail(strtolower($reqDecoded['email']));
     $consumerModel->setFeedback($reqDecoded['feedback']);
     $consumerModel->setUserType("consumer");
+    $consumerModel->setSatisfaction($reqDecoded['satisfaction']);
 
     $userController = new UserController();
-    $response->getBody()->write($userController->registerUser($consumerModel));
+    $response->getBody()->write($userController->registerUser($consumerModel, $reqDecoded['match']));
 
     return $response;
 });

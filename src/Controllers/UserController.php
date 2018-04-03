@@ -23,14 +23,16 @@ class UserController {
 
     /**
      * @param $model
+     * @param $match
      * @return string
      */
-    public function registerUser($model) {
+    public function registerUser($model, $match) {
         $this->model = $model;
 
         $email = $this->model->getEmail();
         $feedback = $this->model->getFeedback();
         $type = $this->model->getUserType();
+        $satisfaction = $this->model->getSatisfaction();
 
         if (!$this->checkIfUserExists()) {
             $sql = $this->dbh->getConnection()->prepare("INSERT INTO users ( email, user_type ) VALUES ( :email, :type )");
@@ -39,16 +41,25 @@ class UserController {
 
             $this->utilManager->handleStatementException($sql, "Error while inserting user!");
 
-            $sql = $this->dbh->getConnection()->prepare("INSERT INTO $type ( user_id, feedback ) VALUES ( (SELECT id from users WHERE email = :email), :feedback )");
+            $sql = $this->dbh->getConnection()->prepare("INSERT INTO $type ( user_id, feedback, satisfaction ) VALUES ( (SELECT id from users WHERE email = :email), :feedback, :satisfaction )");
             $sql->bindParam(':feedback', $feedback, PDO::PARAM_STR);
             $sql->bindParam(':email', $email, PDO::PARAM_STR);
+            $sql->bindParam(':satisfaction', $satisfaction, PDO::PARAM_STR);
 
             $this->utilManager->handleStatementException($sql, "Error while inserting consumer!");
 
             return json_encode(array(
-                'response' => 'updated',
+                'response' => 'add',
                 'promoCode' => $type === 'consumer' ? $this->addPromoCode() : null
             ));
+        } else if ($match) {
+            $sql = $this->dbh->getConnection()->prepare("UPDATE consumer SET satisfaction = :satisfaction WHERE user_id = (SELECT id from users WHERE email = :email)");
+            $sql->bindParam(':satisfaction', $satisfaction, PDO::PARAM_STR);
+            $sql->bindParam(':email', $email, PDO::PARAM_STR);
+
+            $this->utilManager->handleStatementException($sql, "Error while adding satisfaction!");
+
+            return json_encode(array('response' => "update"));
         } else {
             return json_encode(array('response' => 'Email already exists'));
         }
@@ -112,5 +123,4 @@ class UserController {
             'response' => "User with $email has been removed."
         ));
     }
-
 }

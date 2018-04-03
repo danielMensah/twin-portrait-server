@@ -64,10 +64,10 @@ class SimilarityController {
     /**
      * @param $userDataArray
      * @param $dbDataArray
-     * @param int $priority
+     * @param bool $priority
      * @return int
      */
-    public function similarityCalculator($userDataArray, $dbDataArray, $priority = 0) {
+    public function similarityCalculator($userDataArray, $dbDataArray, $priority = false) {
         $length = sizeof($userDataArray);
         $multiArray = [ $userDataArray, $dbDataArray ];
         $priority = (int) $priority;
@@ -136,27 +136,6 @@ class SimilarityController {
 
         return rtrim($criteria, ", ");
     }
-
-//    /**
-//     * @param $arrayOfLandmarks
-//     * @param $beard
-//     * @param $mustache
-//     * @return string
-//     */
-//    public function generateSimilarityCriteria($arrayOfLandmarks, $beard, $mustache) {
-//        $criteria = "";
-//
-//        foreach ($arrayOfLandmarks as $landmark) {
-//            for ($i = sizeof($landmark); $i > 0; $i--) {
-//                $pos = $i -1;
-//                $criteria .= "WHERE pl.$landmark[$pos] = " . $i . " AND ";
-//            }
-//        }
-//
-//        $criteria .= "WHERE pl.beard = " . (int) $beard . " AND " . "WHERE pl.mustache = " . (int) $mustache;
-//
-//        return $criteria;
-//    }
 
     /**
      * @param $userFH

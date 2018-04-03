@@ -352,50 +352,6 @@ class PortraitController {
      * @param $mustache
      * @return string
      */
-    public function generatePossibleDoppelganger($arrayOfLandmarks, $gender, $beard, $mustache) {
-        $criteria = $this->generateCriteria($arrayOfLandmarks, $beard, $mustache);
-
-        $sql = $this->dbh->getConnection()->prepare("SELECT DISTINCT p.id, p.image_url FROM portrait p
-          INNER JOIN portrait_landmarks pl
-            ON p.id = pl.portrait_id WHERE pl.gender = :gender ORDER BY $criteria LIMIT 5");
-        $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
-
-        $this->utilManager->handleStatementException($sql, "Error while fetching match!");
-
-        return json_encode($sql->fetchAll(PDO::FETCH_ASSOC));
-    }
-
-    /**
-     * @param $arrayOfLandmarks
-     * @param $beard
-     * @param $mustache
-     * @return string
-     */
-    public function generateCriteria($arrayOfLandmarks, $beard, $mustache) {
-        $key = $arrayOfLandmarks['primary']['key'];
-        $criteria = $arrayOfLandmarks['primary'][$key][0] . " DESC, ";
-
-        foreach ($arrayOfLandmarks['secondary'] as $landmark) {
-            $keyL = key($landmark);
-            $criteria = $criteria . $landmark[$keyL][0] . " DESC, ";
-        }
-
-        if ($beard)
-            $criteria = $criteria . "beard DESC, ";
-
-        if ($mustache)
-            $criteria = $criteria . "mustache DESC, ";
-
-        return rtrim($criteria, ", ");
-    }
-
-    /**
-     * @param $arrayOfLandmarks
-     * @param $gender
-     * @param $beard
-     * @param $mustache
-     * @return string
-     */
     public function generatePossibleDoppelgangerWithBasicSearch($arrayOfLandmarks, $gender, $beard, $mustache) {
         $similarityController = new SimilarityController();
         $criteria = $similarityController->generateSimilarityCriteria($arrayOfLandmarks, $beard, $mustache);
@@ -424,14 +380,13 @@ class PortraitController {
 
         $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender";
 
-        if ($facialHairImportance === 'true') {
-            $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender AND beard = :beard AND mustache = :mustache";
-        }
+        if ($facialHairImportance) $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender AND beard = :beard AND mustache = :mustache";
+
 
         $sql = $this->dbh->getConnection()->prepare($stm);
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
 
-        if ($facialHairImportance === 'true') {
+        if ($facialHairImportance) {
             $sql->bindParam(':beard', $beard, PDO::PARAM_STR);
             $sql->bindParam(':mustache', $mustache, PDO::PARAM_STR);
         }

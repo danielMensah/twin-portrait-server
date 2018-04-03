@@ -104,9 +104,19 @@ class PortraitHelper {
         ));
     }
 
-    public function generatePossibleDoppelgangerHelper() {
-        return json_encode(array(
+    public function basicMatchHelper() {
+        return array(
+            "eye"=> ["EYE_DEEP_SET", "EYE_DOWNTURNED", "EYE_MONOLID_ALMOND", "EYE_HOODED"],
+            "nose"=> ["NOSE_SNUB", "NOSE_AQUILINE", "NOSE_FLAT", "NOSE_ROMAN_HOOKED"],
+            "eyebrows"=> ["EB_ANGLED", "EB_ROUNDED", "EB_FLAT_SHAPED"]
+        );
+    }
 
-        ));
+    public function advancedMatchHelper() {
+        return array(
+            "eye"=> ["monolid_almond", "deep_set", "downturned", "hooded"],
+            "nose"=> ["flat", "snub", "aquiline", "roman_hooked"],
+            "eyebrows"=> ["angled", "rounded", "flat_shaped"]
+        );
     }
 }

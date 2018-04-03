@@ -17,6 +17,7 @@
                 <file>./src/dependencies.php</file>
                 <file>./src/middleware.php</file>
                 <file>./src/settings.php</file>
+                <file>./src/routes.php</file>
             </exclude>
         </whitelist>
     </filter>

@@ -47,6 +47,16 @@ class SimilarityControllerTest extends PHPUnit_Framework_TestCase {
         self::assertEquals($expectedResult, $actualResult);
     }
 
+    public function testThatWeCanCalculateSimilarityWith4LandmarksPriority2() {
+        $arr1 = ["F", "A", "RH", "S"];
+        $arr2 = ["A", "F", "RH", "S"];
+
+        $expectedResult = 60;
+        $actualResult = $this->controller->similarityCalculator($arr1, $arr2, true);
+
+        self::assertEquals($expectedResult, $actualResult);
+    }
+
     public function testThatCanCalculateFacialHairWithBeard() {
         $userData = array("beard"=>true, "mustache"=>false);
         $dbData = array("beard"=>false, "mustache"=>true);

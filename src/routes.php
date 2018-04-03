@@ -124,21 +124,6 @@ $app->get('/statistics', function (Request $request, Response $response) {
     return $response;
 });
 
-$app->post('/match', function (Request $request, Response $response) {
-    $reqDecoded = json_decode($request->getBody(), true);
-
-    $portraitController = new PortraitController();
-    $response->getBody()->write(
-        $portraitController->generatePossibleDoppelganger(
-            $reqDecoded['landmarks'],
-            $reqDecoded['gender'],
-            ($reqDecoded['beard'] === 'true'),
-            ($reqDecoded['mustache'] === 'true'))
-    );
-
-    return $response;
-});
-
 $app->post('/api/basicSearch', function (Request $request, Response $response) {
     $reqDecoded = json_decode($request->getBody(), true);
 

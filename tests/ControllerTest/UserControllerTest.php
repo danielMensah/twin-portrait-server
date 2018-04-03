@@ -19,10 +19,23 @@ class UserControllerTest extends PHPUnit_Framework_TestCase {
         $model->setFeedback('someFeedback');
         $model->setUserType("consumer");
 
-        $actualResult = json_decode($this->controller->registerUser($model), true);
+        $actualResult = json_decode($this->controller->registerUser($model, 0), true);
 
         $this->assertArrayHasKey('response', $actualResult);
         $this->assertArrayHasKey('promoCode', $actualResult);
+
+    }
+
+    public function testThatWeCanUpdateSatisfactionIfUsersExists() {
+        $model = new ConsumerModel();
+        $model->setEmail('test1@gmail.com');
+        $model->setFeedback('someFeedback');
+        $model->setUserType("consumer");
+        $model->setSatisfaction(1);
+
+        $actualResult = json_decode($this->controller->registerUser($model, 1), true);
+
+        $this->assertArrayHasKey('response', $actualResult);
 
     }
 
@@ -32,7 +45,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase {
         $model->setFeedback('someFeedback');
         $model->setUserType("consumer");
 
-        $actualResult = json_decode($this->controller->registerUser($model), true);
+        $actualResult = json_decode($this->controller->registerUser($model, 0), true);
 
         $this->assertArrayNotHasKey('promoCode', $actualResult);
     }

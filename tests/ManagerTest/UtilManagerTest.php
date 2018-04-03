@@ -48,4 +48,18 @@ class UtilManagerTest extends PHPUnit_Framework_TestCase {
 
         self::assertEquals($expectedResult, $actualResult);
     }
+
+    public function testThatCanGetUploadForm() {
+        $expected  = '
+            <form method="POST" action="/uploadPortrait" enctype="multipart/form-data">
+                <input type="number" name="json" value="0" />
+                <button name="api" value="1">API 1</button>
+                <button name="api" value="2">API 2</button>
+            </form>
+        ';
+
+        $actual = $this->manager->uploadPortraitForm();
+
+        self::assertEquals($expected, $actual);
+    }
 }

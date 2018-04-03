@@ -80,4 +80,40 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
         self::assertEquals($expectedResult, $actualResult);
     }
 
+    public function testThatWeCanHandleNotApplicablePortraits() {
+        $model = new PortraitModel();
+        $model->setId('testId');
+
+        $expectedResult = json_encode(array( 'response' => 'updated '));
+        $actualResult = $this->controller->handleNotApplicationPortrait($model);
+
+        self::assertEquals($expectedResult, $actualResult);
+    }
+
+    public function testThatWeCanGetStatistics() {
+        $expectedResult = 'registeredUsersCount';
+        $actualResult = $this->controller->getStatistics();
+
+        self::assertContains($expectedResult, $actualResult);
+    }
+
+    public function testThatBasicSearchReturnsPortraits() {
+        $data = $this->helper->basicMatchHelper();
+
+        $contain = 'id';
+        $result = $this->controller->generatePossibleDoppelgangerWithBasicSearch($data, 'female', true, true);
+
+        self::assertContains($contain, $result);
+    }
+
+    public function testThatAdvancedSearchReturnsPortrait() {
+        $data = $this->helper->basicMatchHelper();
+
+        $contain = 'portraitId';
+        $result = $this->controller->generatePossibleDoppelgangerWithAdvancedSearch($data, 'male', true,
+            true, 1, null);
+
+        self::assertContains($contain, $result);
+    }
+
 }

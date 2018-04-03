@@ -378,10 +378,10 @@ class PortraitController {
     public function generatePossibleDoppelgangerWithAdvancedSearch($arrayOfLandmarks, $gender, $beard, $mustache, $facialHairImportance, $priority) {
         $similarityController = new SimilarityController();
 
-        $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender";
+        $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender AND features_completed = TRUE";
 
-        if ($facialHairImportance) $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender AND beard = :beard AND mustache = :mustache";
-
+        if ($facialHairImportance) $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender AND features_completed = TRUE 
+            AND beard = :beard AND mustache = :mustache";
 
         $sql = $this->dbh->getConnection()->prepare($stm);
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);

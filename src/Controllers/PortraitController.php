@@ -368,7 +368,14 @@ class PortraitController {
         echo "\n Execution : $execution_time \n";
         $this->utilManager->handleStatementException($sql, "Error while fetching match!");
 
-        return json_encode($sql->fetchAll(PDO::FETCH_ASSOC));
+        $data = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+        $time_end = microtime(true);
+        $execution_time = ($time_end - $time_start)/60;
+
+        echo "\n Execution : $execution_time \n";
+
+        return json_encode($data);
     }
 
     /**

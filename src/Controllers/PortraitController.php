@@ -353,6 +353,7 @@ class PortraitController {
      * @return string
      */
     public function generatePossibleDoppelgangerWithBasicSearch($arrayOfLandmarks, $gender, $beard, $mustache) {
+        $time_start = microtime(true);
         $similarityController = new SimilarityController();
         $criteria = $similarityController->generateSimilarityCriteria($arrayOfLandmarks, $beard, $mustache);
 
@@ -361,6 +362,10 @@ class PortraitController {
             ON p.id = pl.portrait_id WHERE pl.gender = :gender ORDER BY $criteria LIMIT 1");
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
 
+        $time_end = microtime(true);
+        $execution_time = ($time_end - $time_start)/60;
+
+        echo "\n Execution : $execution_time \n";
         $this->utilManager->handleStatementException($sql, "Error while fetching match!");
 
         return json_encode($sql->fetchAll(PDO::FETCH_ASSOC));

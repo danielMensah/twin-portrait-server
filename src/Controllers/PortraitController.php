@@ -397,18 +397,24 @@ class PortraitController {
         $data = $sql->fetchAll(PDO::FETCH_ASSOC);
 
         $items = array();
-        $counter = 0;
-        foreach ($data as $item) {
-            if ($counter < 60) {
-                array_push($items, $similarityController->advancedSimilaritySearch($item, $arrayOfLandmarks, $beard, $mustache, $priority));
-            }
+//        $counter = 0;
+//        foreach ($data as $item) {
+//            if ($counter < 30) {
+//                array_push($items, $similarityController->advancedSimilaritySearch($item, $arrayOfLandmarks, $beard, $mustache, $priority));
+//            }
+//
+//            $counter++;
+//        }
 
-            $counter++;
+        foreach ($data as $item) {
+            array_push($items, $similarityController->advancedSimilaritySearch($item, $arrayOfLandmarks, $beard, $mustache, $priority));
         }
 
         usort($items, function($a, $b) {
             return $b['similarity'] > $a['similarity'];
         });
+
+        $items = array_slice($items, 0, 30);
 
         return json_encode($items);
     }

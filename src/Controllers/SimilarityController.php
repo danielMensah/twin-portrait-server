@@ -118,23 +118,30 @@ class SimilarityController {
 
     /**
      * @param $arrayOfLandmarks
-     * @param $beard
-     * @param $mustache
      * @return string
      */
-    public function generateSimilarityCriteria($arrayOfLandmarks, $beard, $mustache) {
+    public function generateSimilarityCriteria($arrayOfLandmarks) {
+        $eyes = $arrayOfLandmarks['eye'];
+        $eyebrows = $arrayOfLandmarks['eyebrows'];
+        $nose = $arrayOfLandmarks['nose'];
+
+        $highest_value = max(count($eyes), count($eyebrows), count($nose));
         $criteria = "";
 
-        foreach ($arrayOfLandmarks as $landmark) {
-            foreach ($landmark as $item) {
-                $criteria .= $item . " DESC, ";
+        for ($i = 0; $i<= $highest_value; $i++) {
+            $pos = $this->utilManager->convertArrayPosition($highest_value, $i);
+            if (!empty($eyebrows[$i])) {
+                $pos = $this->utilManager->convertArrayPosition(3, $i);
+                $criteria .= " AND pl.$eyebrows[$i] = $pos";
             }
+            if (!empty($eyes[$i])) {
+                $pos = $this->utilManager->convertArrayPosition($highest_value, $i);
+                $criteria .= " AND pl.$eyes[$i] = $pos";
+            }
+            if (!empty($nose[$i])) $criteria .= " AND pl.$nose[$i] = $pos";
         }
 
-        if ($beard) $criteria .= "beard DESC, ";
-        if ($mustache) $criteria .= "mustache DESC, ";
-
-        return rtrim($criteria, ", ");
+        return $criteria;
     }
 
     /**

@@ -101,7 +101,7 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
         $data = $this->helper->basicMatchHelper();
 
         $contain = 'id';
-        $result = $this->controller->generatePossibleDoppelgangerWithBasicSearch($data, 'female', true, true);
+        $result = $this->controller->generatePossibleDoppelgangerWithBasicSearch($data, 'male', true, true);
 
         self::assertContains($contain, $result);
     }

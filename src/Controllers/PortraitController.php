@@ -354,12 +354,14 @@ class PortraitController {
      */
     public function generatePossibleDoppelgangerWithBasicSearch($arrayOfLandmarks, $gender, $beard, $mustache) {
         $similarityController = new SimilarityController();
-        $criteria = $similarityController->generateSimilarityCriteria($arrayOfLandmarks, $beard, $mustache);
+        $criteria = $similarityController->generateSimilarityCriteria($arrayOfLandmarks);
 
         $sql = $this->dbh->getConnection()->prepare("SELECT DISTINCT p.id, p.image_url FROM portrait p
           INNER JOIN portrait_landmarks pl
-            ON p.id = pl.portrait_id WHERE pl.gender = :gender ORDER BY $criteria LIMIT 1");
+            ON p.id = pl.portrait_id WHERE pl.gender = :gender AND pl.beard = :beard AND pl.mustache = :mustache $criteria ORDER BY RAND() LIMIT 1");
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
+        $sql->bindParam(':beard', $beard, PDO::PARAM_STR);
+        $sql->bindParam(':mustache', $mustache, PDO::PARAM_STR);
 
         $this->utilManager->handleStatementException($sql, "Error while fetching match!");
 
@@ -397,14 +399,6 @@ class PortraitController {
         $data = $sql->fetchAll(PDO::FETCH_ASSOC);
 
         $items = array();
-//        $counter = 0;
-//        foreach ($data as $item) {
-//            if ($counter < 30) {
-//                array_push($items, $similarityController->advancedSimilaritySearch($item, $arrayOfLandmarks, $beard, $mustache, $priority));
-//            }
-//
-//            $counter++;
-//        }
 
         foreach ($data as $item) {
             array_push($items, $similarityController->advancedSimilaritySearch($item, $arrayOfLandmarks, $beard, $mustache, $priority));

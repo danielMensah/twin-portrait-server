@@ -106,9 +106,9 @@ class PortraitHelper {
 
     public function basicMatchHelper() {
         return array(
-            "eye"=> ["EYE_DEEP_SET", "EYE_DOWNTURNED", "EYE_MONOLID_ALMOND", "EYE_HOODED"],
-            "nose"=> ["NOSE_SNUB", "NOSE_AQUILINE", "NOSE_FLAT", "NOSE_ROMAN_HOOKED"],
-            "eyebrows"=> ["EB_ANGLED", "EB_ROUNDED", "EB_FLAT_SHAPED"]
+            "eye"=> ["EYE_DEEP_SET", "EYE_HOODED", "EYE_DOWNTURNED", "EYE_MONOLID_ALMOND"],
+            "nose"=> ["NOSE_ROMAN_HOOKED", "NOSE_AQUILINE", "NOSE_SNUB", "NOSE_FLAT"],
+            "eyebrows"=> ["EB_FLAT_SHAPED", "EB_ROUNDED", "EB_ANGLED"]
         );
     }
 

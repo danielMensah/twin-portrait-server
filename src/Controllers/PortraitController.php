@@ -358,7 +358,7 @@ class PortraitController {
 
         $sql = $this->dbh->getConnection()->prepare("SELECT DISTINCT p.id, p.image_url FROM portrait p
           INNER JOIN portrait_landmarks pl
-            ON p.id = pl.portrait_id WHERE pl.gender = :gender AND pl.beard = :beard AND pl.mustache = :mustache $criteria ORDER BY RAND() LIMIT 1");
+            ON p.id = pl.portrait_id WHERE pl.gender = :gender AND pl.beard = :beard AND pl.mustache = :mustache ORDER BY $criteria LIMIT 1");
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);
         $sql->bindParam(':beard', $beard, PDO::PARAM_STR);
         $sql->bindParam(':mustache', $mustache, PDO::PARAM_STR);

@@ -131,17 +131,16 @@ class SimilarityController {
         for ($i = 0; $i<= $highest_value; $i++) {
             $pos = $this->utilManager->convertArrayPosition($highest_value, $i);
             if (!empty($eyebrows[$i])) {
-                $pos = $this->utilManager->convertArrayPosition(3, $i);
-                $criteria .= " AND pl.$eyebrows[$i] = $pos";
+                $criteria .= "pl.$eyebrows[$i], ";
             }
             if (!empty($eyes[$i])) {
                 $pos = $this->utilManager->convertArrayPosition($highest_value, $i);
-                $criteria .= " AND pl.$eyes[$i] = $pos";
+                $criteria .= "pl.$eyes[$i], ";
             }
-            if (!empty($nose[$i])) $criteria .= " AND pl.$nose[$i] = $pos";
+            if (!empty($nose[$i])) $criteria .= "pl.$nose[$i], ";
         }
 
-        return $criteria;
+        return rtrim($criteria, ", ");
     }
 
     /**

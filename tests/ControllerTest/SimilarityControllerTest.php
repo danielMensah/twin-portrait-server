@@ -86,7 +86,7 @@ class SimilarityControllerTest extends PHPUnit_Framework_TestCase {
             "nose" => ["NOSE_SNUB", "NOSE_AQUILINE", "NOSE_FLAT", "NOSE_ROMAN_HOOKED"]
         );
 
-        $expectedResult = " AND pl.EB_ANGLED = 3 AND pl.EYE_DEEP_SET = 4 AND pl.NOSE_SNUB = 4 AND pl.EB_ROUNDED = 2 AND pl.EYE_DOWNTURNED = 3 AND pl.NOSE_AQUILINE = 3 AND pl.EB_FLAT_SHAPED = 1 AND pl.EYE_MONOLID_ALMOND = 2 AND pl.NOSE_FLAT = 2 AND pl.EYE_HOODED = 1 AND pl.NOSE_ROMAN_HOOKED = 1";
+        $expectedResult = "pl.EB_ANGLED, pl.EYE_DEEP_SET, pl.NOSE_SNUB, pl.EB_ROUNDED, pl.EYE_DOWNTURNED, pl.NOSE_AQUILINE, pl.EB_FLAT_SHAPED, pl.EYE_MONOLID_ALMOND, pl.NOSE_FLAT, pl.EYE_HOODED, pl.NOSE_ROMAN_HOOKED";
         $actualResult = $this->controller->generateSimilarityCriteria($userData);
 
         self::assertEquals($expectedResult, $actualResult);

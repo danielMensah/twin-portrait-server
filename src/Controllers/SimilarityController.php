@@ -23,7 +23,7 @@ class SimilarityController {
         $this->dbh = new DbConnection();
     }
 
-    public function advancedSimilaritySearch($dbLandmarks, $userLandmarks, $beard, $mustache, $priority) {
+    public function generateSimilarity($dbLandmarks, $userLandmarks, $beard, $mustache, $priority) {
         $userFH = array("beard"=>$beard, "mustache"=>$mustache);
         $portraitFH = array("beard"=>$dbLandmarks['beard'], "mustache"=>$dbLandmarks['mustache']);
 
@@ -129,14 +129,8 @@ class SimilarityController {
         $criteria = "";
 
         for ($i = 0; $i<= $highest_value; $i++) {
-            $pos = $this->utilManager->convertArrayPosition($highest_value, $i);
-            if (!empty($eyebrows[$i])) {
-                $criteria .= "pl.$eyebrows[$i], ";
-            }
-            if (!empty($eyes[$i])) {
-                $pos = $this->utilManager->convertArrayPosition($highest_value, $i);
-                $criteria .= "pl.$eyes[$i], ";
-            }
+            if (!empty($eyebrows[$i])) $criteria .= "pl.$eyebrows[$i], ";
+            if (!empty($eyes[$i])) $criteria .= "pl.$eyes[$i], ";
             if (!empty($nose[$i])) $criteria .= "pl.$nose[$i], ";
         }
 

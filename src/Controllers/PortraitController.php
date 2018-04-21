@@ -321,11 +321,19 @@ class PortraitController {
         $completedLandmarksStm = $this->dbh->getConnection()->prepare("SELECT * FROM portrait_landmarks WHERE features_completed = TRUE");
         $this->utilManager->handleStatementException($completedLandmarksStm, "Error while fetching landmarks statistics!");
 
+        $maleCompletedPortraitsStm = $this->dbh->getConnection()->prepare("SELECT COUNT(*) FROM portrait_landmarks WHERE gender = 'male' AND features_completed = TRUE");
+        $this->utilManager->handleStatementException($maleCompletedPortraitsStm, "Error while fetching male statistics!");
+
+        $femaleCompletedPortraitsStm = $this->dbh->getConnection()->prepare("SELECT COUNT(*) FROM portrait_landmarks WHERE gender = 'female' AND features_completed = TRUE");
+        $this->utilManager->handleStatementException($femaleCompletedPortraitsStm, "Error while fetching female statistics!");
+
         return json_encode(array(
             "registeredUsersCount" => $registeredUsersStm->rowCount(),
             "registeredUsers" => $registeredUsersStm->fetchAll(PDO::FETCH_ASSOC),
             "completedLandmarksCount" => $completedLandmarksStm->rowCount(),
-            "completedLandmarks" => $completedLandmarksStm->fetchAll(PDO::FETCH_ASSOC)
+            "completedLandmarks" => $completedLandmarksStm->fetchAll(PDO::FETCH_ASSOC),
+            "femalePortraits" => $femaleCompletedPortraitsStm->fetchColumn(),
+            "malePortraits" => $maleCompletedPortraitsStm->fetchColumn()
         ));
 
     }
@@ -401,7 +409,7 @@ class PortraitController {
         $items = array();
 
         foreach ($data as $item) {
-            array_push($items, $similarityController->advancedSimilaritySearch($item, $arrayOfLandmarks, $beard, $mustache, $priority));
+            array_push($items, $similarityController->generateSimilarity($item, $arrayOfLandmarks, $beard, $mustache, $priority));
         }
 
         usort($items, function($a, $b) {

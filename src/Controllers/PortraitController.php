@@ -392,8 +392,13 @@ class PortraitController {
 
         $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender AND features_completed = TRUE";
 
-        if ($facialHairImportance) $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender AND features_completed = TRUE 
+        if ($facialHairImportance) {
+            $stm = "SELECT * FROM portrait_landmarks WHERE gender = :gender AND features_completed = TRUE 
             AND beard = :beard AND mustache = :mustache";
+        }
+
+        $beard = $beard === 'true';
+        $mustache = $mustache === 'true';
 
         $sql = $this->dbh->getConnection()->prepare($stm);
         $sql->bindParam(':gender', $gender, PDO::PARAM_STR);

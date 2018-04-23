@@ -116,4 +116,15 @@ class PortraitControllerTest extends PHPUnit_Framework_TestCase {
         self::assertContains($contain, $result);
     }
 
+    public function testThatWeCannotAddPortrait() {
+        $model = new PortraitModel();
+        $model->setId(null);
+        $model->setImageUrl('http://test.com');
+
+        $expectedResult = $this->expectException(PDOException::class);
+        $actualResult = $this->controller->addPortrait($model);
+
+        self::assertEquals($expectedResult, $actualResult);
+    }
+
 }
